@@ -70,22 +70,98 @@
         </div>
     </nav>
     <!-- Navbar End -->
+    <div class="container">
+        <div class="mx-4 py-5">
+            <h2 class="text-primary">Bienvenido a la Fundación Katupyry </h2>
+        </div>
+    </div>
 
+    <div class="container mb-4">
+        <div class="row" style="@media (min-width: 720px) {height: 500px}">
+            <div class="col-md-9 mb-2">
+                <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    </div>
+
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" data-bs-interval="10000">
+                            <img src="{{asset('www/img/carousel-1.jpg')}}" class="d-block w-100" alt="..." >
+                            <div class="carousel-caption d-none d-md-block" >
+                                <h5>First slide label</h5>
+                                <p>Some representative placeholder content for the first slide.</p>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item" data-bs-interval="2000">
+                            <img src="{{asset('www/img/carousel-1.jpg')}}" class="d-block w-100" alt="...">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>Second slide label</h5>
+                                <p>Some representative placeholder content for the second slide.</p>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="{{asset('www/img/carousel-1.jpg')}}" class="d-block w-100" alt="...">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>Third slide label</h5>
+                                <p>Some representative placeholder content for the third slide.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-sm-3 ">
+                <div class="card" style="width: 100%">
+                    <div class="card-header text-white fw-bold" style="background: rgb(236, 57, 162)">
+                      Links de Interés
+                    </div>
+                    <ul class="list-group list-group-flush rounded" style="background: rgb(236, 57, 162)">
+                        <li class="list-group-item w-bold">
+                            <a href="" class="w-bold"><i class="fab fa-facebook-f ml-2"></i> Facebook</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a class="w-bold" href="https://www.instagram.com/fundacionkatupyry/"><i class="fab fa-instagram"></i> Instagram</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#"><i class="fas fa-book-reader"></i> Cursos</a>
+                        </li>
+
+                        <li class="list-group-item">
+                            <a href="#"><i class="fas fa-book-reader"></i> Noticias</a>
+                        </li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Carousel Start -->
-    <div class="container-fluid p-0 mb-5">
+    {{-- <div class="container-fluid p-0 mb-5">
         <div class="owl-carousel header-carousel position-relative">
             <div class="owl-carousel-item position-relative">
-                <img class="img-fluid" src="{{asset('www/img/carousel-1.jpg')}}" alt="">
+                <img class="img-fluid" src="{{asset('www/img/carousel-1.jpg')}}lt="" style="height: 500px">
+                <img class="img-fluid" src="{{Storage::url('iconos/logo.jpg')}}" alt="" style="height: 500px">
                 <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(24, 29, 56, .7);">
                     <div class="container">
                         <div class="row justify-content-start">
                             <div class="col-sm-10 col-lg-8">
-                                {{-- <h5 class="text-primary text-uppercase mb-3 animated slideInDown">Animate a dar este importante paso</h5> --}}
                                 <h1 class="display-3 text-white animated slideInDown">Animate a dar este importante paso</h1>
                                 <p class="fs-5 text-white mb-4 pb-2">Dejanos mostrarte el camino que puede llevarte al éxito y hacer que alcances todas tus metas.</p>
                                 <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Ver Cursos</a>
-                                {{-- <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Join Now</a> --}}
                             </div>
                         </div>
                     </div>
@@ -97,7 +173,6 @@
                     <div class="container">
                         <div class="row justify-content-start">
                             <div class="col-sm-10 col-lg-8">
-                                {{-- <h5 class="text-primary text-uppercase mb-3 animated slideInDown">Best Online Courses</h5> --}}
                                 <h1 class="display-3 text-white animated slideInDown">Puedes contribir con nuestra misión</h1>
                                 <p class="fs-5 text-white mb-4 pb-2">Si quieres ayudarnos a hacer todo esto posible no dudes en escribirnos!</p>
                                 <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Contactenos</a>
@@ -108,7 +183,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- Carousel End -->
 
 
