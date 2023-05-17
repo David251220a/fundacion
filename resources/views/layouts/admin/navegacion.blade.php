@@ -11,7 +11,7 @@
                 <a href="index.html" class="nav-link"> KATU </a>
             </li>
         </ul> --}}
-        <a href="{{route('home')}}" class="text-white"><img src="{{Storage::url('iconos/logo_horizontal.png')}}" class="navbar-logo" alt="logo" style="width: 200px;
+        <a href="{{route('home')}}" class="text-white"><img src="{{Storage::url('iconos/logo_horizontal-1.png')}}" class="navbar-logo" alt="logo" style="width: 200px;
             margin-left: 5px;
             margin-right: 10px;">
         </a>
@@ -34,7 +34,7 @@
 
             <li class="nav-item dropdown user-profile-dropdown">
                 <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    <img src="{{Storage::url('iconoS/user.png')}}" alt="avatar">
+                    <img src="{{Storage::url('iconos/user.png')}}" alt="avatar">
                 </a>
                 <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
                     <div class="">

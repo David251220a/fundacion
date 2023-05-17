@@ -9,7 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300&display=swap" rel="stylesheet">
 	<script src="https://kit.fontawesome.com/a81368914c.js"></script>
-    @vite(['resources/login/css/style.css', 'resources/login/js/main.js'])
+    {{-- @vite(['resources/login/css/style.css', 'resources/login/js/main.js']) --}}
+    <link rel="stylesheet" href="{{asset('rostro/css/style.css')}}">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -65,6 +66,6 @@
             </div> --}}
         </div>
     </div>
-    {{-- <script type="text/javascript" src="js/main.js"></script> --}}
+    <script type="text/javascript" src="{{asset('rostro/js/main.js')}}"></script>
 </body>
 </html>
