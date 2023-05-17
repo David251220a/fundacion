@@ -66,27 +66,32 @@
                 </div> --}}
                 <a href="{{route('contacto')}}" class="nav-item nav-link">Contactanos</a>
             </div>
-            <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Ingresar<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="{{route('login')}}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Ingresar<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
     <!-- Navbar End -->
 
 
     <!-- Header Start -->
-    <div class="container-fluid bg-primary py-5 mb-5 page-header">
-        <div class="container py-5">
-            <div class="row justify-content-center">
-                <div class="col-lg-10 text-center">
-                    {{-- <h1 class="display-3 text-white animated slideInDown">About Us</h1> --}}
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb justify-content-center">
+    @if (Route::currentRouteName() == 'inicio')
 
-                        </ol>
-                    </nav>
+    @else
+        <div class="container-fluid bg-primary py-5 mb-5 page-header">
+            <div class="container py-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10 text-center">
+                        {{-- <h1 class="display-3 text-white animated slideInDown">About Us</h1> --}}
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-center">
+
+                            </ol>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
+
     <!-- Header End -->
 
     @yield('content')

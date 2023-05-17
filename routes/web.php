@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\InicioController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Limpiar;
+use App\Http\Controllers\NoticiasController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,5 +26,15 @@ Route::get('/limpiar', [Limpiar::class, 'limpiar'])->name('limpiar');
 Route::get('/crear/acceso', [Limpiar::class, 'acceso'])->name('acceso');
 
 Auth::routes();
+Route::get('/logout', [LoginController::class, 'logout']);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::group([
+    'middleware' => 'auth',
+], function(){
+
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    Route::resource('/noticia', NoticiasController::class)->names('noticias');
+
+});
+

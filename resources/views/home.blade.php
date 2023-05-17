@@ -1,23 +1,21 @@
-@extends('layouts.app')
+@extends('layouts.admin')
+
+@section('styles')
+@endsection
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+<div class="layout-px-spacing mt-4">
 
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
+    <div class="row layout-spacing">
+        <div class="mb-4">
+            <h2>Bienvenido a Fundación katupyry <img src="{{Storage::url('iconos/logo_katu.jpg')}}" class="rounded-circle" style="width: 100px; height: 100px"></h2>
         </div>
+
     </div>
 </div>
+
+@endsection
+
+@section('js')
 @endsection
