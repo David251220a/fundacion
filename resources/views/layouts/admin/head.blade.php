@@ -16,4 +16,5 @@
 <link rel="stylesheet" href="{{asset('fontawesome/css/fontawesome.min.css')}}">
 <link rel="stylesheet" href="{{asset('fontawesome/css/solid.css')}}">
 <link rel="stylesheet" href="{{asset('fontawesome/css/solid.min.css')}}">
+<link href="{{Storage::url('iconos/favicon16x16.png')}}" rel="icon">
 <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->

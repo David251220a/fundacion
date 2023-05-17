@@ -1,18 +1,21 @@
 <div class="header-container fixed-top">
     <header class="header navbar navbar-expand-sm">
 
-        <ul class="navbar-item theme-brand flex-row  text-center">
+        {{-- <ul class="navbar-item theme-brand flex-row  text-center">
             <li class="nav-item theme-logo">
-                {{-- <a href="#">
-                    <img src="{{asset('assets/img/logo.svg')}}" class="navbar-logo" alt="logo">
-                </a> --}}
+                <a href="#">
+                    <img src="{{Storage::url('iconos/logo_horizontal.png')}}" class="navbar-logo" alt="logo">
+                </a>
             </li>
             <li class="nav-item theme-text">
                 <a href="index.html" class="nav-link"> KATU </a>
             </li>
-        </ul>
-
-        <ul class="navbar-item flex-row ml-md-0 ml-auto">
+        </ul> --}}
+        <a href="{{route('home')}}" class="text-white"><img src="{{Storage::url('iconos/logo_horizontal.png')}}" class="navbar-logo" alt="logo" style="width: 200px;
+            margin-left: 5px;
+            margin-right: 10px;">
+        </a>
+        <ul class="navbar-item flex-row ml-md-0 ml-auto ml-3">
             <li class="nav-item align-self-center search-animated">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" s
                     troke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
