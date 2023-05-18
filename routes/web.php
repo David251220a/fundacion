@@ -21,6 +21,8 @@ Route::get('/', [InicioController::class, 'inicio'])->name('inicio');
 Route::get('/nosotros', [InicioController::class, 'nosotros'])->name('nosotros');
 Route::get('/cursos', [InicioController::class, 'cursos'])->name('cursos');
 Route::get('/contacto', [InicioController::class, 'contacto'])->name('contacto');
+Route::get('/new', [InicioController::class, 'new'])->name('new');
+Route::get('/new/{slug}', [InicioController::class, 'new_detalle'])->name('new_detalle');
 
 Route::get('/limpiar', [Limpiar::class, 'limpiar'])->name('limpiar');
 Route::get('/crear/acceso', [Limpiar::class, 'acceso'])->name('acceso');
@@ -34,7 +36,10 @@ Route::group([
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-    Route::resource('/noticia', NoticiasController::class)->names('noticias');
+    Route::resource('/noticia', NoticiasController::class, ['parameters' => [
+        'noticia' => 'noticia',
+    ],
+    ])->names('noticias');
 
 });
 

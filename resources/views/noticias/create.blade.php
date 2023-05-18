@@ -15,11 +15,13 @@
         <div id="flFormsGrid" class="col-lg-12 layout-spacing">
             <div class="statbox widget box box-shadow">
                 <div class="widget-content widget-content-area">
-                    <form >
+                    <form action="{{route('noticias.store')}}" method="POST" enctype="multipart/form-data">
+                        @csrf
                         <div class="form-row mb-2">
                             <div class="form-group col-md-4">
                                 <label for="inputEmail4">Titulo</label>
-                                <input type="text" class="form-control" placeholder="titulo" name="titulo" id="name" value="{{old('titulo')}}">
+                                <input type="text" class="form-control" placeholder="titulo" name="titulo" id="titulo" value="{{old('titulo')}}"
+                                onchange="generarSlug()" onkeyup="generarSlug()" required>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="inputPassword4">Slug</label>
@@ -35,6 +37,14 @@
                         </div>
 
                         <div class="form-row mb-4">
+                            <div class="form-group col-md-4">
+                                <label for="inputPassword4">Publicado</label>
+                                <select name="publicado" id="publicado" class="form-control">
+                                    <option {{ (old('publicado')== 1 ? 'selected' : '') }} value="1">SI</option>
+                                    <option {{ (old('publicado')== 2 ? 'selected' : '') }} value="2">NO</option>
+                                </select>
+                            </div>
+
                             <div class="form-group col-md-4">
                                 <label for="inputEmail4">Publicación Facebbok</label>
                                 <input type="text" class="form-control" name="facebook" id="facebook" value="{{old('facebook')}}">
@@ -64,6 +74,30 @@
                                 <textarea name="contenido" id="contenido" cols="30" rows="10" class=""></textarea>
                             </div>
                         </div>
+                        <h4>Adjunto</h4>
+                        <div class="form-row mb-2">
+                            <div class="form-group col-md-3">
+                                <label for="inputEmail4">Foto 1</label>
+                                <input type="file" class="form-control" name="file_1" id="file_1" value="{{old('file_1')}}">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="inputEmail4">Foto 2</label>
+                                <input type="file" class="form-control" name="file_2" id="file_2" value="{{old('file_1')}}">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="inputEmail4">Foto 3</label>
+                                <input type="file" class="form-control" name="file_3" id="file_3" value="{{old('file_1')}}">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="inputEmail4">Foto 4</label>
+                                <input type="file" class="form-control" name="file_4" id="file_4" value="{{old('file_1')}}">
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label for="inputEmail4">Video</label>
+                                <input type="text" class="form-control" name="file_5" id="file_5" value="{{old('file_1')}}">
+                            </div>
+                        </div>
                       <button type="submit" class="btn btn-success mt-3">Crear</button>
                     </form>
                 </div>
@@ -76,14 +110,27 @@
 @section('js')
     <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/classic/ckeditor.js"></script>
     <script>
-       ClassicEditor
-        .create(document.querySelector('#contenido'), {
-            // Ruta del archivo CSS personalizado
-            contentsCss: '/css/ckeditor-styles.css'
+        ClassicEditor
+        .create(document.querySelector('#contenido'))
+        .then(editor => {
+            editor.editing.view.change(writer => {
+            writer.setStyle(' background-color', 'black', editor.editing.view.document.getRoot());
+        });
         })
         .catch(error => {
             console.error(error);
         });
+
+        function generarSlug() {
+            // Obtener el valor del input del título
+            const titulo = document.getElementById('titulo').value;
+
+            // Reemplazar caracteres especiales y espacios en blanco por guiones
+            const slug = titulo.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+            // Asignar el slug al input correspondiente
+            document.getElementById('slug').value = slug;
+        }
 
     </script>
 @endsection

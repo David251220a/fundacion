@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tag extends Model
+class NoticiaTag extends Model
 {
     use HasFactory;
 
-    public function noticias_tag()
+    protected $guarded = [];
+
+    public function tag()
     {
-        return $this->hasMany(NoticiaTag::class, 'tag_id');
+        return $this->belongsTo(Tag::class, 'tag_id');
     }
 }

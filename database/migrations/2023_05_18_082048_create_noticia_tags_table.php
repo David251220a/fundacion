@@ -13,16 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('noticias', function (Blueprint $table) {
+        Schema::create('noticia_tags', function (Blueprint $table) {
             $table->id();
-            $table->string('titulo', 150)->nullable();
-            $table->text('contenido')->nullable();
-            $table->text('feed_facebook')->nullable();
-            $table->text('feed_instagram')->nullable();
-            $table->tinyInteger('portada', false, false);
-            $table->tinyInteger('publicado', false, false);
-            $table->string('slug');
-            $table->foreignId('estado_id')->constrained()->default(1);
+            $table->foreignId('noticia_id')->constrained();
+            $table->foreignId('tag_id')->constrained();
+            $table->foreignId('estado_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->unsignedBigInteger('modif_user_id');
             $table->foreign('modif_user_id')->references('id')->on('users');
@@ -37,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('noticias');
+        Schema::dropIfExists('noticia_tags');
     }
 };

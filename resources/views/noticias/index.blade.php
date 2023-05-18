@@ -2,6 +2,7 @@
 
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{asset('plugins/table/datatable/dt-global_style.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/ckeditor-styles.css') }}">
 @endsection
 
 @section('content')
@@ -33,47 +34,35 @@
                     </thead>
                     <tbody>
                         @foreach ($noticias as $item)
-                            <tr>
+                            <tr style="font-weight: bold">
                                 <td>{{$item->titulo}}</td>
-                                <td>{{str_limit($item->contenido, 5)}}</td>
+                                <td>{!! Str::limit($item->contenido, 20, '...') !!}</td>
                                 <td>
                                     @if ($item->portada == 1)
-                                        SI
+                                       <a class="btn-si">SI</a>
                                     @else
-                                        NO
+                                        <a class="btn-no">NO</a>
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($item->portada == 1)
-                                        SI
+                                    @if ($item->publicado == 1)
+                                       <a class="btn-si">SI</a>
                                     @else
-                                        NO
+                                    <a class="btn-no">NO</a>
                                     @endif
                                 </td>
                                 <td>
                                     {{date('d/m/Y', strtotime($item->created_at))}}
                                 </td>
                                 <td>
-                                    {{$item->user_id}}
+                                    {{$item->usuario->name}}
                                 </td>
                                 <td>
-                                    <a href="">b</a>
-                                    <a href="">a</a>
+                                    <a href="{{route('noticias.show', $item->slug)}}" class="ml-2"><i class="fas fa-eye"></i></a>
+                                    <a href="{{route('noticias.edit', $item)}}" class="ml-2"><i class="fas fa-pencil"></i></a>
                                 </td>
                             </tr>
                         @endforeach
-                        <tr>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>61</td>
-                            <td>2011/04/25</td>
-                            <td>$320,800</td>
-                            <td>
-                                <a href="">b</a>
-                                <a href="">a</a>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>

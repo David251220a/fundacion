@@ -1,16 +1,61 @@
+/* .custom-ckeditor {
+    min-height: 200px;
+    background-color: black;
+    color: white;
+} */
+
 .ck-editor__editable {
     min-height: 200px;
-    /* color: black; */
+    background-color: black;
+    color: white;
 }
+
+.btn-si{
+    padding: 2px 7px;
+    border: 1px solid;
+    border-color: green;
+    background: green;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.btn-no{
+    padding: 2px 7px;
+    border: 1px solid;
+    border-color: red;
+    background: red;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+
+.carousel-img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.owl-carousel .owl-stage {
+    overflow: hidden;
+}
+
+.owl-carousel .owl-stage .owl-item {
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.owl-carousel .owl-stage .owl-item.active {
+    opacity: 1;
+}
+
 
 /* Establecer el color del texto en negro */
-.ck.ck-editor__main>.ck-editor__editable{
+/* .ck.ck-editor__main>.ck-editor__editable{
     background: #101010;
 }
 
-/* .ck.ck-ck-editor__editable {
-    background: #101010;
-} */
 
 /* .ck.ck-editor__main > .ck-editor__editable {
     background: #101010;

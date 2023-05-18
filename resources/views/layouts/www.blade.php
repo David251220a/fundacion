@@ -30,6 +30,8 @@
 
     <!-- Template Stylesheet -->
     <link href="{{asset('www/css/style.css')}}" rel="stylesheet">
+
+    @yield('styles')
 </head>
 
 <body>
@@ -56,43 +58,13 @@
                 <a href="{{route('inicio')}}" class="nav-item nav-link active">Inicio</a>
                 <a href="{{route('nosotros')}}" class="nav-item nav-link">Quienes Somos</a>
                 <a href="{{route('cursos')}}" class="nav-item nav-link">Cursos</a>
-                {{-- <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="#" class="dropdown-item">Our Team</a>
-                        <a href="#" class="dropdown-item">Testimonial</a>
-                        <a href="#" class="dropdown-item">404 Page</a>
-                    </div>
-                </div> --}}
+                <a href="{{route('new')}}" class="nav-item nav-link">Noticias</a>
                 <a href="{{route('contacto')}}" class="nav-item nav-link">Contactanos</a>
             </div>
             <a href="{{route('login')}}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Ingresar<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
     <!-- Navbar End -->
-
-
-    <!-- Header Start -->
-    @if (Route::currentRouteName() == 'inicio')
-
-    @else
-        <div class="container-fluid bg-primary py-5 mb-5 page-header">
-            <div class="container py-5">
-                <div class="row justify-content-center">
-                    <div class="col-lg-10 text-center">
-                        {{-- <h1 class="display-3 text-white animated slideInDown">About Us</h1> --}}
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb justify-content-center">
-
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
-
-    <!-- Header End -->
 
     @yield('content')
 
@@ -105,81 +77,20 @@
                     <a class="btn btn-link" href="">Sobre Nosotros</a>
                     <a class="btn btn-link" href="">Cursos</a>
                     <a class="btn btn-link" href="">Contactanos</a>
-                    {{-- <a class="btn btn-link" href="">Terms & Condition</a>
-                    <a class="btn btn-link" href="">FAQs & Help</a> --}}
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h4 class="text-white mb-3">Contacto</h4>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+595 986 602 555</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Ruta Nº 3, Elizado Aquino</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+595 983 602 155</p>
                     <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@fundacionkatupyry.com.py</p>
                     <div class="d-flex pt-2">
-                        {{-- <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a> --}}
                         <a class="btn btn-outline-light btn-social" target="__blank" href="https://www.facebook.com/FundacionKatupyry"><i class="fab fa-facebook-f"></i></a>
                         <a class="btn btn-outline-light btn-social" target="__blank" href="https://www.instagram.com/fundacionkatupyry/"><i class="fab fa-instagram"></i></a>
-                        {{-- <a class="btn btn-outline-light btn-social" href="https://www.instagram.com/kuimbaehakunapy/"><i class="fab fa-youtube"></i></a> --}}
-                        {{-- <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a> --}}
                     </div>
                 </div>
-
-                {{-- <div class="col-lg-3 col-md-6">
-                    <h4 class="text-white mb-3">Galería</h4>
-                    <div class="row g-2 pt-2">
-                        <div class="col-4">
-                            <img class="img-fluid bg-light p-1" src="img/course-1.jpg" alt="">
-                        </div>
-                        <div class="col-4">
-                            <img class="img-fluid bg-light p-1" src="img/course-2.jpg" alt="">
-                        </div>
-                        <div class="col-4">
-                            <img class="img-fluid bg-light p-1" src="img/course-3.jpg" alt="">
-                        </div>
-                        <div class="col-4">
-                            <img class="img-fluid bg-light p-1" src="img/course-2.jpg" alt="">
-                        </div>
-                        <div class="col-4">
-                            <img class="img-fluid bg-light p-1" src="img/course-3.jpg" alt="">
-                        </div>
-                        <div class="col-4">
-                            <img class="img-fluid bg-light p-1" src="img/course-1.jpg" alt="">
-                        </div>
-                    </div>
-                </div> --}}
-
-                {{-- <div class="col-lg-3 col-md-6">
-                    <h4 class="text-white mb-3">Newsletter</h4>
-                    <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
-                    <div class="position-relative mx-auto" style="max-width: 400px;">
-                        <input class="form-control border-0 w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
-                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
-                    </div>
-                </div> --}}
             </div>
         </div>
-        {{-- <div class="container">
-            <div class="copyright">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="#">Your Site Name</a>, All Right Reserved.
-
-                        <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a><br><br>
-                        Distributed By <a class="border-bottom" href="https://themewagon.com">ThemeWagon</a>
-                    </div>
-                    <div class="col-md-6 text-center text-md-end">
-                        <div class="footer-menu">
-                            <a href="">Home</a>
-                            <a href="">Cookies</a>
-                            <a href="">Help</a>
-                            <a href="">FQAs</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
     </div>
-    <!-- Footer End -->
-
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
