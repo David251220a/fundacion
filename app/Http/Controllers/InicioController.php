@@ -9,7 +9,13 @@ class InicioController extends Controller
 {
     public function inicio()
     {
-        return view('welcome');
+        $data = Noticia::where('publicado', 1)
+        ->where('estado_id', 1)
+        ->latest()
+        ->take(5)
+        ->get();
+
+        return view('welcome', compact('data'));
     }
 
     public function nosotros()

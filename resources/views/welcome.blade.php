@@ -1,7 +1,10 @@
 @extends('layouts.www')
 
-@section('content')
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('css/ckeditor-styles.css') }}">
+@endsection
 
+@section('content')
 
     <div class="container-fluid p-0 mb-5">
         <div class="owl-carousel header-carousel position-relative">
@@ -41,26 +44,30 @@
             {{-- <h1 class="mb-5">Our Students Say!</h1> --}}
         </div>
 
-        <div class="row" style="@media (min-width: 720px) {height: 500px}">
+        <div class="row mb-2" style="@media (min-width: 720px) {height: 500px}">
             <div class="col-md-9 mb-2">
                 <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
                     <div class="carousel-indicators">
                         <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                         <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
                     </div>
-
                     <div class="carousel-inner">
-                        <div class="carousel-item active" data-bs-interval="10000">
-                            <img src="{{Storage::url('iconos/porta1.jpg')}}" class="d-block w-100" alt="..." >
-                            <div class="carousel-caption d-none d-md-block" >
+                        @foreach ($data as $item)
+                            @php
+                                $active = '';
+                                if ($loop->first){
+                                    $active = 'active';
+                                }
+                            @endphp
+                            <div class="carousel-item {{$active}}" data-bs-interval="10000">
+                                <img src="{{Storage::url($item->files_fotos[0]->file)}}" class="d-block w-100"  style="max-height: 720px; opacity: 1" alt="..." >
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5 class="py-2" >
+                                        <a href="{{route('new_detalle', $item->slug)}}" class="a-titulo">{{Str::title($item->titulo)}}</a>
+                                    </h5>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="carousel-item" data-bs-interval="2000">
-                            <img src="{{Storage::url('iconos/porta2.jpg')}}" class="d-block w-100" alt="...">
-                            <div class="carousel-caption d-none d-md-block">
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
 
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
@@ -74,7 +81,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-3 ">
+            <div class="col-md-3 ">
                 <div class="card" style="width: 100%">
                     <div class="card-header text-white fw-bold" style="background: rgb(236, 57, 162)">
                       Links de Interés
@@ -91,7 +98,7 @@
                         </li>
 
                         <li class="list-group-item">
-                            <a href="#"  style="color: rgb(170, 170, 26)"><i class="fas fa-newspaper"></i> Noticias</a>
+                            <a href="{{route('new')}}"  style="color: rgb(170, 170, 26)"><i class="fas fa-newspaper"></i> Noticias</a>
                         </li>
                     </ul>
                   </div>
