@@ -33,7 +33,7 @@ class InicioController extends Controller
         ->where('estado_id', 1)
         ->latest()
         ->take(1000)
-        ->paginate(1);
+        ->paginate(20);
 
         return view('www.noticia', compact('data'));
     }

@@ -49,7 +49,7 @@
 
     <div class="container">
         <div class="pagination">
-            {{ $data->links('pagination::bootstrap-5') }}
+            {{ $data->links('pagination::bootstrap-4') }}
         </div>
     </div>
 
