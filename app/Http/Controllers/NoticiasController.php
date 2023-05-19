@@ -33,9 +33,10 @@ class NoticiasController extends Controller
             'titulo' => 'required',
             'slug' => 'required',
             'contenido' => 'required',
-            'tags.*' => 'required',
+            'tags' => 'required',
         ]);
 
+        dd($request->all());
         $fecha = date('dmY');
         $fecha_actual = date('Y-m-d');
         $cont = Noticia::where(DB::raw('CAST(created_at AS DATE)'), $fecha_actual)->count();
@@ -168,7 +169,7 @@ class NoticiasController extends Controller
             'titulo' => 'required',
             'slug' => 'required',
             'contenido' => 'required',
-            'tags.*' => 'required',
+            'tags' => 'required',
         ]);
 
         $fecha = date('dmY');

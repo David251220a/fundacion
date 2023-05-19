@@ -41,7 +41,6 @@
     <div class="container mb-4">
         <div class="text-center mb-4">
             <h4 class="section-title bg-white text-center text-primary px-3">Últimas Noticias</h4>
-            {{-- <h1 class="mb-5">Our Students Say!</h1> --}}
         </div>
 
         <div class="row mb-2" style="@media (min-width: 720px) {height: 500px}">
@@ -62,7 +61,7 @@
                                     $active = 'active';
                                 }
                             @endphp
-                            <div class="carousel-item {{$active}}" data-bs-interval="10000">
+                            <div class="carousel-item  {{$active}}" data-bs-interval="10000">
                                 <img src="{{Storage::url($item->files_fotos[0]->file)}}" class="d-block w-100"  style="max-height: 720px; opacity: 1" alt="..." >
                                 <div class="carousel-caption d-none d-md-block">
                                     <h5 class="py-2" >

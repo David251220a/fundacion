@@ -15,7 +15,7 @@
         <div id="flFormsGrid" class="col-lg-12 layout-spacing">
             <div class="statbox widget box box-shadow">
                 <div class="widget-content widget-content-area">
-                    <form action="{{route('noticias.store')}}" method="POST" enctype="multipart/form-data">
+                    <form action="{{route('noticias.store')}}" method="POST" enctype="multipart/form-data" onsubmit="disableButton()">
                         @csrf
                         <div class="form-row mb-2">
                             <div class="form-group col-md-4">
@@ -98,7 +98,7 @@
                                 <input type="text" class="form-control" name="file_5" id="file_5" value="{{old('file_1')}}">
                             </div>
                         </div>
-                      <button type="submit" class="btn btn-success mt-3">Crear</button>
+                      <button type="submit" class="btn btn-success mt-3" id="submitBtn" onclick="this.disabled = true; this.form.submit();">Crear</button>
                     </form>
                 </div>
             </div>
@@ -130,6 +130,10 @@
 
             // Asignar el slug al input correspondiente
             document.getElementById('slug').value = slug;
+        }
+
+        function disableButton() {
+            document.getElementById('submitBtn').disabled = true;
         }
 
     </script>

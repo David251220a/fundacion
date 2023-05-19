@@ -15,7 +15,7 @@
         <div id="flFormsGrid" class="col-lg-12 layout-spacing">
             <div class="statbox widget box box-shadow">
                 <div class="widget-content widget-content-area">
-                    <form action="{{route('noticias.update', $data)}}" method="POST" enctype="multipart/form-data">
+                    <form action="{{route('noticias.update', $data)}}" method="POST" enctype="multipart/form-data" onsubmit="disableButton()">
                         @method('PUT')
                         @csrf
                         <div class="form-row mb-2">
@@ -139,7 +139,7 @@
                                 </table>
                             </div>
                         </div>
-                      <button type="submit" class="btn btn-success mt-3">Editar</button>
+                      <button type="submit" class="btn btn-success mt-3" id="submitBtn" onclick="this.disabled = true; this.form.submit();">Editar</button>
                     </form>
                 </div>
             </div>
@@ -171,6 +171,10 @@
 
             // Asignar el slug al input correspondiente
             document.getElementById('slug').value = slug;
+        }
+
+        function disableButton() {
+            document.getElementById('submitBtn').disabled = true;
         }
 
     </script>
