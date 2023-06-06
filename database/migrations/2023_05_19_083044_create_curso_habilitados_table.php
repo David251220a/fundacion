@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('descripcion', 250);
             $table->text('observacion')->nullable();
             $table->date('periodo_desde');
-            $table->date('periodo_hasta');
+            $table->date('periodo_hasta')->nullable();
+            $table->integer('duracion')->nullable();
             $table->decimal('precio', 12, 0);
             $table->string('portada', 250);
             $table->time('hora_entrada');
