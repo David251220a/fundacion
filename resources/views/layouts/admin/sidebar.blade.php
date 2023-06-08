@@ -63,7 +63,7 @@
             </li>
         @endcan
 
-        @can('user.index')
+        {{-- @can('user.index') --}}
             <li class="menu">
                 <a href="{{ route('user.index') }}" {{(substr(Route::currentRouteName() , 0 , strpos(Route::currentRouteName(), '.')) == 'user' ? 'data-active=true' : '')}}
                     aria-expanded="false" class="dropdown-toggle">
@@ -73,7 +73,7 @@
                     </div>
                 </a>
             </li>
-        @endcan
+        {{-- @endcan --}}
 
         @can('role.index')
             <li class="menu">

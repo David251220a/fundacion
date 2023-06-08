@@ -7,7 +7,8 @@ use App\Http\Controllers\HabilitarCursoController;
 use App\Http\Controllers\Limpiar;
 use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\TipoCursoController;
-use App\Models\CursoHabilitado;
+use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\GrupoUsuarioController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -45,7 +46,9 @@ Route::group([
     ],
     ])->names('noticias');
     Route::get('/tipocurso', [TipoCursoController::class, 'index'])->name('tipocurso.index');
-    Route::resource('/cursos', CursoController::class)->names('curso');
+    Route::resource('/admin/cursos', CursoController::class)->names('curso');
+    Route::resource('/users', UsuarioController::class)->names('user');
+    Route::resource('/roles', GrupoUsuarioController::class)->names('role');
     Route::resource('/curso-habilitado/', HabilitarCursoController::class, ['parameters' => [
         'cursoHabilitado' => 'cursoHabilitado',
     ],
