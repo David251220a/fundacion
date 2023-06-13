@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('periodos', function (Blueprint $table) {
             $table->id();
+            $table->string('descripcion', 50);
+            $table->foreignId('estado_id')->constrained();
+            $table->foreignId('user_id')->constrained();
+            $table->foreign('modif_user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
