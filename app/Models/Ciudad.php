@@ -10,4 +10,9 @@ class Ciudad extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function barrio()
+    {
+        return $this->hasMany(Barrio::class, 'ciudad_id');
+    }
 }

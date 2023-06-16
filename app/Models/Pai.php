@@ -10,4 +10,9 @@ class Pai extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function departamento()
+    {
+        return $this->hasMany(Departamento::class, 'pais_id');
+    }
 }

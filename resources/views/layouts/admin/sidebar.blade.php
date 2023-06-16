@@ -48,6 +48,10 @@
                 <li>
                     <a href="{{route('curso.index')}}"> Curso </a>
                 </li>
+
+                <li>
+                    <a href="{{route('instructor.index')}}"> Instructor </a>
+                </li>
             </ul>
         </li>
 

@@ -9,6 +9,7 @@ use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\TipoCursoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\GrupoUsuarioController;
+use App\Http\Controllers\InstructorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,10 +50,11 @@ Route::group([
     Route::resource('/admin/cursos', CursoController::class)->names('curso');
     Route::resource('/users', UsuarioController::class)->names('user');
     Route::resource('/roles', GrupoUsuarioController::class)->names('role');
-    Route::resource('/curso-habilitado/', HabilitarCursoController::class, ['parameters' => [
+    Route::resource('/curso/habilitado/', HabilitarCursoController::class, ['parameters' => [
         'cursoHabilitado' => 'cursoHabilitado',
     ],
     ])->names('habilitado');
+    Route::resource('/instructor' ,InstructorController::class)->names('instructor');
 
 });
 
