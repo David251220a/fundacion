@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('descripcion', 150);
             $table->foreignId('estado_id')->constrained();
             $table->foreignId('user_id')->constrained();
+            $table->unsignedBigInteger('modif_user_id');
             $table->foreign('modif_user_id')->references('id')->on('users');
             $table->timestamps();
         });

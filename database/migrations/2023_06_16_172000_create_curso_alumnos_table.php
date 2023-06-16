@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('barrios', function (Blueprint $table) {
+        Schema::create('curso_alumnos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pais_id')->constrained();
-            $table->foreignId('departamento_id')->constrained();
-            $table->foreignId('ciudad_id')->constrained();
-            $table->string('descripcion', 150);
+            $table->foreignId('curso_habilitado_id')->constrained();
+            $table->foreignId('alumno_id')->constrained();
+            $table->integer('monto_abonado')->default(0);
+            $table->tinyInteger('aprobado')->default(0);
+            $table->string('certificado', 250)->nullable();
             $table->foreignId('estado_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->unsignedBigInteger('modif_user_id');
@@ -34,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('barrios');
+        Schema::dropIfExists('curso_alumnos');
     }
 };

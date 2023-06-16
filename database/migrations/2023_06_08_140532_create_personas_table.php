@@ -15,6 +15,22 @@ return new class extends Migration
     {
         Schema::create('personas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('pais_id')->constrained();
+            $table->foreignId('departamento_id')->constrained();
+            $table->foreignId('ciudad_id')->constrained();
+            $table->foreignId('barrio_id')->constrained();
+            $table->foreignId('estado_civil_id')->constrained();
+            $table->foreignId('partido_id')->constrained()->default(1);
+            $table->string('nombre', 100);
+            $table->string('apellido', 100);
+            $table->integer('sexo');
+            $table->string('celular', 20)->nullable();
+            $table->string('direccion', 200)->nullable();
+            $table->date('fecha_nacimiento');
+            $table->foreignId('estado_id')->constrained();
+            $table->foreignId('user_id')->constrained();
+            $table->unsignedBigInteger('modif_user_id');
+            $table->foreign('modif_user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

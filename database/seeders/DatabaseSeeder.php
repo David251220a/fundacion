@@ -18,22 +18,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->call(RoleSeeder::class);
+
         User::create([
             'name' => 'Admin',
             'documento' => '4918642',
             'email' => 'admin@dev',
             'password' => Hash::make('admin123456'),
-        ]);
+        ])->assignRole('admin');
 
         $this->call([
             EstadoSeeder::class,
             TagsSeeder::class,
+            DatosPaisSeeder::class,
+            EstadoSeeder::class,
+            PartidoSeeder::class,
+            PeriodoSeeder::class,
+            TipoFamiliaSeeder::class,
         ]);
     }
 }
