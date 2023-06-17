@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -32,7 +31,7 @@ class DatabaseSeeder extends Seeder
             EstadoSeeder::class,
             TagsSeeder::class,
             DatosPaisSeeder::class,
-            EstadoSeeder::class,
+            EstadoCivilSeeder::class,
             PartidoSeeder::class,
             PeriodoSeeder::class,
             TipoFamiliaSeeder::class,

@@ -17,7 +17,7 @@
     </div>
     <div class="col-md-3 col-sm-6 mb-4">
         <label for="">Ciudad - <button type="button" data-toggle="modal" data-target="#ciudadmodal" style="border-radius: 15px">Crear</button></label>
-        <select wire:model="ciudad_id" name="ciudad_id" class="form-control " onchange="actualizar_ciudad()">
+        <select wire:model="ciudad_id" name="ciudad_id" class="form-control ">
             @foreach ($ciudad as $item)
                 <option value="{{$item->id}}">{{$item->descripcion}}</option>
             @endforeach

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignId('barrio_id')->constrained();
             $table->foreignId('estado_civil_id')->constrained();
             $table->foreignId('partido_id')->constrained()->default(1);
+            $table->string('documento', 20);
             $table->string('nombre', 100);
             $table->string('apellido', 100);
             $table->integer('sexo');

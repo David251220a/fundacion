@@ -15,4 +15,9 @@ class Instructor extends Model
     {
         return $this->belongsTo(Persona::class, 'persona_id');
     }
+
+    public function estado()
+    {
+        return $this->belongsTo(Estado::class, 'estado_id');
+    }
 }

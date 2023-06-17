@@ -45,11 +45,11 @@
                                     {{date('d/m/Y', strtotime($item->persona->fecha_nacimiento))}}
                                 </td>
                                 <td>
-                                    {{$item->estado_id}}
+                                    {{$item->estado->descripcion}}
                                 </td>
                                 <td>
                                     {{-- @can('instructor.show') --}}
-                                        <a href="{{route('instructor.show', $item->slug)}}" class="ml-2"><i class="fas fa-eye"></i></a>
+                                        <a href="{{route('instructor.show', $item)}}" class="ml-2"><i class="fas fa-eye"></i></a>
                                     {{-- @endcan --}}
                                     {{-- @can('instructor.edit') --}}
                                         <a href="{{route('instructor.edit', $item)}}" class="ml-2"><i class="fas fa-pencil"></i></a>
