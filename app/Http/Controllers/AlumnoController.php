@@ -2,22 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alumno;
 use App\Models\EstadoCivil;
-use App\Models\Instructor;
 use App\Models\Partido;
 use App\Models\Persona;
 use App\Models\PersonaFamilia;
 use App\Models\TipoFamilia;
 use Illuminate\Http\Request;
 
-class InstructorController extends Controller
+class AlumnoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = Instructor::take(500)
-        ->get();
-
-        return view('instructor.index', compact('data'));
+        $search = str_replace('.', '', $request->search);
+        if($request->search)
+        {
+            $data = Alumno::join('personas AS a', 'alumnos.persona_id', '=', 'a.id')
+            ->select('alumnos.*')
+            ->where('a.documento', $search)
+            ->orderBy('a.documento')
+            ->paginate(50);
+        }else{
+            $data = Alumno::join('personas AS a', 'alumnos.persona_id', '=', 'a.id')
+            ->select('alumnos.*')
+            ->orderBy('a.documento')
+            ->paginate(50);
+        }
+        return view('alumno.index', compact('data', 'search'));
     }
 
     public function create()
@@ -25,7 +36,7 @@ class InstructorController extends Controller
         $tipo_familia = TipoFamilia::all();
         $partido = Partido::all();
         $estado_civil = EstadoCivil::all();
-        return view('instructor.create', compact('tipo_familia', 'partido', 'estado_civil'));
+        return view('alumno.create', compact('tipo_familia', 'partido', 'estado_civil'));
     }
 
     public function store(Request $request)
@@ -76,34 +87,28 @@ class InstructorController extends Controller
             }
         }
 
-        Instructor::create([
+        Alumno::create([
             'persona_id' => $persona->id,
-            'firma' => '',
             'estado_id' => $request->estado_id,
             'user_id' => auth()->user()->id,
             'modif_user_id' => auth()->user()->id,
         ]);
 
-        return redirect()->route('instructor.index')->with('message', 'Se ha creado con exito el instrucor.');
+        return redirect()->route('alumno.index')->with('message', 'Se ha creado con exito el alumno.');
     }
 
-    public function show(Instructor $instructor)
+    public function edit(Alumno $alumno)
     {
-
-    }
-
-    public function edit(Instructor $instructor)
-    {
-        $data = $instructor->persona;
+        $data = $alumno->persona;
         $tipo_familia = TipoFamilia::all();
         $partido = Partido::all();
         $estado_civil = EstadoCivil::all();
-        return view('instructor.edit', compact('data', 'tipo_familia', 'partido', 'estado_civil', 'instructor'));
+        return view('alumno.edit', compact('data', 'tipo_familia', 'partido', 'estado_civil', 'alumno'));
     }
 
-    public function update(Instructor $instructor, Request $request)
+    public function update(Alumno $alumno, Request $request)
     {
-        $persona = $instructor->persona;
+        $persona = $alumno->persona;
 
         $request->validate([
             'nombre' => 'required',
@@ -130,7 +135,7 @@ class InstructorController extends Controller
             'modif_user_id' => auth()->user()->id,
         ]);
 
-        $instructor->update([
+        $alumno->update([
             'modif_user_id' => auth()->user()->id,
         ]);
 
@@ -172,12 +177,12 @@ class InstructorController extends Controller
             }
         }
 
-        return redirect()->route('instructor.edit', $instructor)->with('message', 'Instructor Actualizado.');
+        return redirect()->route('alumno.edit', $alumno)->with('message', 'Alumno Actualizado.');
     }
 
     public function validar()
     {
-        return view('instructor.validar');
+        return view('alumno.validar');
     }
 
     public function validar_post(Request $request)
@@ -185,21 +190,24 @@ class InstructorController extends Controller
         $documento = str_replace('.', '', $request->documento);
         $persona = Persona::where('documento', $documento)
         ->first();
-        if(empty($persona->instructor))
+
+        if(empty($persona->alumno))
         {
-            $instructor = null;
+            $alumno = null;
         }else{
-            $instructor = $persona->alumno;
+            $alumno = $persona->alumno;
         }
 
-        if($instructor){
-            return redirect()->route('instructor.edit', $instructor);
+
+        if($alumno != null){
+            return redirect()->route('alumno.edit', $alumno);
         }else{
             if($persona === null){
-                return redirect()->route('instructor.create');
+                return redirect()->route('alumno.create');
             }else{
-                return redirect()->route('instructor.add_nuevo', $persona);
+                return redirect()->route('alumno.add_nuevo', $persona);
             }
+
         }
     }
 
@@ -209,7 +217,7 @@ class InstructorController extends Controller
         $tipo_familia = TipoFamilia::all();
         $partido = Partido::all();
         $estado_civil = EstadoCivil::all();
-        return view('instructor.add', compact('data', 'tipo_familia', 'partido', 'estado_civil'));
+        return view('alumno.add', compact('data', 'tipo_familia', 'partido', 'estado_civil'));
     }
 
     public function add_nuevo_post(Persona $persona, Request $request)
@@ -240,9 +248,8 @@ class InstructorController extends Controller
         ]);
 
 
-        $instructor = Instructor::create([
+        Alumno::create([
             'persona_id' => $persona->id,
-            'firma' => '',
             'estado_id' => $request->estado_id,
             'user_id' => auth()->user()->id,
             'modif_user_id' => auth()->user()->id,
@@ -286,6 +293,6 @@ class InstructorController extends Controller
             }
         }
 
-        return redirect()->route('instructor.index')->with('message', 'Instructor creado con exito.');
+        return redirect()->route('alumno.index')->with('message', 'Alumno creado con exito.');
     }
 }

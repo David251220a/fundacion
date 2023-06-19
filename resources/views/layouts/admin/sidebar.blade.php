@@ -22,10 +22,20 @@
         </li>
 
         <li class="menu">
-            <a href="{{ route('habilitado.index') }}" {{(substr(Route::currentRouteName() , 0 , strpos(Route::currentRouteName(), '.')) == 'habilitado' ? 'data-active=true' : '')}}
+            <a href="{{ route('alumno.index') }}" {{(substr(Route::currentRouteName() , 0 , strpos(Route::currentRouteName(), '.')) == 'alumno' ? 'data-active=true' : '')}}
                 aria-expanded="false" class="dropdown-toggle">
                 <div class="">
                     <i class="fas fa-user-graduate mr-3"></i>
+                    <span>Alumnos</span>
+                </div>
+            </a>
+        </li>
+
+        <li class="menu">
+            <a href="{{ route('habilitado.index') }}" {{(substr(Route::currentRouteName() , 0 , strpos(Route::currentRouteName(), '.')) == 'habilitado' ? 'data-active=true' : '')}}
+                aria-expanded="false" class="dropdown-toggle">
+                <div class="">
+                    <i class="fas fa-book-reader mr-2"></i>
                     <span>Cursos Habilitados</span>
                 </div>
             </a>

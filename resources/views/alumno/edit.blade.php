@@ -13,9 +13,9 @@
         <div class="col-lg-12 layout-spacing">
             <div class="widget-content widget-content-area">
                 <div class="row" style="margin-left: 3px">
-                    <h3 class="mb-4">Editar Instructor: {{$data->nombre}} {{$data->apellido}}</h3>
+                    <h3 class="mb-4">Editar Alumno: {{$data->nombre}} {{$data->apellido}}</h3>
                 </div>
-                <form class="needs-validation" action="{{route('instructor.update', $instructor)}}" method="POST" >
+                <form class="needs-validation" action="{{route('alumno.update', $alumno)}}" method="POST" >
                     @method('PUT')
                     @csrf
 

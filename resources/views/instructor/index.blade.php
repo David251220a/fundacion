@@ -14,7 +14,7 @@
             </div>
             {{-- @can('instructor.create') --}}
                 <div class="col-lg-2 col-md-10 d-flex align-items-center">
-                    <a href="{{route('instructor.create')}}" class="btn btn-info">Agregar</a>
+                    <a href="{{route('instructor.validar')}}" class="btn btn-info">Agregar</a>
                 </div>
             {{-- @endcan --}}
 
@@ -25,6 +25,7 @@
                 <table id="zero-config" class="table dt-table-hover" style="width:100%">
                     <thead>
                         <tr>
+                            <th>Documento</th>
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Celular</th>
@@ -37,6 +38,7 @@
                     <tbody>
                         @foreach ($data as $item)
                             <tr style="font-weight: bold">
+                                <td style="text-align: right">{{number_format($item->persona->documento, 0, ".", ".")}}</td>
                                 <td>{{$item->persona->nombre}}</td>
                                 <td>{{$item->persona->apellido}}</td>
                                 <td>{{$item->persona->celular}}</td>

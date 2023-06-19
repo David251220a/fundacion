@@ -13,13 +13,12 @@
         <div class="col-lg-12 layout-spacing">
             <div class="widget-content widget-content-area">
                 <div class="row" style="margin-left: 3px">
-                    <h3 class="mb-4">Editar Instructor: {{$data->nombre}} {{$data->apellido}}</h3>
+                    <h3 class="mb-4">Agregar Alumno</h3>
                 </div>
-                <form class="needs-validation" action="{{route('instructor.update', $instructor)}}" method="POST" >
-                    @method('PUT')
+                <form class="needs-validation" action="{{route('alumno.store')}}" method="POST" >
                     @csrf
 
-                    @include('ui.persona.edit')
+                    @include('ui.persona.add')
 
                     <button class="btn btn-primary mt-3" type="submit">Grabar</button>
                 </form>

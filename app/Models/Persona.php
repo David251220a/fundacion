@@ -13,12 +13,17 @@ class Persona extends Model
 
     public function familiares()
     {
-        return $this->hasMany(PersonaFamilia::class, 'persona_id')->where('estado_id', 2);
+        return $this->hasMany(PersonaFamilia::class, 'persona_id')->where('estado_id', 1);
     }
 
     public function instructor()
     {
         return $this->hasOne(Instructor::class, 'persona_id');
+    }
+
+    public function alumno()
+    {
+        return $this->hasOne(Alumno::class, 'persona_id');
     }
 
 }
