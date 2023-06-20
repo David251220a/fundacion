@@ -130,6 +130,11 @@ class HabilitarCursoController extends Controller
         return view('habilitar.edit', compact('periodo', 'cursoHabilitado'));
     }
 
+    public function show(CursoHabilitado $cursoHabilitado)
+    {
+        return view('habilitar.show', compact('cursoHabilitado'));
+    }
+
     public function update(CursoHabilitado $cursoHabilitado, Request $request)
     {
         $request->validate([

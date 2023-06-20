@@ -25,4 +25,10 @@ class CursoHabilitado extends Model
     {
         return $this->belongsTo(Estado::class, 'estado_id');
     }
+
+    public function alumno()
+    {
+        return $this->belongsTo(Alumno::class, 'alumno_id');
+    }
+
 }
