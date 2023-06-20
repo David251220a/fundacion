@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alumno;
+use App\Models\CursoAlumno;
 use App\Models\CursoHabilitado;
 use App\Models\EstadoCivil;
+use App\Models\FormaPago;
+use App\Models\IngresoMatricula;
 use App\Models\Partido;
 use App\Models\Persona;
 use App\Models\TipoFamilia;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CursoAlumnoController extends Controller
@@ -40,7 +44,7 @@ class CursoAlumnoController extends Controller
         }
 
         $alumno = $persona->alumno;
-        return redirect()->route('cursoAlumno.agregar_alumno', [$cursoHabilitado, $alumno])->with('message', 'Alumno inscrito con exito.');
+        return redirect()->route('cursoAlumno.agregar_alumno', [$cursoHabilitado, $alumno]);
 
     }
 
@@ -108,5 +112,72 @@ class CursoAlumnoController extends Controller
         ]);
 
         return redirect()->route('cursoAlumno.agregar_alumno', [$cursoHabilitado, $alumno])->with('message', 'Alumno inscrito con exito.');
+    }
+
+    public function agregar_alumno(CursoHabilitado $cursoHabilitado, Alumno $alumno)
+    {
+        $forma_pago = FormaPago::all();
+
+        return view('cursoAlumno.inscribir', compact('cursoHabilitado', 'alumno', 'forma_pago'));
+    }
+
+    public function agregar_alumno_post(CursoHabilitado $cursoHabilitado, Alumno $alumno, Request $request)
+    {
+        $monto_abonado = ( empty($request->total_pagar) ? 0 : str_replace('.', '', $request->total_pagar));
+
+        $cursoAlumno = CursoAlumno::create([
+            'curso_habilitado_id' => $cursoHabilitado->id,
+            'curso_a_estado_id' => 1,
+            'alumno_id' => $alumno->id,
+            'total_pagar' => $cursoHabilitado->precio,
+            'monto_abonado' => $monto_abonado,
+            'saldo' => ($cursoHabilitado->precio - $monto_abonado),
+            'aprobado' => 0,
+            'certificado' => '',
+            'estado_id' => 1,
+            'user_id' => auth()->user()->id,
+            'modif_user_id' => auth()->user()->id,
+        ]);
+
+        $fecha_actual = Carbon::now();
+        $mes = intval(date('m', strtotime($fecha_actual)));
+        $anio = intval(date('Y', strtotime($fecha_actual)));
+        $numero_recibo = IngresoMatricula::where('mes', $mes)
+        ->where('año', $anio)
+        ->max('numero_recibo');
+
+        $numero_recibo += 1;
+
+        dd($mes, $anio, $numero_recibo, $monto_abonado);
+
+        if($monto_abonado > 0){
+            $ingreso = IngresoMatricula::create([
+                'alumno_id' => $alumno->id,
+                'fecha_ingreso' => $fecha_actual,
+                'año' => $anio,
+                'mes' => $mes,
+                'numero_recibo' => $numero_recibo,
+                'sucursal' => '000',
+                'general' => '000',
+                'factura_numero' => 0,
+                'total_pagado' => $monto_abonado,
+                'estado_id' => 1,
+                'user_id' => auth()->user()->id,
+                'modif_user_id' => auth()->user()->id,
+            ]);
+
+            $ingreso->detalle()->create([
+                'curso_habilitado_id' => $cursoHabilitado->id,
+                'alumno_id' => $alumno->id,
+                'monto_total' => $cursoHabilitado->precio,
+                'monto_pagado' => $monto_abonado,
+                'saldo' => ($cursoHabilitado->precio - $monto_abonado),
+                'estado_id' => 1,
+                'user_id' => auth()->user()->id,
+                'modif_user_id' => auth()->user()->id,
+            ]);
+        }
+
+        return redirect()->route('habilitado.show', $cursoHabilitado)->with('message', 'Alumno inscrito con exito.');
     }
 }

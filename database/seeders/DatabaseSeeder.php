@@ -32,9 +32,11 @@ class DatabaseSeeder extends Seeder
             TagsSeeder::class,
             DatosPaisSeeder::class,
             EstadoCivilSeeder::class,
+            CursoAlumnoEstadoSeeder::class,
             PartidoSeeder::class,
             PeriodoSeeder::class,
             TipoFamiliaSeeder::class,
+            FormaPagoSeeder::class,
         ]);
     }
 }

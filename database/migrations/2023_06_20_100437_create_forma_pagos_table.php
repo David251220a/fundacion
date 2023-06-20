@@ -13,16 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('curso_alumnos', function (Blueprint $table) {
+        Schema::create('forma_pagos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('curso_habilitado_id')->constrained();
-            $table->foreignId('curso_a_estado_id')->constrained();
-            $table->foreignId('alumno_id')->constrained();
-            $table->decimal('total_pagar')->default(0);
-            $table->decimal('monto_abonado')->default(0);
-            $table->decimal('saldo')->default(0);
-            $table->tinyInteger('aprobado')->default(0);
-            $table->string('certificado', 250)->nullable();
+            $table->string('descripcion', 80);
             $table->foreignId('estado_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->unsignedBigInteger('modif_user_id');
@@ -38,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('curso_alumnos');
+        Schema::dropIfExists('forma_pagos');
     }
 };

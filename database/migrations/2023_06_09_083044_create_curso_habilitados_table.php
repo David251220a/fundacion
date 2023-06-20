@@ -35,6 +35,7 @@ return new class extends Migration
             $table->tinyInteger('viernes');
             $table->tinyInteger('sabado');
             $table->tinyInteger('domingo');
+            $table->tinyInteger('concluido')->default(0);
             $table->foreignId('estado_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->unsignedBigInteger('modif_user_id');
