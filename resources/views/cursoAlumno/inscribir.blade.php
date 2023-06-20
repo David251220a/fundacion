@@ -39,11 +39,11 @@
                 <div class="form-row">
                     <div class="form-group col-md-2">
                         <label for="">Curso Precio</label>
-                        <input type="text" class="form-control w-full text-right" value="{{number_format($cursoHabilitado->precio, 0, ".", ".")}}" readonly>
+                        <input type="text" class="form-control w-full text-right" value="{{number_format($cursoHabilitado->precio, 0, ".", ".")}}" id="curso_precio" readonly>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="">Total a pagar</label>
-                        <input type="text" class="form-control w-full text-right" name="total_pagar" id="total_pagar" value="0" onkeyup="punto_decimal_limite(this)">
+                        <input type="text" class="form-control w-full text-right" name="total_pagar" id="total_pagar" value="0" onkeyup="punto_decimal_limite_precio(this)">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="">Forma de Pago</label>
