@@ -34,21 +34,28 @@
                     <tbody>
                         @foreach ($data as $item)
                             <tr style="font-weight: bold">
-                                <td>{{$item->tipo_curso_id}}</td>
-                                <td>{{$item->curso_id }}</td>
+                                <td>{{$item->tipo_curso->descripcion}}</td>
+                                <td>{{$item->curso->descripcion }}</td>
                                 <td>
                                     {{date('d/m/Y', strtotime($item->periodo_desde))}}
                                 </td>
                                 <td>
-                                    LUNES
+                                    {{ ($item->lunes == 1 ? 'LUNES' : '') }}
+                                    {{ ($item->martes == 1 ? 'MARTES' : '')}}
+                                    {{ ($item->miercoles == 1 ? 'MIERCOLES' : '')}}
+                                    {{ ($item->jueves == 1 ? 'JUEVES' : '')}}
+                                    {{ ($item->viernes == 1 ? 'VIERNES' : '')}}
+                                    {{ ($item->sabado == 1 ? 'SABADO' : '')}}
+                                    {{ ($item->domingo == 1 ? 'DOMINGO' : '')}}
                                 </td>
                                 <td>
-                                    {{$item->precio}}
+                                    {{number_format($item->precio, 0, ".", ".")}}
                                 </td>
                                 <td>
-                                    {{$item->estado_id}}
+                                    {{$item->estado->descripcion}}
                                 </td>
                                 <td>
+                                    <a href="{{route('cursoAlumno.buscar', $item)}}" class="ml-2"><i class="fas fa-user-plus"></i></a>
                                     <a href="{{route('habilitado.show', $item)}}" class="ml-2"><i class="fas fa-eye"></i></a>
                                     <a href="{{route('habilitado.edit', $item)}}" class="ml-2"><i class="fas fa-pencil"></i></a>
                                 </td>

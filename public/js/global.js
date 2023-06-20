@@ -27,6 +27,50 @@ function punto_decimal(input){
     }
 }
 
+function punto_decimal_limite(input){
+    var num = input.value.replace(/\./g,'');
+    if(!isNaN(num)){
+        if(num == ''){
+
+        }else{
+            if (num > 9999999) {
+                aux_num = num.toString().length;
+                cantidad = ((parseInt(aux_num) - 7) * -1);
+                num = num.slice(0, cantidad);
+            }
+            num = parseInt(num);
+            num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
+            num = num.split('').reverse().join('').replace(/^[\.]/,'');
+            input.value = num;
+        }
+
+    }
+    else{
+        input.value = input.value.replace(/[^\d\.]*/g,'');
+    }
+}
+
+function punto_decimal_n(input){
+    var num = input.value.replace(/\./g,'');
+    if(!isNaN(num)){
+        if(num == ''){
+
+        }else{
+            if (num > 99) {
+                num = num.slice(0, -1);
+            }
+            num = parseInt(num);
+            num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
+            num = num.split('').reverse().join('').replace(/^[\.]/,'');
+            input.value = num;
+        }
+
+    }
+    else{
+        input.value = input.value.replace(/[^\d\.]*/g,'');
+    }
+}
+
 function abrir_modal(agenda_id)
 {
     let modal = document.getElementById('edit_estado').innerHTML;
@@ -72,4 +116,9 @@ function abrir_modal(agenda_id)
 
     })
 
+}
+
+
+function disableButton() {
+    document.getElementById('submitBtn').disabled = true;
 }

@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('tipo_curso_id')->constrained();
             $table->foreignId('curso_id')->constrained();
-            $table->foreignId('periodo')->constrained();
+            $table->foreignId('periodo_id')->constrained();
             $table->foreignId('instructor_id')->constrained();
-            $table->string('descripcion', 250);
+            $table->string('descripcion', 250)->nullable();
             $table->text('observacion')->nullable();
             $table->date('periodo_desde');
             $table->date('periodo_hasta')->nullable();

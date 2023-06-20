@@ -3,6 +3,7 @@
 use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\CursoAlumnoController;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\HabilitarCursoController;
 use App\Http\Controllers\Limpiar;
@@ -51,10 +52,18 @@ Route::group([
     Route::resource('/admin/cursos', CursoController::class)->names('curso');
     Route::resource('/users', UsuarioController::class)->names('user');
     Route::resource('/roles', GrupoUsuarioController::class)->names('role');
-    Route::resource('/curso/habilitado/', HabilitarCursoController::class, ['parameters' => [
-        'cursoHabilitado' => 'cursoHabilitado',
+    Route::resource('/habilitacion', HabilitarCursoController::class, ['parameters' => [
+        'habilitacion' => 'cursoHabilitado',
     ],
     ])->names('habilitado');
+
+    Route::get('/curso/alumno/{cursoHabilitado}', [CursoAlumnoController::class, 'buscar'])->name('cursoAlumno.buscar');
+    Route::post('/curso/alumno/{cursoHabilitado}', [CursoAlumnoController::class, 'buscar_post'])->name('cursoAlumno.buscar_post');
+    Route::get('/curso/alumno/{cursoHabilitado}/agregar/{alumno}', [CursoAlumnoController::class, 'agregar_alumno'])->name('cursoAlumno.agregar_alumno');
+    Route::post('/curso/alumno/{cursoHabilitado}/agregar/{alumno}', [CursoAlumnoController::class, 'agregar_alumno_post'])->name('cursoAlumno.agregar_alumno_post');
+    Route::get('/curso/alumno/{cursoHabilitado}/crear', [CursoAlumnoController::class, 'crear_alumno'])->name('cursoAlumno.crear_alumno');
+    Route::post('/curso/alumno/{cursoHabilitado}/crear', [CursoAlumnoController::class, 'crear_alumno_post'])->name('cursoAlumno.crear_alumno_post');
+
     Route::resource('/instructor' ,InstructorController::class)->names('instructor');
     Route::get('/instructor/add/nuevo/{persona}' , [InstructorController::class, 'add_nuevo'])->name('instructor.add_nuevo');
     Route::post('/instructor/add/nuevo/{persona}' , [InstructorController::class, 'add_nuevo_post'])->name('instructor.add_nuevo_post');
