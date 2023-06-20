@@ -18,9 +18,9 @@ return new class extends Migration
             $table->foreignId('curso_habilitado_id')->constrained();
             $table->foreignId('alumno_id')->constrained();
             $table->foreignId('ingreso_matricula_id')->constrained();
-            $table->decimal('monto_total')->default(0);
-            $table->decimal('monto_pagado')->default(0);
-            $table->decimal('saldo')->default(0);
+            $table->decimal('monto_total', 12, 0)->default(0);
+            $table->decimal('monto_pagado', 12, 0)->default(0);
+            $table->decimal('saldo', 12, 0)->default(0);
             $table->foreignId('estado_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->unsignedBigInteger('modif_user_id');

@@ -148,12 +148,11 @@ class CursoAlumnoController extends Controller
 
         $numero_recibo += 1;
 
-        dd($mes, $anio, $numero_recibo, $monto_abonado);
-
         if($monto_abonado > 0){
             $ingreso = IngresoMatricula::create([
                 'alumno_id' => $alumno->id,
                 'fecha_ingreso' => $fecha_actual,
+                'forma_pago_id' => $request->forma_pago_id,
                 'año' => $anio,
                 'mes' => $mes,
                 'numero_recibo' => $numero_recibo,

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Curso;
+use App\Models\CursoAEstado;
 use App\Models\CursoHabilitado;
 use App\Models\Noticia;
 use App\Models\NoticiaFile;
@@ -132,7 +133,8 @@ class HabilitarCursoController extends Controller
 
     public function show(CursoHabilitado $cursoHabilitado)
     {
-        return view('habilitar.show', compact('cursoHabilitado'));
+        $estados_alumno = CursoAEstado::all();
+        return view('habilitar.show', compact('cursoHabilitado', 'estados_alumno'));
     }
 
     public function update(CursoHabilitado $cursoHabilitado, Request $request)

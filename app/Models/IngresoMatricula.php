@@ -13,6 +13,6 @@ class IngresoMatricula extends Model
 
     public function detalle()
     {
-        return $this->belongsTo(IngresoMatriculaDetalle::class, 'ingreso_matricula_id');
+        return $this->hasMany(IngresoMatriculaDetalle::class, 'ingreso_matricula_id');
     }
 }
