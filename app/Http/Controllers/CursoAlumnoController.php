@@ -44,6 +44,15 @@ class CursoAlumnoController extends Controller
         }
 
         $alumno = $persona->alumno;
+
+        $curso_alumno = CursoAlumno::where('alumno_id', $alumno->id)
+        ->where('curso_habilitado_id', $cursoHabilitado->id)
+        ->first();
+
+        if(!(empty($curso_alumno))){
+            return redirect()->route('cursoAlumno.buscar', $cursoHabilitado)->with('message', 'El alumno con este numero de cedula ya esta inscrito en este curso.');
+        }
+
         return redirect()->route('cursoAlumno.agregar_alumno', [$cursoHabilitado, $alumno]);
 
     }
@@ -178,5 +187,18 @@ class CursoAlumnoController extends Controller
         }
 
         return redirect()->route('habilitado.show', $cursoHabilitado)->with('message', 'Alumno inscrito con exito.');
+    }
+
+    public function asistencia(CursoHabilitado $cursoHabilitado)
+    {
+        // $cursoAlumno = CursoAlumno::where('curso_habilitado_id', $cursoHabilitado->id)
+        // ->where('e')
+
+        return view('cursoAlumno.asistencia', compact('cursoHabilitado'));
+    }
+
+    public function asistencia_post(CursoHabilitado $cursoHabilitado, Request $request)
+    {
+
     }
 }

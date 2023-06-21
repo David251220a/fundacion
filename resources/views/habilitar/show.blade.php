@@ -46,7 +46,7 @@
 
                 <div class="tab-pane fade show " id="rounded-pills-icon-profile" role="tabpanel" aria-labelledby="rounded-pills-icon-profile-tab">
                     <div class="col-xl-12 col-lg-12 col-sm-12">
-                        <a href="#" class="btn btn-info">Llamar Lista</a>
+                        <a href="{{route('cursoAlumno.asistencia', $cursoHabilitado)}}" class="btn btn-info">Llamar Lista</a>
                     </div>
                     <div class="col-xl-12 col-lg-12 col-sm-12">
                         <div class="table-responsive widget-content widget-content-area br-6">
@@ -102,8 +102,13 @@
 
             window.livewire.on('reloadClassCSs', msj => {
                 let mensaje = document.getElementById("mensaje");
+                let mensaje_2 = document.getElementById("mensaje_2");
                 if(mensaje != null){
                     document.getElementById("mensaje").style.display = "none";
+                }
+
+                if(mensaje_2 != null){
+                    document.getElementById("mensaje_2").style.display = "none";
                 }
 
             });

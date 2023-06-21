@@ -10,18 +10,22 @@ use App\Models\IngresoMatricula;
 use App\Models\Persona;
 use Carbon\Carbon;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class ListadoCurso extends Component
 {
 
-    public $curso_id, $documento, $curso_precio, $observacion_modal, $estado_a_id, $estado_curso = 99;
+    public $curso_id, $documento, $curso_precio, $comprobante, $observacion_modal, $estado_a_id, $estado_curso = 99;
     public $documento_modal, $forma_pago_id = 1, $nombre_modal, $total_pagar_modal = 0;
     public $cursoAlumno;
+
+    use WithFileUploads;
 
     protected $listeners = ['render', 'datos'];
 
     protected $rules = [
         'total_pagar_modal' => 'required',
+        'comprobante' => 'image|mimes:jpeg,png,jpg,gif'
     ];
 
     public function mount(CursoHabilitado $cursoHabilitado)
@@ -109,6 +113,12 @@ class ListadoCurso extends Component
         ->max('numero_recibo');
         $numero_recibo += 1;
 
+        if($this->comprobante){
+            $filePath = $this->comprobante->store('public/comprobante');
+        }else{
+            $filePath = '';
+        }
+
         $ingreso = IngresoMatricula::create([
             'alumno_id' => $cursoAlumno->alumno_id,
             'fecha_ingreso' => $fecha_actual,
@@ -120,6 +130,7 @@ class ListadoCurso extends Component
             'general' => '000',
             'factura_numero' => 0,
             'total_pagado' => $total_pagar,
+            'comprobante' => $filePath,
             'estado_id' => 1,
             'user_id' => auth()->user()->id,
             'modif_user_id' => auth()->user()->id,

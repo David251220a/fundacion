@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('general', 3)->default('000');
             $table->integer('factura_numero')->default(0);
             $table->decimal('total_pagado', 12, 0)->default(0);
+            $table->text('comprobante')->nullable();
             $table->foreignId('estado_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->unsignedBigInteger('modif_user_id');

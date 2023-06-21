@@ -63,6 +63,8 @@ Route::group([
     Route::post('/curso/alumno/{cursoHabilitado}/agregar/{alumno}', [CursoAlumnoController::class, 'agregar_alumno_post'])->name('cursoAlumno.agregar_alumno_post');
     Route::get('/curso/alumno/{cursoHabilitado}/crear', [CursoAlumnoController::class, 'crear_alumno'])->name('cursoAlumno.crear_alumno');
     Route::post('/curso/alumno/{cursoHabilitado}/crear', [CursoAlumnoController::class, 'crear_alumno_post'])->name('cursoAlumno.crear_alumno_post');
+    Route::get('/curso/alumno/{cursoHabilitado}/asistencia', [CursoAlumnoController::class, 'asistencia'])->name('cursoAlumno.asistencia');
+    Route::post('/curso/alumno/{cursoHabilitado}/asistencia', [CursoAlumnoController::class, 'asistencia_post'])->name('cursoAlumno.asistencia_post');
 
     Route::resource('/instructor' ,InstructorController::class)->names('instructor');
     Route::get('/instructor/add/nuevo/{persona}' , [InstructorController::class, 'add_nuevo'])->name('instructor.add_nuevo');

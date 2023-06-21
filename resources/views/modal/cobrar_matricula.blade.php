@@ -43,7 +43,14 @@
                                     <option value="{{$item->id}}">{{$item->descripcion}}</option>
                                 @endforeach
                             </select>
+                        </div>
 
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">Comprobante</label>
+                            <input type="file" wire:model.defer="comprobante" class="form-control" accept="image/*">
+                            @error('comprobante')
+                                <span role="alert" id="mensaje_2" style="color: red; padding: 2px 2px">El comprobante deber ser una imagen o pdf..</span>
+                            @enderror
                         </div>
                     </div>
                 </div>
