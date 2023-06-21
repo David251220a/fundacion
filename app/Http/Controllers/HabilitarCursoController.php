@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Curso;
 use App\Models\CursoAEstado;
+use App\Models\CursoAlumno;
+use App\Models\CursoAlumnoAsistencia;
 use App\Models\CursoHabilitado;
 use App\Models\Noticia;
 use App\Models\NoticiaFile;
@@ -134,7 +136,19 @@ class HabilitarCursoController extends Controller
     public function show(CursoHabilitado $cursoHabilitado)
     {
         $estados_alumno = CursoAEstado::all();
-        return view('habilitar.show', compact('cursoHabilitado', 'estados_alumno'));
+        $alumnos_cursando = CursoAlumno::where('curso_habilitado_id', $cursoHabilitado->id)
+        ->whereIn('curso_a_estado_id', [1, 2])
+        ->get();
+
+        $asistencia_fecha = CursoAlumnoAsistencia::where('curso_habilitado_id', $cursoHabilitado->id)
+        ->select('fecha')
+        ->groupBy('fecha')
+        ->get();
+
+        $asistencia = CursoAlumnoAsistencia::where('curso_habilitado_id', $cursoHabilitado->id)
+        ->get();
+
+        return view('habilitar.show', compact('cursoHabilitado', 'estados_alumno', 'alumnos_cursando', 'asistencia_fecha', 'asistencia'));
     }
 
     public function update(CursoHabilitado $cursoHabilitado, Request $request)

@@ -45,7 +45,40 @@
                 </div>
 
                 <div class="tab-pane fade show " id="rounded-pills-icon-profile" role="tabpanel" aria-labelledby="rounded-pills-icon-profile-tab">
-                    tabla asistencia
+                    <div class="col-xl-12 col-lg-12 col-sm-12">
+                        <a href="#" class="btn btn-info">Llamar Lista</a>
+                    </div>
+                    <div class="col-xl-12 col-lg-12 col-sm-12">
+                        <div class="table-responsive widget-content widget-content-area br-6">
+                            <table id="zero-config" class="table dt-table-hover" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th width="5%">Documento</th>
+                                        <th width="10%">Nombre</th>
+                                        <th width="10%">Apellido</th>
+                                        @if (count($asistencia_fecha) > 0)
+                                            <th>Apellido</th>
+                                        @else
+                                            <th></th>
+                                        @endif
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($alumnos_cursando as $item)
+                                        <tr>
+                                            <td class="text-right">{{number_format($item->alumno->persona->documento, 0, ".", ".")}}</td>
+                                            <td class="">{{$item->alumno->persona->nombre}}</td>
+                                            <td class="">{{$item->alumno->persona->apellido}}</td>
+                                            <td></td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
