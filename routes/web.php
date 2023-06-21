@@ -11,6 +11,7 @@ use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\TipoCursoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\GrupoUsuarioController;
+use App\Http\Controllers\IngresoMatriculaController;
 use App\Http\Controllers\InstructorController;
 use Illuminate\Support\Facades\Route;
 
@@ -73,6 +74,8 @@ Route::group([
     Route::resource('/alumno' , AlumnoController::class)->names('alumno');
     Route::get('/alumno/add/nuevo/{persona}' , [AlumnoController::class, 'add_nuevo'])->name('alumno.add_nuevo');
     Route::post('/alumno/add/nuevo/{persona}' , [AlumnoController::class, 'add_nuevo_post'])->name('alumno.add_nuevo_post');
+
+    Route::get('/ingreso/matricula', [IngresoMatriculaController::class, 'index'])->name('ingreso_matricula.index');
 
     Route::get('/validar/alumno/',[AlumnoController::class, 'validar'])->name('alumno.validar');
     Route::post('/validar/alumno/',[AlumnoController::class, 'validar_post'])->name('alumno.validar_post');

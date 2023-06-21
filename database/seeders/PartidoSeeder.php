@@ -16,6 +16,15 @@ class PartidoSeeder extends Seeder
     public function run()
     {
         Partido::create([
+            'descripcion' => 'SIN ESPECIFICAR',
+            'alias' => 'SIN',
+            'estado_id' => 1,
+            'user_id' => 1,
+            'modif_user_id' => 1
+        ]);
+
+
+        Partido::create([
             'descripcion' => 'PARTIDO COLORADO',
             'alias' => 'ANR',
             'estado_id' => 1,

@@ -37,6 +37,7 @@ class DatabaseSeeder extends Seeder
             PeriodoSeeder::class,
             TipoFamiliaSeeder::class,
             FormaPagoSeeder::class,
+            PersonaSeeder::class,
         ]);
     }
 }

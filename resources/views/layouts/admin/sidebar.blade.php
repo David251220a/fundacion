@@ -35,8 +35,18 @@
             <a href="{{ route('habilitado.index') }}" {{(substr(Route::currentRouteName() , 0 , strpos(Route::currentRouteName(), '.')) == 'habilitado' ? 'data-active=true' : '')}}
                 aria-expanded="false" class="dropdown-toggle">
                 <div class="">
-                    <i class="fas fa-book-reader mr-2"></i>
+                    <i class="fas fa-book-reader mr-3"></i>
                     <span>Cursos Habilitados</span>
+                </div>
+            </a>
+        </li>
+
+        <li class="menu">
+            <a href="{{ route('ingreso_matricula.index') }}" {{(substr(Route::currentRouteName() , 0 , strpos(Route::currentRouteName(), '.')) == 'ingreso_matricula' ? 'data-active=true' : '')}}
+                aria-expanded="false" class="dropdown-toggle">
+                <div class="">
+                    <i class="fas fa-money-check-alt mr-3"></i>
+                    <span>Ingreso Matricula</span>
                 </div>
             </a>
         </li>

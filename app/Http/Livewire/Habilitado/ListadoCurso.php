@@ -93,7 +93,16 @@ class ListadoCurso extends Component
 
     public function save()
     {
-        $this->validate();
+        if($this->comprobante){
+            $filePath = $this->comprobante->store('public/comprobante');
+            $this->validate();
+        }else{
+            $filePath = '';
+            $this->validate([
+                'total_pagar_modal' => 'required',
+            ]);
+        }
+
 
         $total_pagar = str_replace('.', '', $this->total_pagar_modal);
 

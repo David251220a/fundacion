@@ -15,4 +15,19 @@ class IngresoMatricula extends Model
     {
         return $this->hasMany(IngresoMatriculaDetalle::class, 'ingreso_matricula_id');
     }
+
+    public function alumno()
+    {
+        return $this->belongsTo(Alumno::class, 'alumno_id');
+    }
+
+    public function forma_pago()
+    {
+        return $this->belongsTo(FormaPago::class, 'forma_pago_id');
+    }
+
+    public function estado()
+    {
+        return $this->belongsTo(Estado::class, 'estado_id');
+    }
 }
