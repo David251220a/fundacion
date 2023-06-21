@@ -105,5 +105,9 @@
             tags: true,
         });
 
+        function actualizar(){
+            Livewire.emit('render');
+        }
+
     </script>
 @endsection

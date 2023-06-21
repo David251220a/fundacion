@@ -18,10 +18,11 @@ return new class extends Migration
             $table->foreignId('curso_habilitado_id')->constrained();
             $table->foreignId('curso_a_estado_id')->constrained();
             $table->foreignId('alumno_id')->constrained();
-            $table->decimal('total_pagar')->default(0);
-            $table->decimal('monto_abonado')->default(0);
-            $table->decimal('saldo')->default(0);
+            $table->decimal('total_pagar', 12, 0)->default(0);
+            $table->decimal('monto_abonado', 12, 0)->default(0);
+            $table->decimal('saldo', 12, 0)->default(0);
             $table->tinyInteger('aprobado')->default(0);
+            $table->string('observacion', 200)->nullable();
             $table->string('certificado', 250)->nullable();
             $table->foreignId('estado_id')->constrained();
             $table->foreignId('user_id')->constrained();

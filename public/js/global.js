@@ -134,7 +134,6 @@ function punto_decimal_limite_precio(input){
                 }else{
                     cantidad = ((parseInt(aux_num) - parseInt(aux_precio)) * -1);
                 }
-                console.log(aux_precio, precio, cantidad);
                 num = num.slice(0, cantidad);
             }
             num = parseInt(num);

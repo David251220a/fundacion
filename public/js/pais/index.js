@@ -38,7 +38,7 @@ window.addEventListener('load', function() {
 
     window.livewire.on('departamento-error', msj => {
         // $(".mensaje_departamento").css("display", "block");
-        console.log(msj);
+        // console.log(msj);
         document.getElementById("mensaje_departamento").style.display = "block";
         document.getElementById("contenido_departamento").innerHTML = msj;
     });

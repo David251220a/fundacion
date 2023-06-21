@@ -2,6 +2,9 @@
 
 @section('styles')
     <link href="{{asset('assets/css/components/tabs-accordian/custom-tabs.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('plugins/sweetalerts/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('plugins/sweetalerts/sweetalert.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/css/components/custom-sweetalert.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -16,10 +19,9 @@
             </div>
         </div>
 
-        <hr class="bg-white" style="color: white; backgraund: white; font-size: 5px">
         <div class="widget-content widget-content-area rounded-pills-icon">
 
-            <ul class="nav nav-pills mb-4 mt-3  justify-content-center" id="rounded-pills-icon-tab" role="tablist">
+            <ul class="nav nav-pills justify-content-center" id="rounded-pills-icon-tab" role="tablist">
                 <li class="nav-item ml-2 mr-2">
                     <a class="nav-link mb-2 active text-center" id="rounded-pills-icon-home-tab" data-toggle="pill"
                     href="#rounded-pills-icon-home" role="tab" aria-controls="rounded-pills-icon-home" aria-selected="true">
@@ -54,6 +56,62 @@
 @endsection
 
 @section('js')
+    <script src="{{asset('plugins/sweetalerts/sweetalert2.min.js')}}"></script>
+    <script src="{{asset('plugins/sweetalerts/custom-sweetalert.js')}}"></script>
+    <script>
 
+        const swalWithBootstrapButtons = swal.mixin({
+            confirmButtonClass: 'btn btn-success btn-rounded',
+            cancelButtonClass: 'btn btn-danger btn-rounded mr-3',
+            buttonsStyling: false,
+        })
+        window.addEventListener('load', function() {
+
+            window.livewire.on('reloadClassCSs', msj => {
+                let mensaje = document.getElementById("mensaje");
+                if(mensaje != null){
+                    document.getElementById("mensaje").style.display = "none";
+                }
+
+            });
+
+            window.livewire.on('mensaje_error', msj => {
+                $('#modal_agregar').modal('hide');
+                swalWithBootstrapButtons(
+                    'Atención',
+                    msj,
+                    'error'
+                )
+            });
+
+            window.livewire.on('cobro_exito', msj => {
+                $('#modal_agregar').modal('hide');
+                swal({
+                    title: 'Buen Trabajo',
+                    text: msj,
+                    type: 'success',
+                    padding: '2em'
+                })
+            });
+
+            window.livewire.on('estado_exito', msj => {
+                $('#modal_estado').modal('hide');
+                swal({
+                    title: 'Buen Trabajo',
+                    text: msj,
+                    type: 'success',
+                    padding: '2em'
+                })
+            });
+        });
+
+        function actualizar(){
+            Livewire.emit('render');
+        }
+
+        function datos(cursoAlumno){
+            Livewire.emit('datos', cursoAlumno);
+        }
+    </script>
 @endsection
 

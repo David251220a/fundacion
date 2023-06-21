@@ -24,12 +24,21 @@ class HabilitadoEdit extends Component
     {
         $tipo_curso = TipoCurso::where('estado_id', 1)
         ->get();
+        $id = 0;
+        if(empty($this->tipo_curso_id)){
+            $id = $tipo_curso[0]->id;
+        }else{
+            $id = $this->tipo_curso_id;
+        }
 
-        $curso = Curso::where('tipo_curso_id', $tipo_curso[0]->id)
+        $curso = Curso::where('tipo_curso_id', $id)
         ->where('estado_id', 1)
         ->get();
+
+        $this->curso_id = $curso[0]->id;
 
         $instructor = Instructor::where('estado_id', 1)->get();
         return view('livewire.habilitado.habilitado-edit', compact('tipo_curso', 'curso', 'instructor'));
     }
+
 }

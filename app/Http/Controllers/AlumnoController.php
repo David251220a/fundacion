@@ -21,12 +21,12 @@ class AlumnoController extends Controller
             ->select('alumnos.*')
             ->where('a.documento', $search)
             ->orderBy('a.documento')
-            ->paginate(50);
+            ->get();
         }else{
             $data = Alumno::join('personas AS a', 'alumnos.persona_id', '=', 'a.id')
             ->select('alumnos.*')
             ->orderBy('a.documento')
-            ->paginate(50);
+            ->get();
         }
         return view('alumno.index', compact('data', 'search'));
     }

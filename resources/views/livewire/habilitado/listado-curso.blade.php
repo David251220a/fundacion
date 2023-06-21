@@ -1,35 +1,65 @@
-{{-- <div class="row">
+<div class="">
 
     <div class="form-row">
-        <div class="col-md-4 col-sm-6 mb-4">
+        <div class="col-md-3 col-sm-6 mb-4">
             <label for="">Documento</label>
-            <input type="text" class="form-control ">
+            <input wire:model.defer="documento"  type="text" class="form-control text-right" onkeyup="punto_decimal(this)">
         </div>
 
         <div class="col-md-4 col-sm-6 mb-4">
             <label for="">Estado Alumno</label>
-            <select class="form-control">
+            <select wire:model.defer="estado_curso" class="form-control">
+                <option value="99">--TODOS--</option>
                 @foreach ($estado as $item)
                     <option value="{{$item->id}}">{{$item->descripcion}}</option>
                 @endforeach
             </select>
         </div>
-    </div> --}}
+
+        <div class="col-md-2 col-sm-4 mb-4">
+            <label for="" class="w-full" style="width: 100%">Accion</label>
+            <button type="button" class="btn btn-info" onclick="actualizar()">Filtrar</button>
+        </div>
+    </div>
 
     <div class="col-xl-12 col-lg-12 col-sm-12">
         <div class="table-responsive widget-content widget-content-area br-6">
-            <table class="table dt-table-hover" style="width:100%">
+            <table id="zero-config" class="table dt-table-hover" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Tipo Curso</th>
-                        <th>Curso</th>
-                        <th>Fecha Inicio</th>
-                        <th>Dias</th>
-                        <th>Precio</th>
+                        <th>Documento</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
                         <th>Estado</th>
-                        <th class="no-content">Actions</th>
+                        <th>Saldo</th>
+                        <th class="text-center no-content">Actions</th>
                     </tr>
                 </thead>
+                <tbody>
+                    @foreach ($alumnos as $item)
+                        <tr>
+                            <td class="text-right">{{number_format($item->alumno->persona->documento, 0, ".", ".")}}</td>
+                            <td class="">{{$item->alumno->persona->nombre}}</td>
+                            <td class="">{{$item->alumno->persona->apellido}}</td>
+                            <td class="">
+                                <button type="button" data-toggle="modal" data-target="#modal_estado" onclick="datos({{$item->id}})" class="btn btn-info">
+                                    {{$item->estado_alumno->descripcion}}
+                                </button>
+                            </td>
+                            <td class="text-right">
+                                {{number_format($item->saldo, 0, ".", ".")}}
+                            </td>
+                            <td class="text-center">
+                                @if ($item->saldo > 0)
+                                    <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal_agregar" onclick="datos({{$item->id}})">Cobrar</button>
+                                @endif
+
+                                <a class="btn btn-success btn-sm">Ver Estado Cuenta</a>
+
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
                 <tbody>
 
                 </tbody>
@@ -37,5 +67,7 @@
         </div>
     </div>
 
+    @include('modal.cobrar_matricula')
+    @include('modal.cambio_estado')
 
-{{-- </div> --}}
+</div>

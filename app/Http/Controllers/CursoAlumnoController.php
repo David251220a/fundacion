@@ -34,7 +34,7 @@ class CursoAlumnoController extends Controller
             return redirect()->route('cursoAlumno.crear_alumno', $cursoHabilitado);
         }else{
             if(empty($persona->alumno)){
-                Alumno::create([
+                $alumno = Alumno::create([
                     'persona_id' => $persona->id,
                     'estado_id' => 1,
                     'user_id' => auth()->user()->id,
