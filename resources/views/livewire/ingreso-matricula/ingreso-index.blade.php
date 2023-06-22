@@ -1,81 +1,90 @@
-<div class="form-row">
+<div class="mx-4">
+    <div class="form-row">
+        <div class="col-xl-12 col-lg-12 col-sm-12">
+            <h4 class="mb-2">Filtros {{$recibo}}</h4>
+        </div>
+
+        <div class="col-md-2  mb-4">
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" checked onclick="filtro(1)">
+                <label class="custom-control-label" for="customRadioInline1">Por Fecha</label>
+            </div>
+        </div>
+
+        <div class="col-md-2 mb-4">
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" onclick="filtro(2)">
+                <label class="custom-control-label" for="customRadioInline2">Por numero de recibo</label>
+            </div>
+        </div>
+
+        <div class="col-md-2 mb-4">
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input" onclick="filtro(3)">
+                <label class="custom-control-label" for="customRadioInline3">Por Documento</label>
+            </div>
+        </div>
+
+        <div class="col-md-2 mb-4">
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInline4" name="customRadioInline1" class="custom-control-input">
+                <label class="custom-control-label" for="customRadioInline4">Por Tipo de Curso</label>
+            </div>
+        </div>
+
+        <div class="col-md-2 mb-4">
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInline5" name="customRadioInline1" class="custom-control-input">
+                <label class="custom-control-label" for="customRadioInline5">Por Curso</label>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-row">
+        <div class="col-md-3 mb-4" style="display:{{$ver_fecha}}">
+            <label for="">Fecha</label>
+            <input wire:model.defer="fecha_actual" type="date" class="form-control text-right">
+        </div>
+
+        <div class="col-md-3  mb-4" id="ver_recibo" style="display: {{$ver_recibo}}">
+            <label for="">Nº Recibo</label>
+            <input wire:model.defer="recibo" type="text" class="form-control text-right">
+        </div>
+
+        <div class="col-md-3  mb-4" id="ver_documento" style="display: {{$ver_documento}}">
+            <label for="">Documento</label>
+            <input wire:model.defer="documento" type="text" class="form-control text-right" placeholder="">
+        </div>
+
+        <div class="col-md-3  mb-4" id="ver_tipo_curso_id" style="display: none">
+            <label for="">Tipo de Curso</label>
+            <select wire:model.defer="tipo_curso_id" class="form-control">
+                @foreach ($tipo_curso as $item)
+                    <option value="{{$item->id}}">{{$item->descripcion}}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="col-md-3  mb-4" id="ver_curso" style="display: none">
+            <label for="">Curso</label>
+            <select wire:model.defer="curso_id" class="form-control">
+                @foreach ($curso as $item)
+                    <option value="{{$item->id}}">{{$item->descripcion}}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="col-md-3  mb-4">
+            <label for="" class="w-full">Accion</label>
+            <br>
+            <button wire:click="render" type="button" class="btn btn-info">Filtrar</button>
+        </div>
+    </div>
+
 
     <div class="col-xl-12 col-lg-12 col-sm-12">
-        <h4 class="mb-2">Filtros</h4>
-    </div>
-
-    <div class="col-md-2 col-sm-6 mb-4">
-        <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" checked>
-            <label class="custom-control-label" for="customRadioInline1">Por Fecha</label>
-        </div>
-    </div>
-
-    <div class="col-md-2 col-sm-6 mb-4">
-        <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
-            <label class="custom-control-label" for="customRadioInline2">Por numero de recibo</label>
-        </div>
-    </div>
-
-    <div class="col-md-2 col-sm-6 mb-4">
-        <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input">
-            <label class="custom-control-label" for="customRadioInline3">Por Documento</label>
-        </div>
-    </div>
-
-    <div class="col-md-2 col-sm-6 mb-4">
-        <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="customRadioInline4" name="customRadioInline1" class="custom-control-input">
-            <label class="custom-control-label" for="customRadioInline4">Por Tipo de Curso</label>
-        </div>
-    </div>
-
-    <div class="col-md-4 col-sm-6 mb-4">
-        <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="customRadioInline5" name="customRadioInline1" class="custom-control-input">
-            <label class="custom-control-label" for="customRadioInline5">Por Curso</label>
-        </div>
-    </div>
-
-    <div class="col-md-3 col-sm-6 mb-4">
-        <label for="">Fecha</label>
-        <input wire:model.defer="fecha_actual" type="date" class="form-control text-right">
-    </div>
-
-    <div class="col-md-3 col-sm-6 mb-4" id="ver_documento" style="display: none">
-        <label for="">Documento</label>
-        <input wire:model.defer="documento" type="text" class="form-control text-right" placeholder="">
-    </div>
-
-    <div class="col-md-3 col-sm-6 mb-4" id="ver_tipo_curso_id" style="display: none">
-        <label for="">Tipo de Curso</label>
-        <select wire:model.defer="tipo_curso_id" class="form-control">
-            @foreach ($tipo_curso as $item)
-                <option value="{{$item->id}}">{{$item->descripcion}}</option>
-            @endforeach
-        </select>
-    </div>
-
-    <div class="col-md-3 col-sm-6 mb-4" id="ver_curso" style="display: none">
-        <label for="">Curso</label>
-        <select wire:model.defer="curso_id" class="form-control">
-            @foreach ($curso as $item)
-                <option value="{{$item->id}}">{{$item->descripcion}}</option>
-            @endforeach
-        </select>
-    </div>
-
-    <div class="col-md-3 col-sm-6 mb-4">
-        <label for="" class="w-full">Accion</label>
-        <br>
-        <button type="button" class="btn btn-info">Filtrar</button>
-    </div>
-
-
-    <div class="col-xl-12 col-lg-12 col-sm-12">
-        <div class="widget-content widget-content-area br-6 table-responsive">
+        <div class="table-responsive widget-content widget-content-area br-6">
             <table id="zero-config" class="table dt-table-hover" style="width:100%">
                 <thead>
                     <tr>

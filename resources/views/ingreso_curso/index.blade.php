@@ -6,11 +6,11 @@
 
 @section('content')
 
-    <div class="layout-px-spacing mt-4">
+    <div class="col-lg-12 layout-spacing mt-4">
+        <div class="widget-content widget-content-area">
 
-        <div class="row layout-spacing">
             <div class="col-lg-10 col-md-10 col-sm-12">
-                <h2 class="w-25 p-3">Ingreso Curso</h2>
+                <h2 class="w-25">Ingreso Curso</h2>
             </div>
 
             @livewire('ingreso-matricula.ingreso-index')
@@ -22,5 +22,6 @@
 @endsection
 
 @section('js')
-
+    <script src="{{asset('plugins/table/datatable/datatables.js')}}"></script>
+    <script src="{{asset('js/ingreso/index.js')}}"></script>
 @endsection

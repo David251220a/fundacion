@@ -34,5 +34,22 @@ class RoleSeeder extends Seeder
         $permission = Permission::create(['name' => 'usuario.update', 'descripcion' => 'Usuario Actualizar'])->syncRoles($admin);
         $permission = Permission::create(['name' => 'usuario.store', 'descripcion' => 'Usuario Guardar'])->syncRoles($admin);
         $permission = Permission::create(['name' => 'usuario.delete', 'descripcion' => 'Usuario Elimnar'])->syncRoles($admin);
+
+
+        $permission = Permission::create(['name' => 'habilitado.index', 'descripcion' => 'Habilitacion de Curso: Ver Listado'])->syncRoles($admin);
+        $permission = Permission::create(['name' => 'habilitado.create', 'descripcion' => 'Habilitacion de Curso: Crear'])->syncRoles($admin);
+        $permission = Permission::create(['name' => 'habilitado.edit', 'descripcion' => 'Habilitacion de Curso: Editar'])->syncRoles($admin);
+        $permission = Permission::create(['name' => 'habilitado.show', 'descripcion' => 'Habilitacion de Curso: Ver'])->syncRoles($admin);
+        $permission = Permission::create(['name' => 'habilitado.update', 'descripcion' => 'Habilitacion de Curso: Actualizar'])->syncRoles($admin);
+        $permission = Permission::create(['name' => 'habilitado.store', 'descripcion' => 'Habilitacion de Curso: Guardar'])->syncRoles($admin);
+        $permission = Permission::create(['name' => 'habilitado.delete', 'descripcion' => 'Habilitacion de Curso: Elimnar'])->syncRoles($admin);
+
+        $permission = Permission::create(['name' => 'curso.index', 'descripcion' => 'Curso: Ver Listado'])->syncRoles($admin);
+        $permission = Permission::create(['name' => 'curso.create', 'descripcion' => 'Curso: Crear'])->syncRoles($admin);
+        $permission = Permission::create(['name' => 'curso.edit', 'descripcion' => 'Curso: Editar'])->syncRoles($admin);
+        $permission = Permission::create(['name' => 'curso.show', 'descripcion' => 'Curso: Ver'])->syncRoles($admin);
+        $permission = Permission::create(['name' => 'curso.update', 'descripcion' => 'Curso: Actualizar'])->syncRoles($admin);
+        $permission = Permission::create(['name' => 'curso.store', 'descripcion' => 'Curso: Guardar'])->syncRoles($admin);
+        $permission = Permission::create(['name' => 'curso.delete', 'descripcion' => 'Curso: Elimnar'])->syncRoles($admin);
     }
 }
