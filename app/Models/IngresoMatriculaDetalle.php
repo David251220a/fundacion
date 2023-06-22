@@ -15,4 +15,9 @@ class IngresoMatriculaDetalle extends Model
     {
         return $this->belongsTo(CursoHabilitado::class, 'curso_habilitado_id');
     }
+
+    public function ingreso_matricula()
+    {
+        return $this->belongsTo(IngresoMatricula::class, 'ingreso_matricula_id');
+    }
 }

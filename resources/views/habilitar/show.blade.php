@@ -37,6 +37,27 @@
                         Asistencia
                     </a>
                 </li>
+
+                <li class="nav-item ml-2 mr-2">
+                    <a class="nav-link mb-2 text-center" href="{{route('cursoAlumno.buscar', $cursoHabilitado)}}"
+                    role="tab" aria-controls="rounded-pills-icon-profile" aria-selected="false" style="background: rgb(78, 187, 87);
+                    color: white">
+                    <i class="fas fa-user-plus" style="font-size: 2.5rem"></i>
+                    <br>
+                        Inscribir
+                    </a>
+                </li>
+
+                <li class="nav-item ml-2 mr-2">
+                    <a class="nav-link mb-2 text-center" href="{{route('habilitado.index')}}"
+                    role="tab" aria-controls="rounded-pills-icon-profile" aria-selected="false" style="background: red;
+                    color: white">
+                    <i class="fas fa-undo" style="font-size: 2.5rem"></i>
+                    <br>
+                        Atras
+                    </a>
+                </li>
+
             </ul>
 
             <div class="tab-content" id="rounded-pills-icon-tabContent">
@@ -149,6 +170,10 @@
 
         function datos(cursoAlumno){
             Livewire.emit('datos', cursoAlumno);
+        }
+
+        function estado_cuenta(cursoAlumno, alumno){
+            Livewire.emit('estado_cuenta', cursoAlumno, alumno);
         }
     </script>
 @endsection

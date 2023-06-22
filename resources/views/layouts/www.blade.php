@@ -60,8 +60,9 @@
                 <a href="{{route('cursos')}}" class="nav-item nav-link">Cursos</a>
                 <a href="{{route('new')}}" class="nav-item nav-link">Noticias</a>
                 <a href="{{route('contacto')}}" class="nav-item nav-link">Contactanos</a>
+                <a href="{{route('login')}}" class="btn btn-primary py-4 px-lg-5 ">Ingresar<i class="fa fa-arrow-right ms-3"></i></a>
             </div>
-            <a href="{{route('login')}}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Ingresar<i class="fa fa-arrow-right ms-3"></i></a>
+            {{-- <a href="{{route('login')}}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Ingresar<i class="fa fa-arrow-right ms-3"></i></a> --}}
         </div>
     </nav>
     <!-- Navbar End -->

@@ -14,28 +14,20 @@
 
                 <div id="" class="col-lg-12">
                     <div class="form-row mb-2">
-                        <div class="form-group col-md-3">
-                            <label for="inputEmail4">Documento</label>
-                            <input wire:model.defer="documento_modal" type="text" class="form-control" readonly>
+                        <div class="form-group col-md-12">
+                            <label for="inputEmail4">Nombre y Apellido</label>
+                            @php
+                                $nombre = $documento_modal . ' - ' . $nombre_modal;
+                            @endphp
+                            {{-- <input wire:model.defer="documento_modal" type="text" class="form-control" readonly> --}}
+                            <input type="text" class="form-control" value="{{$nombre}}" readonly>
                         </div>
 
-                        <div class="form-group col-md-9">
+                        {{-- <div class="form-group col-md-9">
                             <label for="inputPassword4">Nombre y Apellido</label>
                             <input wire:model.defer="nombre_modal" type="text" class="form-control" readonly>
-                        </div>
+                        </div> --}}
 
-                        <div class="form-group col-md-6">
-                            <label for="inputPassword4">Monto a Pagar</label>
-                            <input wire:model.defer="curso_precio" id="curso_precio" type="text" class="form-control text-right" readonly>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            <label for="inputPassword4">Total a Pagar</label>
-                            <input wire:model.defer="total_pagar_modal" type="text" class="form-control text-right" onkeyup="punto_decimal_limite_precio(this)" >
-                            @error('total_pagar_modal')
-                                <span role="alert" id="mensaje" style="color: red; padding: 2px 2px">El total a pagar no pueder estar vacio o ser 0.</span>
-                            @enderror
-                        </div>
                         <div class="form-group col-md-6">
                             <label for="inputPassword4">Forma Pago</label>
                             <select wire:model.defer="forma_pago_id" class="form-control">
@@ -50,6 +42,19 @@
                             <input type="file" wire:model.defer="comprobante" class="form-control" accept="image/*">
                             @error('comprobante')
                                 <span role="alert" id="mensaje_2" style="color: red; padding: 2px 2px">El comprobante deber ser una imagen o pdf..</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">Monto a Pagar</label>
+                            <input wire:model.defer="curso_precio" id="curso_precio" type="text" class="form-control text-right" readonly>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">Total a Pagar</label>
+                            <input wire:model.defer="total_pagar_modal" type="text" class="form-control text-right" onkeyup="punto_decimal_limite_precio(this)" >
+                            @error('total_pagar_modal')
+                                <span role="alert" id="mensaje" style="color: red; padding: 2px 2px">El total a pagar no pueder estar vacio o ser 0.</span>
                             @enderror
                         </div>
                     </div>

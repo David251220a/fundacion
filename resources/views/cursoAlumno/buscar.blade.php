@@ -10,6 +10,10 @@
 
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
+                <h2 class="">{{$cursoHabilitado->curso->descripcion}} </h2>
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12">
                 <h2 class="">Cursos - Agregar Alumno </h2>
             </div>
         </div>
@@ -24,7 +28,9 @@
             </div>
 
             <div class="form-row">
-                <button class="btn btn-success" type="submit" id="submitBtn" onclick="this.disabled = true; this.form.submit();">Siguiente</button>
+                <button class="btn btn-success mr-3" type="submit" id="submitBtn" onclick="this.disabled = true; this.form.submit();">Siguiente</button>
+                <a href="{{route('habilitado.show', $cursoHabilitado)}}" class="btn btn-info mr-3">Ir al Curso</a>
+                <a href="{{route('habilitado.index')}}" class="btn btn-warning">Volver al Inicio</a>
             </div>
         </form>
 

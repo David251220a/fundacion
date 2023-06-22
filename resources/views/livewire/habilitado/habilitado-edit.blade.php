@@ -9,7 +9,7 @@
     </div>
     <div class="form-group col-md-3">
         <label for="inputEmail4">Curso</label>
-        <select wire:model="curso_id" name="curso_id" id="curso_id" class="form-control">
+        <select wire:model.defer="curso_id" name="curso_id" id="curso_id" class="form-control">
             @foreach ($curso as $item)
                 <option {{ (old('curso_id', $curso_id)== $item->id ? 'selected' : '') }} value="{{$item->id}}">{{$item->descripcion}}</option>
             @endforeach

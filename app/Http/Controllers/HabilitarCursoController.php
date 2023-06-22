@@ -37,7 +37,8 @@ class HabilitarCursoController extends Controller
             'duracion' => 'required',
             'hora_entrada' => 'required',
             'hora_salida' => 'required',
-            'portada' => 'required|image|mimes:jpeg,png,jpg'
+            'portada' => 'required|image|mimes:jpeg,png,jpg',
+            'curso_id' => 'required',
         ]);
 
         $lunes = ($request->lunes == 'on' ? 1 : 0);
@@ -159,7 +160,8 @@ class HabilitarCursoController extends Controller
             'duracion' => 'required',
             'hora_entrada' => 'required',
             'hora_salida' => 'required',
-            'portada' => 'image|mimes:jpeg,png,jpg'
+            'portada' => 'image|mimes:jpeg,png,jpg',
+            'curso_id' => 'required',
         ]);
 
         $lunes = ($request->lunes == 'on' ? 1 : 0);

@@ -46,7 +46,7 @@
                 aria-expanded="false" class="dropdown-toggle">
                 <div class="">
                     <i class="fas fa-money-check-alt mr-3"></i>
-                    <span>Ingreso Matricula</span>
+                    <span>Ingreso Curso</span>
                 </div>
             </a>
         </li>

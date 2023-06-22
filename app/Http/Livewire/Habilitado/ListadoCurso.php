@@ -2,11 +2,13 @@
 
 namespace App\Http\Livewire\Habilitado;
 
+use App\Models\Alumno;
 use App\Models\CursoAEstado;
 use App\Models\CursoAlumno;
 use App\Models\CursoHabilitado;
 use App\Models\FormaPago;
 use App\Models\IngresoMatricula;
+use App\Models\IngresoMatriculaDetalle;
 use App\Models\Persona;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -17,11 +19,11 @@ class ListadoCurso extends Component
 
     public $curso_id, $documento, $curso_precio, $comprobante, $observacion_modal, $estado_a_id, $estado_curso = 99;
     public $documento_modal, $forma_pago_id = 1, $nombre_modal, $total_pagar_modal = 0;
-    public $cursoAlumno;
+    public $cursoAlumno, $documento_e_modal, $nombre_e_modal, $cuenta = [];
 
     use WithFileUploads;
 
-    protected $listeners = ['render', 'datos'];
+    protected $listeners = ['render', 'datos', 'estado_cuenta'];
 
     protected $rules = [
         'total_pagar_modal' => 'required',
@@ -75,9 +77,10 @@ class ListadoCurso extends Component
 
         }
 
+        $total_saldo = $alumnos->sum('saldo');
         $estado = CursoAEstado::all();
 
-        return view('livewire.habilitado.listado-curso', compact('alumnos', 'estado', 'forma_pago'));
+        return view('livewire.habilitado.listado-curso', compact('alumnos', 'estado', 'forma_pago', 'total_saldo'));
     }
 
 
@@ -90,6 +93,16 @@ class ListadoCurso extends Component
         $this->cursoAlumno = $cursoAlumno;
     }
 
+    public function estado_cuenta(CursoAlumno $cursoAlumno, Alumno $alumno)
+    {
+        $this->nombre_e_modal = $cursoAlumno->alumno->persona->nombre . ' ' . $cursoAlumno->alumno->persona->apellido;
+        $this->documento_e_modal = number_format($cursoAlumno->alumno->persona->documento, 0, ".", ".");
+        $this->cursoAlumno = $cursoAlumno;
+        $this->cuenta = IngresoMatriculaDetalle::where('curso_habilitado_id', $cursoAlumno->curso_habilitado_id)
+        ->where('alumno_id', $alumno->id)
+        ->where('estado_id', 1)
+        ->get();
+    }
 
     public function save()
     {
@@ -183,6 +196,8 @@ class ListadoCurso extends Component
         $this->reset('curso_precio');
         $this->reset('documento_modal');
         $this->reset('nombre_modal');
+        $this->reset('documento_e_modal');
+        $this->reset('nombre_e_modal');
         $this->reset('cursoAlumno');
         $this->reset('total_pagar_modal');
         $this->reset('observacion_modal');

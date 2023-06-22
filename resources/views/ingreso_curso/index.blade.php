@@ -10,7 +10,7 @@
 
         <div class="row layout-spacing">
             <div class="col-lg-10 col-md-10 col-sm-12">
-                <h2 class="w-25 p-3">Ingreso Matricula</h2>
+                <h2 class="w-25 p-3">Ingreso Curso</h2>
             </div>
 
             @livewire('ingreso-matricula.ingreso-index')

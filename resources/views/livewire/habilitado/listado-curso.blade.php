@@ -37,37 +37,50 @@
                 </thead>
                 <tbody>
                     @foreach ($alumnos as $item)
-                        <tr>
-                            <td class="text-right">{{number_format($item->alumno->persona->documento, 0, ".", ".")}}</td>
-                            <td class="">{{$item->alumno->persona->nombre}}</td>
-                            <td class="">{{$item->alumno->persona->apellido}}</td>
-                            <td class="">
-                                <button type="button" data-toggle="modal" data-target="#modal_estado" onclick="datos({{$item->id}})" class="btn btn-info">
+                        @php
+
+                            if($item->saldo > 0){
+                                $color = 'background: rgb(250, 52, 52)';
+                            }else {
+                                $color = 'background: rgb(99, 250, 53)';
+                            }
+                        @endphp
+                        <tr style="{{$color}};">
+                            <td class="text-right text-bold" style="font-weight: bold; color:black; font-size:15px">{{number_format($item->alumno->persona->documento, 0, ".", ".")}}</td>
+                            <td class="" style="font-weight: bold; color:black; font-size:15px">{{$item->alumno->persona->nombre}}</td>
+                            <td class="" style="font-weight: bold; color:black; font-size:15px">{{$item->alumno->persona->apellido}}</td>
+                            <td class="" style="font-weight: bold; color:black; font-size:15px">
+                                <button type="button" data-toggle="modal" data-target="#modal_estado" onclick="datos({{$item->id}})" class="btn btn-dark btn-sm mb-2">
                                     {{$item->estado_alumno->descripcion}}
                                 </button>
                             </td>
-                            <td class="text-right">
+                            <td class="text-right" style="font-weight: bold; color:black; font-size:15px">
                                 {{number_format($item->saldo, 0, ".", ".")}}
                             </td>
-                            <td class="text-center">
+                            <td class="text-center" style="font-weight: bold; color:black; font-size:15px">
                                 @if ($item->saldo > 0)
-                                    <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal_agregar" onclick="datos({{$item->id}})">Cobrar</button>
+                                    <button class="btn btn-info btn-sm mb-2" data-toggle="modal" data-target="#modal_agregar" onclick="datos({{$item->id}})">Cobrar</button>
                                 @endif
 
-                                <a class="btn btn-success btn-sm">Ver Estado Cuenta</a>
+                                <a class="btn btn-info btn-sm mb-2" data-toggle="modal" data-target="#moda_estado_cuenta" onclick="estado_cuenta({{$item->id}}, {{$item->alumno_id}})">Estado Cuenta</a>
 
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
-                <tbody>
-
-                </tbody>
+                <tfoot style="color: white">
+                    <td colspan="4">
+                        TOTAL SALDO
+                    </td>
+                    <td class="text-right">
+                        {{number_format($total_saldo, 0, ".", ".")}}
+                    </td>
+                </tfoot>
             </table>
         </div>
     </div>
 
     @include('modal.cobrar_matricula')
     @include('modal.cambio_estado')
-
+    @include('modal.estado_cuenta')
 </div>
