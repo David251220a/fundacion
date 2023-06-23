@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
             TipoFamiliaSeeder::class,
             FormaPagoSeeder::class,
             PersonaSeeder::class,
+            IngresoConceptoSeeder::class,
         ]);
     }
 }

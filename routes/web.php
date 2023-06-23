@@ -12,6 +12,7 @@ use App\Http\Controllers\TipoCursoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\GrupoUsuarioController;
 use App\Http\Controllers\IngresoMatriculaController;
+use App\Http\Controllers\IngresoVarioController;
 use App\Http\Controllers\InstructorController;
 use Illuminate\Support\Facades\Route;
 
@@ -81,6 +82,9 @@ Route::group([
     Route::post('/validar/alumno/',[AlumnoController::class, 'validar_post'])->name('alumno.validar_post');
     Route::get('/validar/instructor/',[InstructorController::class, 'validar'])->name('instructor.validar');
     Route::post('/validar/instructor/',[InstructorController::class, 'validar_post'])->name('instructor.validar_post');
+
+    Route::get('ingreso/varios', [IngresoVarioController::class, 'index'])->name('ingreso_varios.index');
+    Route::get('ingreso/varios/consulta', [IngresoVarioController::class, 'consulta'])->name('ingreso_varios.consulta');
 
 });
 

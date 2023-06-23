@@ -23,7 +23,7 @@ class PersonaSeeder extends Seeder
             'direccion' => '',
             'sexo' => '1',
             'celular' => '',
-            'pais_id' => '',
+            'pais_id' => 1,
             'fecha_nacimiento' => '1990-01-01',
             'departamento_id' => 1,
             'ciudad_id' => 1,

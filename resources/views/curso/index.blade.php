@@ -25,7 +25,7 @@
                         <tr>
                             <th>ID#</th>
                             <th>Descripcion</th>
-                            <th>Tipo Curso</th>
+                            <th>Familia</th>
                             <th>Estado</th>
                             <th>Usuario</th>
                             <th class="no-content">Actions</th>

@@ -24,7 +24,7 @@
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="inputPassword4">Tipo Curso</label>
+                                <label for="inputPassword4">Familia</label>
                                 <select name="tipo_curso_id" id="tipo_curso_id" class="form-control basic">
                                     @foreach ($tipo_curso as $item)
                                         <option {{ (old('tipo_curso_id')== $item->id ? 'selected' : '') }} value="{{$item->id}}">{{$item->descripcion}}</option>

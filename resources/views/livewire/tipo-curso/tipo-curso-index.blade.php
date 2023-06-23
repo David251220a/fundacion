@@ -2,7 +2,7 @@
 
     <div class="row layout-spacing">
         <div class="col-lg-10 col-md-10 col-sm-12">
-            <h2 class="w-25 p-3">Tipo Curso</h2>
+            <h2 class="w-25 p-3">Familia</h2>
         </div>
         <div class="col-lg-2 col-md-10 d-flex align-items-center">
             <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bd-example-modal-lg">Agregar</button>

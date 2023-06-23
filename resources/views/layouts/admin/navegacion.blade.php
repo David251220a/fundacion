@@ -1,5 +1,5 @@
 <div class="header-container fixed-top">
-    <header class="header navbar navbar-expand-sm">
+    <header class="header navbar navbar-expand-sm expand-header">
 
         {{-- <ul class="navbar-item theme-brand flex-row  text-center">
             <li class="nav-item theme-logo">
