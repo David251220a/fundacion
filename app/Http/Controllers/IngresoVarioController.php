@@ -42,4 +42,9 @@ class IngresoVarioController extends Controller
 
         return $data;
     }
+
+    public function buscar()
+    {
+        return view('ingreso_varios.buscar');
+    }
 }

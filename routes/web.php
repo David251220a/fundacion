@@ -85,6 +85,8 @@ Route::group([
 
     Route::get('ingreso/varios', [IngresoVarioController::class, 'index'])->name('ingreso_varios.index');
     Route::get('ingreso/varios/consulta', [IngresoVarioController::class, 'consulta'])->name('ingreso_varios.consulta');
+    Route::get('ingreso/varios/buscar', [IngresoVarioController::class, 'buscar'])->name('ingreso_varios.buscar');
+    Route::post('ingreso/varios/buscar', [IngresoVarioController::class, 'buscar_post'])->name('ingreso_varios.buscar_post');
 
 });
 
