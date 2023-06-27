@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('ingreso_varios', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('alumno_id')->constrained();
+            $table->foreignId('persona_id')->constrained();
             $table->foreignId('forma_pago_id')->constrained();
             $table->date('fecha_ingreso');
             $table->integer('año')->default(0);

@@ -31,7 +31,7 @@
 
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="card component-card_1 mb-4" style="background: aqua">
-                        <a href="#">
+                        <a href="{{route('ingreso_varios.buscar')}}">
                             <div class="card-body">
                                 <div class="user-info">
                                     <img src="{{Storage::url('iconos/cobro_varios.png')}}" class="card-img-top" alt="...">

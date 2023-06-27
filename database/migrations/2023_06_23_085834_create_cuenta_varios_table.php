@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('cuenta_varios', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('alumno_id')->constrained();
+            $table->foreignId('persona_id')->constrained();
             $table->foreignId('forma_pago_id')->constrained();
             $table->foreignId('ingreso_vario_id')->constrained();
             $table->date('fecha_ingreso');
@@ -26,8 +26,6 @@ return new class extends Migration
             $table->string('general', 3)->default('000');
             $table->integer('factura_numero')->default(0);
             $table->decimal('total_pagado', 12, 0)->default(0);
-            $table->text('comprobante')->nullable();
-            $table->bigInteger('cuenta_padre')->default(0);
             $table->foreignId('estado_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->unsignedBigInteger('modif_user_id');

@@ -15,10 +15,12 @@ return new class extends Migration
     {
         Schema::create('ingreso_varios_detalles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('alumno_id')->constrained();
+            $table->foreignId('persona_id')->constrained();
             $table->foreignId('ingreso_vario_id')->constrained();
             $table->foreignId('ingreso_concepto_id')->constrained();
             $table->string('descripcion', 200)->nullable();
+            $table->decimal('precio_unitario', 12, 0)->default(0);
+            $table->integer('cantidad')->default(0);
             $table->decimal("total_pagar", 12, 0)->default(0);
             $table->decimal('monto_pagado', 12, 0)->default(0);
             $table->decimal('saldo', 12, 0)->default(0);

@@ -130,8 +130,7 @@ class ListadoCurso extends Component
         $fecha_actual = Carbon::now();
         $mes = intval(date('m', strtotime($fecha_actual)));
         $anio = intval(date('Y', strtotime($fecha_actual)));
-        $numero_recibo = IngresoMatricula::where('mes', $mes)
-        ->where('año', $anio)
+        $numero_recibo = IngresoMatricula::where('año', $anio)
         ->max('numero_recibo');
         $numero_recibo += 1;
 
