@@ -11,7 +11,7 @@
         <label for="inputEmail4">Curso</label>
         <select wire:model.defer="curso_id" name="curso_id" id="curso_id" class="form-control">
             @foreach ($curso as $item)
-                <option {{ (old('curso_id', $curso_id)== $item->id ? 'selected' : '') }} value="{{$item->id}}">{{$item->descripcion}}</option>
+                <option {{ (old('curso_id', $curso_id)== $item->id ? 'selected' : '') }} value="{{$item->id}}">{{$item->descripcion}} - {{$item->modulo->descripcion}}</option>
             @endforeach
         </select>
     </div>

@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cursos', function (Blueprint $table) {
+        Schema::create('curso_modulos', function (Blueprint $table) {
             $table->id();
-            $table->string('descripcion');
+            $table->string('descripcion', 150);
             $table->foreignId('estado_id')->constrained();
-            $table->foreignId('tipo_curso_id')->constrained();
-            $table->foreignId('curso_modulo_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->unsignedBigInteger('modif_user_id');
             $table->foreign('modif_user_id')->references('id')->on('users');
@@ -33,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cursos');
+        Schema::dropIfExists('curso_modulos');
     }
 };

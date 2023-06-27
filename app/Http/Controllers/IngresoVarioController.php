@@ -48,12 +48,12 @@ class IngresoVarioController extends Controller
         return $data;
     }
 
-    public function buscar()
+    public function buscar($id)
     {
-        return view('ingreso_varios.buscar');
+        return view('ingreso_varios.buscar', compact('id'));
     }
 
-    public function buscar_post(Request $request)
+    public function buscar_post($id, Request $request)
     {
 
         $documento = str_replace('.', '', $request->documento);
@@ -61,7 +61,24 @@ class IngresoVarioController extends Controller
         if(empty($persona)){
             return redirect()->back()->withInput()->withErrors('No existe la persona con este numero de cedula: ' . $request->documento);
         }else{
-            return redirect()->route('ingreso_varios.ingreso_persona', $persona);
+            if($id == 1){
+                return redirect()->route('ingreso_varios.ingreso_persona', $persona);
+            }
+
+            if($id == 2){
+                $pendiente = CuentaVario::where('persona_id', $persona->id)
+                ->where('estado_id', 1)
+                ->get();
+
+                if(count($pendiente) > 0){
+                    return redirect()->route('ingreso_varios.ingreso_pendiente', $persona);
+                }else{
+                    return redirect()->back()->withInput()->withErrors('Esta persona no posee cuentas pendientes.');
+                }
+
+
+            }
+
         }
 
     }
@@ -236,5 +253,17 @@ class IngresoVarioController extends Controller
     {
 
         return view('ingreso_varios.recibo', compact('ingreso'));
+    }
+
+    public function ingreso_pendiente(Persona $persona)
+    {
+        $pendiente = CuentaVario::where('persona_id', $persona->id)
+        ->where('estado_id', 1)->get();
+        return view('ingreso_varios.ingreso_pendiente', compact('persona', 'pendiente'));
+    }
+
+    public function ingreso_pendiente_post(Persona $persona, Request $request)
+    {
+
     }
 }

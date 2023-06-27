@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <h3 class="">Curso:</h3>
-                <h5>{{$cursoHabilitado->curso->descripcion}}</h5>
+                <h5>{{$cursoHabilitado->curso->descripcion}} - {{$cursoHabilitado->curso->modulo->descripcion}}</h5>
                 <p>Periodo: {{$cursoHabilitado->periodo_desde}} al {{$cursoHabilitado->periodo_hasta}}</p>
                 <p>Precio: {{number_format($cursoHabilitado->precio, 0, ".", ".")}}
             </div>

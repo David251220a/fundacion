@@ -85,12 +85,14 @@ Route::group([
 
     Route::get('ingreso/varios', [IngresoVarioController::class, 'index'])->name('ingreso_varios.index');
     Route::get('ingreso/varios/consulta', [IngresoVarioController::class, 'consulta'])->name('ingreso_varios.consulta');
-    Route::get('ingreso/varios/buscar', [IngresoVarioController::class, 'buscar'])->name('ingreso_varios.buscar');
-    Route::post('ingreso/varios/buscar', [IngresoVarioController::class, 'buscar_post'])->name('ingreso_varios.buscar_post');
+    Route::get('ingreso/varios/buscar/{id}', [IngresoVarioController::class, 'buscar'])->name('ingreso_varios.buscar');
+    Route::post('ingreso/varios/buscar/{id}', [IngresoVarioController::class, 'buscar_post'])->name('ingreso_varios.buscar_post');
     Route::get('ingreso/varios/{persona}/ingreso', [IngresoVarioController::class, 'ingreso_persona'])->name('ingreso_varios.ingreso_persona');
     Route::post('ingreso/varios/{persona}/ingreso', [IngresoVarioController::class, 'ingreso_persona_post'])->name('ingreso_varios.ingreso_persona_post');
     Route::post('ingreso/crear_ingreso_concepto', [IngresoVarioController::class, 'crear_ingreso_concepto'])->name('ingreso_varios.crear_ingreso_concepto');
     Route::get('ingreso/recibo/{ingreso}', [IngresoVarioController::class, 'ver_recibo'])->name('ingreso_varios.ver_recibo');
+    Route::get('ingreso/varios/{persona}/ingreso/pendiente', [IngresoVarioController::class, 'ingreso_pendiente'])->name('ingreso_varios.ingreso_pendiente');
+    Route::post('ingreso/varios/{persona}/ingreso/pendiente', [IngresoVarioController::class, 'ingreso_pendiente_post'])->name('ingreso_varios.ingreso_pendiente_post');
 
 
 });

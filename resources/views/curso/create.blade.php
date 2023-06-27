@@ -19,11 +19,6 @@
                         @csrf
                         <div class="form-row mb-2">
                             <div class="form-group col-md-4">
-                                <label for="inputEmail4">Descripcion</label>
-                                <input type="text" class="form-control" placeholder="Descripcion" name="descripcion" id="descripcion" value="{{old('descripcion')}}" required>
-                            </div>
-
-                            <div class="form-group col-md-4">
                                 <label for="inputPassword4">Familia</label>
                                 <select name="tipo_curso_id" id="tipo_curso_id" class="form-control basic">
                                     @foreach ($tipo_curso as $item)
@@ -31,6 +26,21 @@
                                     @endforeach
                                 </select>
                             </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="inputEmail4">Descripcion</label>
+                                <input type="text" class="form-control" placeholder="Descripcion" name="descripcion" id="descripcion" value="{{old('descripcion')}}" required>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="inputPassword4">Modulo</label>
+                                <select name="curso_modulo_id" id="curso_modulo_id" class="form-control basic">
+                                    @foreach ($modulo as $item)
+                                        <option {{ (old('curso_modulo_id')== $item->id ? 'selected' : '') }} value="{{$item->id}}">{{$item->descripcion}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                             <div class="form-group col-md-4">
                                 <label for="inputPassword4">Estado</label>
                                 <select name="estado_id" id="estado_id" class="form-control">

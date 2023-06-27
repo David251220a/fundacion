@@ -15,4 +15,15 @@ class Curso extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function modulo()
+    {
+        return $this->belongsTo(CursoModulo::class, 'curso_modulo_id');
+    }
+
+    public function familia()
+    {
+        return $this->belongsTo(TipoCurso::class, 'tipo_curso_id');
+    }
+
 }

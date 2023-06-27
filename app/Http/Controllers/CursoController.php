@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Curso;
+use App\Models\CursoModulo;
 use App\Models\TipoCurso;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,8 @@ class CursoController extends Controller
     public function create()
     {
         $tipo_curso = TipoCurso::where('estado_id', 1)->get();
-        return view('curso.create', compact('tipo_curso'));
+        $modulo = CursoModulo::all();
+        return view('curso.create', compact('tipo_curso', 'modulo'));
     }
 
     public function store(Request $request)
@@ -27,11 +29,13 @@ class CursoController extends Controller
         $request->validate([
             'descripcion' => 'required',
             'tipo_curso_id' => 'required',
+            'curso_modulo_id' => 'required',
         ]);
 
         Curso::create([
             'descripcion' => $request->descripcion,
             'tipo_curso_id' => $request->tipo_curso_id,
+            'curso_modulo_id' => $request->curso_modulo_id,
             'estado_id' => $request->estado_id,
             'user_id' => auth()->user()->id,
             'modif_user_id' => auth()->user()->id,
@@ -43,7 +47,8 @@ class CursoController extends Controller
     public function edit(Curso $curso)
     {
         $tipo_curso = TipoCurso::get();
-        return view('curso.edit', compact('curso', 'tipo_curso'));
+        $modulo = CursoModulo::all();
+        return view('curso.edit', compact('curso', 'tipo_curso', 'modulo'));
     }
 
     public function update(Curso $curso, Request $request)
@@ -51,11 +56,13 @@ class CursoController extends Controller
         $request->validate([
             'descripcion' => 'required',
             'tipo_curso_id' => 'required',
+            'curso_modulo_id' => 'required',
         ]);
 
         $curso->update([
             'descripcion' => $request->descripcion,
             'tipo_curso_id' => $request->tipo_curso_id,
+            'curso_modulo_id' => $request->curso_modulo_id,
             'estado_id' => $request->estado_id,
             'modif_user_id' => auth()->user()->id,
         ]);

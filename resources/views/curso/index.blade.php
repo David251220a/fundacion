@@ -35,9 +35,9 @@
                         @foreach ($data as $item)
                             <tr style="font-weight: bold">
                                 <td>{{$item->id}}</td>
-                                <td>{{$item->descripcion}}</td>
+                                <td>{{$item->descripcion}} - {{$item->modulo->descripcion}}</td>
                                 <td>
-                                    {{$item->tipo_curso_id}}
+                                    {{$item->familia->descripcion}}
                                 </td>
                                 <td>
                                     {{($item->estado_id == 1 ? 'ACTIVO' : 'INACTIVO' )}}

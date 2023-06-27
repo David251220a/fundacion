@@ -10,4 +10,9 @@ class CuentaVarioDetalle extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function producto()
+    {
+        return $this->belongsTo(IngresoConcepto::class, 'ingreso_concepto_id');
+    }
 }

@@ -10,7 +10,7 @@
 
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
-                <h2 class="">Ingreso Varios</h2>
+                <h2 class="">Ingreso Varios {{ ($id == 2 ? ' - Cobros Pendiente' : '') }} </h2>
             </div>
 
             <div class="col-lg-12 col-md-12 col-sm-12">
@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <form action="{{route('ingreso_varios.buscar_post')}}" method="POST" onsubmit="disableButton()">
+        <form action="{{route('ingreso_varios.buscar_post', $id)}}" method="POST" onsubmit="disableButton()">
             @csrf
             <div class="form-row">
                 <div class="form-group col-md-4">

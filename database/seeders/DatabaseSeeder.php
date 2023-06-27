@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
             FormaPagoSeeder::class,
             PersonaSeeder::class,
             IngresoConceptoSeeder::class,
+            CursoModuloSeeder::class,
         ]);
     }
 }
