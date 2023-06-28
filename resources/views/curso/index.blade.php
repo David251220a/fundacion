@@ -13,9 +13,12 @@
             <div class="col-lg-10 col-md-10 col-sm-12">
                 <h2 class="w-25 p-3">Curso</h2>
             </div>
-            <div class="col-lg-2 col-md-10 d-flex align-items-center">
-                <a href="{{route('curso.create')}}" class="btn btn-info">Agregar</a>
-            </div>
+            @can('curso.create')
+                <div class="col-lg-2 col-md-10 d-flex align-items-center">
+                    <a href="{{route('curso.create')}}" class="btn btn-info">Agregar</a>
+                </div>
+            @endcan
+
         </div>
 
         <div class="col-xl-12 col-lg-12 col-sm-12">
@@ -46,7 +49,9 @@
                                     {{$item->usuario->name}}
                                 </td>
                                 <td>
-                                    <a href="{{route('curso.edit', $item)}}" class="ml-2"><i class="fas fa-pencil"></i></a>
+                                    @can('curso.edit')
+                                        <a href="{{route('curso.edit', $item)}}" class="ml-2"><i class="fas fa-pencil"></i></a>
+                                    @endcan
                                 </td>
                             </tr>
                         @endforeach

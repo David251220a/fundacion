@@ -12,6 +12,20 @@ use Illuminate\Http\Request;
 
 class AlumnoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:alumno.index')->only('index');
+        $this->middleware('permission:alumno.create')->only('create');
+        $this->middleware('permission:alumno.store')->only('store');
+        $this->middleware('permission:alumno.edit')->only('edit');
+        $this->middleware('permission:alumno.update')->only('update');
+        $this->middleware('permission:alumno.update')->only('update');
+        $this->middleware('permission:alumno.add_nuevo')->only('add_nuevo');
+        $this->middleware('permission:alumno.add_nuevo')->only('add_nuevo_post');
+        $this->middleware('permission:alumno.validar')->only('validar');
+        $this->middleware('permission:alumno.validar')->only('validar');
+    }
+
     public function index(Request $request)
     {
         $search = str_replace('.', '', $request->search);
@@ -60,6 +74,7 @@ class AlumnoController extends Controller
             'departamento_id' => $request->departamento_id,
             'ciudad_id' => $request->ciudad_id,
             'barrio_id' => $request->barrio_id,
+            'email' => $request->email,
             'estado_id' => $request->estado_id,
             'estado_civil_id' => $request->estado_civil_id,
             'partido_id' => $request->partido_id,
@@ -129,6 +144,7 @@ class AlumnoController extends Controller
             'departamento_id' => $request->departamento_id,
             'ciudad_id' => $request->ciudad_id,
             'barrio_id' => $request->barrio_id,
+            'email' => $request->email,
             'estado_id' => $request->estado_id,
             'estado_civil_id' => $request->estado_civil_id,
             'partido_id' => $request->partido_id,
@@ -242,6 +258,7 @@ class AlumnoController extends Controller
             'ciudad_id' => $request->ciudad_id,
             'barrio_id' => $request->barrio_id,
             'estado_id' => $request->estado_id,
+            'email' => $request->email,
             'estado_civil_id' => $request->estado_civil_id,
             'partido_id' => $request->partido_id,
             'modif_user_id' => auth()->user()->id,

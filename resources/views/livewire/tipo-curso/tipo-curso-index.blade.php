@@ -4,10 +4,12 @@
         <div class="col-lg-10 col-md-10 col-sm-12">
             <h2 class="w-25 p-3">Familia</h2>
         </div>
-        <div class="col-lg-2 col-md-10 d-flex align-items-center">
-            <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bd-example-modal-lg">Agregar</button>
-            {{-- <button type="button" class="btn btn-primary mb-2 mr-2" data-toggle="modal" data-target=".bd-example-modal-lg">Large</button> --}}
-        </div>
+        @can('tipocurso.create')
+            <div class="col-lg-2 col-md-10 d-flex align-items-center">
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bd-example-modal-lg">Agregar</button>
+            </div>
+        @endcan
+
     </div>
 
     <div class="col-xl-12 col-lg-12 col-sm-12">
@@ -38,8 +40,9 @@
                                 {{$item->usuario->name}}
                             </td>
                             <td>
-                                <a onclick="edicion({{$item->id}})" class="ml-2"><i class="fas fa-pencil"></i></a>
-                                {{-- <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bd-example-modal-lg">Agregar</button> --}}
+                                @can('tipocurso.edit')
+                                    <a onclick="edicion({{$item->id}})" class="ml-2"><i class="fas fa-pencil"></i></a>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

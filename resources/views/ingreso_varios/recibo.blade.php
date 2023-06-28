@@ -189,6 +189,11 @@
             </div>
         </div>
 
+        <div class="row">
+            <a href="{{route('ingreso_varios.index')}}" class="btn btn-warning">Volver al Inicio</a>
+            <a href="#" class="btn btn-info">Imprimir</a>
+        </div>
+
     </div>
 
 @endsection

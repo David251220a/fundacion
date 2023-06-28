@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('celular', 20)->nullable();
             $table->string('direccion', 200)->nullable();
             $table->date('fecha_nacimiento');
+            $table->string('email', 200)->nullable();
             $table->foreignId('estado_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->unsignedBigInteger('modif_user_id');

@@ -15,6 +15,18 @@ use Illuminate\Http\Request;
 
 class IngresoVarioController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:ingreso_varios.index')->only('index');
+        $this->middleware('permission:ingreso_varios.consulta')->only('consulta');
+        $this->middleware('permission:ingreso_varios.buscar')->only('buscar');
+        $this->middleware('permission:ingreso_varios.buscar')->only('buscar_post');
+        $this->middleware('permission:ingreso_varios.ingreso_persona')->only('ingreso_persona');
+        $this->middleware('permission:ingreso_varios.ingreso_persona')->only('ingreso_persona_post');
+        $this->middleware('permission:ingreso_varios.ingreso_pendiente')->only('ingreso_pendiente');
+        $this->middleware('permission:ingreso_varios.ingreso_pendiente')->only('ingreso_pendiente_post');
+    }
+
     public function index(Request $request)
     {
         return view('ingreso_varios.index');
@@ -138,6 +150,10 @@ class IngresoVarioController extends Controller
         $forma_pago = $request->forma_pago;
         if($total_a_pagar == 0){
             return redirect()->back()->withInput()->withErrors('El total a pagar no puede ser cero por favor agregue los productos a comprar.');
+        }
+
+        if($monto_a_pagar == 0){
+            return redirect()->back()->withInput()->withErrors('El monto a pagar no puede ser cero.');
         }
 
         $concepto = $request->env_descripcion_id;

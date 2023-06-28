@@ -44,6 +44,12 @@
 @livewire('persona.create-persona')
 
 <div class="form-row">
+
+    <div class="col-md-3 col-sm-6 mb-4">
+        <label for="">Email</label>
+        <input type="email" class="form-control" name="email" id="email">
+    </div>
+
     <div class="col-md-3 col-sm-6 mb-4">
         <label for="">Estado Civil</label>
         <select name="estado_civil_id" id="estado_civil_id" class="form-control">

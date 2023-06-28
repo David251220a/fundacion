@@ -11,6 +11,16 @@ use Illuminate\Support\Facades\DB;
 
 class NoticiasController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:noticias.index')->only('index');
+        $this->middleware('permission:noticias.create')->only('create');
+        $this->middleware('permission:noticias.store')->only('store');
+        $this->middleware('permission:noticias.show')->only('show');
+        $this->middleware('permission:noticias.edit')->only('edit');
+        $this->middleware('permission:noticias.update')->only('update');
+    }
+
     public function index()
     {
         $noticias = Noticia::where('estado_id', 1)

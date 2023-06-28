@@ -15,7 +15,7 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-sm-12 layout-spacing">
                         <label for="">Documento</label>
-                        <input type="text" class="form-control" name="documento" value="{{old('documento')}}"
+                        <input type="text" class="form-control" name="documento" id="documento" value="{{old('documento')}}"
                         onkeyup="punto_decimal(this)" onchange="punto_decimal(this)" required>
                     </div>
                     <div class="col-lg-3 col-md-4 col-sm-12 layout-spacing">

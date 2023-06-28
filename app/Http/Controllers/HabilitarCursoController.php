@@ -15,6 +15,16 @@ use Illuminate\Support\Facades\DB;
 
 class HabilitarCursoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:habilitado.index')->only('index');
+        $this->middleware('permission:habilitado.create')->only('create');
+        $this->middleware('permission:habilitado.store')->only('store');
+        $this->middleware('permission:habilitado.edit')->only('edit');
+        $this->middleware('permission:habilitado.update')->only('update');
+        $this->middleware('permission:habilitado.show')->only('show');
+    }
+
     public function index()
     {
         $data = CursoHabilitado::take(1000)

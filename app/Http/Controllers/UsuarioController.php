@@ -12,11 +12,11 @@ class UsuarioController extends Controller
 
     public function __construct()
     {
-        // $this->middleware('permission:user.index')->only('index');
-        // $this->middleware('permission:user.create')->only('create');
-        // $this->middleware('permission:user.store')->only('store');
-        // $this->middleware('permission:user.edit')->only('edit');
-        // $this->middleware('permission:user.update')->only('update');
+        $this->middleware('permission:usuario.index')->only('index');
+        $this->middleware('permission:usuario.create')->only('create');
+        $this->middleware('permission:usuario.store')->only('store');
+        $this->middleware('permission:usuario.edit')->only('edit');
+        $this->middleware('permission:usuario.update')->only('update');
     }
 
     public function index(Request $request)
@@ -109,9 +109,9 @@ class UsuarioController extends Controller
         //     ->withErrors('No existe persona con este documento: '. $request->documento .'!.');
         // }
 
-        // $user->documento = str_replace('.', '', $request->documento);
-        // $user->name = $request->name;
-        // $user->email = $request->email;
+        $user->documento = str_replace('.', '', $request->documento);
+        $user->name = $request->name;
+        $user->email = $request->email;
 
         if($request->password){
             if (preg_match('/[a-zA-Z]+.*[0-9]+|[0-9]+.*[a-zA-Z]+/', $request->password)) {

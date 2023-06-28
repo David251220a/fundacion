@@ -12,9 +12,12 @@
             <div class="col-lg-10 col-md-10 col-sm-12">
                 <h2 class="w-25 p-3">Cursos Habilitados</h2>
             </div>
-            <div class="col-lg-2 col-md-10 d-flex align-items-center">
-                <a href="{{route('habilitado.create')}}" class="btn btn-info">Agregar</a>
-            </div>
+            @can('habilitado.create')
+                <div class="col-lg-2 col-md-10 d-flex align-items-center">
+                    <a href="{{route('habilitado.create')}}" class="btn btn-info">Agregar</a>
+                </div>
+            @endcan
+
         </div>
 
         <div class="col-xl-12 col-lg-12 col-sm-12">
@@ -55,9 +58,18 @@
                                     {{$item->estado->descripcion}}
                                 </td>
                                 <td>
-                                    <a href="{{route('cursoAlumno.buscar', $item)}}" class="ml-2"><i class="fas fa-user-plus"></i></a>
-                                    <a href="{{route('habilitado.show', $item)}}" class="ml-2"><i class="fas fa-eye"></i></a>
-                                    <a href="{{route('habilitado.edit', $item)}}" class="ml-2"><i class="fas fa-pencil"></i></a>
+                                    @can('cursoAlumno.buscar')
+                                        <a href="{{route('cursoAlumno.buscar', $item)}}" class="ml-2"><i class="fas fa-user-plus"></i></a>
+                                    @endcan
+
+                                    @can('habilitado.show')
+                                        <a href="{{route('habilitado.show', $item)}}" class="ml-2"><i class="fas fa-eye"></i></a>
+                                    @endcan
+
+                                    @can('habilitado.edit')
+                                        <a href="{{route('habilitado.edit', $item)}}" class="ml-2"><i class="fas fa-pencil"></i></a>
+                                    @endcan
+
                                 </td>
                             </tr>
                         @endforeach

@@ -9,6 +9,16 @@ use Illuminate\Http\Request;
 
 class CursoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:curso.index')->only('index');
+        $this->middleware('permission:curso.create')->only('create');
+        $this->middleware('permission:curso.store')->only('store');
+        $this->middleware('permission:curso.show')->only('show');
+        $this->middleware('permission:curso.edit')->only('edit');
+        $this->middleware('permission:curso.update')->only('update');
+    }
+
     public function index()
     {
         $data = Curso::orderBy('id', 'DESC')

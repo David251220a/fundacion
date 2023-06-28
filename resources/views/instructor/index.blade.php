@@ -12,11 +12,11 @@
             <div class="col-lg-10 col-md-10 col-sm-12">
                 <h2 class="w-25 p-3">Instructores</h2>
             </div>
-            {{-- @can('instructor.create') --}}
+            @can('instructor.create')
                 <div class="col-lg-2 col-md-10 d-flex align-items-center">
                     <a href="{{route('instructor.validar')}}" class="btn btn-info">Agregar</a>
                 </div>
-            {{-- @endcan --}}
+            @endcan
 
         </div>
 
@@ -50,12 +50,12 @@
                                     {{$item->estado->descripcion}}
                                 </td>
                                 <td>
-                                    {{-- @can('instructor.show') --}}
+                                    @can('instructor.show')
                                         <a href="{{route('instructor.show', $item)}}" class="ml-2"><i class="fas fa-eye"></i></a>
-                                    {{-- @endcan --}}
-                                    {{-- @can('instructor.edit') --}}
+                                    @endcan
+                                    @can('instructor.edit')
                                         <a href="{{route('instructor.edit', $item)}}" class="ml-2"><i class="fas fa-pencil"></i></a>
-                                    {{-- @endcan --}}
+                                    @endcan
                                 </td>
                             </tr>
                         @endforeach

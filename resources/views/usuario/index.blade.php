@@ -14,11 +14,11 @@
             <div class="col-xl-4 col-lg-4 col-sm-4">
                 @include('ui.busqueda_conletras')
             </div>
-            {{-- @can('user.create') --}}
+            @can('usuario.create')
                 <div class="col-xl-4 col-lg-4 col-sm-4">
                     <a class="btn btn-primary btn-rounded mb-2" href="{{route('user.create')}}">Agregar</a>
                 </div>
-            {{-- @endcan --}}
+            @endcan
         </div>
 
         <div class="row layout-top-spacing" id="cancel-row">
@@ -41,12 +41,12 @@
                                     <td>{{$item->name}}</td>
                                     <td>{{$item->email}}</td>
                                     <td>
-                                        {{-- @can('user.edit') --}}
+                                        @can('usuario.edit')
                                             <a href="{{route('user.edit', $item)}}" class="bs-popover" data-container="body"
                                             data-container="body" data-trigger="hover" data-placement="top" data-content="Editar Usuario">
                                                 <i class="fas fa-user-edit"></i>
                                             </a>
-                                        {{-- @endcan --}}
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach

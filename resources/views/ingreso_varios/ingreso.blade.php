@@ -105,7 +105,7 @@
             </div>
 
             <div class="form-row">
-                <button class="btn btn-success mr-3" type="submit" id="submitBtn" onclick="this.disabled = true; this.form.submit();">Grabar</button>
+                <button class="btn btn-success mr-3" type="submit" id="submitBtn" onclick="this.disabled = true; this.form.submit();">Cobrar</button>
                 <a href="{{route('ingreso_varios.buscar', 1)}}" class="btn btn-info mr-3">Buscar Alumno</a>
                 <a href="{{route('ingreso_varios.index')}}" class="btn btn-warning">Volver al Inicio</a>
             </div>

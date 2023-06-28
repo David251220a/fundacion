@@ -16,6 +16,18 @@ use Illuminate\Http\Request;
 
 class CursoAlumnoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:cursoAlumno.buscar')->only('buscar');
+        $this->middleware('permission:cursoAlumno.buscar')->only('buscar_post');
+        $this->middleware('permission:cursoAlumno.agregar_alumno')->only('agregar_alumno');
+        $this->middleware('permission:cursoAlumno.agregar_alumno')->only('agregar_alumno_post');
+        $this->middleware('permission:cursoAlumno.crear_alumno')->only('crear_alumno');
+        $this->middleware('permission:cursoAlumno.crear_alumno')->only('crear_alumno_post');
+        $this->middleware('permission:cursoAlumno.asistencia')->only('asistencia');
+        $this->middleware('permission:cursoAlumno.asistencia')->only('asistencia_post');
+    }
+
     public function buscar(CursoHabilitado $cursoHabilitado)
     {
         return view('cursoAlumno.buscar', compact('cursoHabilitado'));
@@ -87,6 +99,7 @@ class CursoAlumnoController extends Controller
             'ciudad_id' => $request->ciudad_id,
             'barrio_id' => $request->barrio_id,
             'estado_id' => $request->estado_id,
+            'email' => $request->email,
             'estado_civil_id' => $request->estado_civil_id,
             'partido_id' => $request->partido_id,
             'user_id' => auth()->user()->id,

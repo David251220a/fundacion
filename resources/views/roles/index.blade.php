@@ -11,7 +11,8 @@
 
     <div class="layout-px-spacing">
         <div class="row" style="margin-top: 15px">
-            @can('role.create')
+            <h3>Grupo de Usuario</h3>
+            @can('rol.create')
                 <div class="col-xl-4 col-lg-4 col-sm-4">
                     <a class="btn btn-primary btn-rounded mb-2" href="{{route('role.create')}}">Agregar</a>
                 </div>
@@ -36,7 +37,7 @@
                                     <td style="text-align: right">{{number_format($item->id, 0, ".", ".")}}</td>
                                     <td>{{$item->name}}</td>
                                     <td>
-                                        @can('role.edit')
+                                        @can('rol.edit')
                                             <a href="{{route('role.edit', $item)}}" class="bs-popover" data-container="body"
                                             data-container="body" data-trigger="hover" data-placement="top" data-content="Editar Rol">
                                                 <i class="fas fa-edit"></i>

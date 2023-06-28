@@ -9,7 +9,7 @@
                             <table>
                                 <tr>
                                     <th width="60%">
-                                        <img class="navbar-logo" src="{{Storage::url('public/iconos/logo_horizontal-1.png')}}" alt="logo">
+                                        <img class="navbar-logo" src="{{Storage::url('public/iconos/logo_horizontal-1.png')}}" alt="logo" style="width: 50%">
                                     </th>
                                     <th width="40%">
                                         <p>N° Recibo:</p>
