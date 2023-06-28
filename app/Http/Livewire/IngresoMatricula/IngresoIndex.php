@@ -7,7 +7,6 @@ use App\Models\IngresoMatricula;
 use App\Models\Persona;
 use App\Models\TipoCurso;
 use Carbon\Carbon;
-use Faker\Provider\ar_EG\Person;
 use Livewire\Component;
 
 class IngresoIndex extends Component

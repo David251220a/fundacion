@@ -77,6 +77,7 @@ Route::group([
     Route::post('/alumno/add/nuevo/{persona}' , [AlumnoController::class, 'add_nuevo_post'])->name('alumno.add_nuevo_post');
 
     Route::get('/ingreso/matricula', [IngresoMatriculaController::class, 'index'])->name('ingreso_matricula.index');
+    Route::get('/ingreso/curso/{alumno}/cobro', [IngresoMatriculaController::class, 'cobro_curso'])->name('ingreso_matricula.cobro_alumno');
 
     Route::get('/validar/alumno/',[AlumnoController::class, 'validar'])->name('alumno.validar');
     Route::post('/validar/alumno/',[AlumnoController::class, 'validar_post'])->name('alumno.validar_post');

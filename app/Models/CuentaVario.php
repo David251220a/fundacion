@@ -15,4 +15,9 @@ class CuentaVario extends Model
     {
         return $this->hasMany(CuentaVarioDetalle::class, 'cuenta_vario_id');
     }
+
+    public function detalle_pago()
+    {
+        return $this->hasMany(CuentaVarioDetalle::class, 'cuenta_vario_id')->where('saldo','>', 0);
+    }
 }

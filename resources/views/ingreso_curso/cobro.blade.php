@@ -12,7 +12,7 @@
 
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
-                <h2 class="">Ingreso Varios - Cobros Pendiente</h2>
+                <h2 class="">Cobro Cursos</h2>
             </div>
         </div>
 
@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            @livewire('ingreso.ingreso-pendiente', ['persona' => $persona], key($persona->id))
+            @livewire('ingreso-matricula.ingreso-curso', ['alumno' => $alumno], key($alumno->id))
 
             <div class="form-row">
                 <a href="{{route('ingreso_varios.index')}}" class="btn btn-warning">Volver al Inicio</a>
@@ -44,6 +44,6 @@
 @section('js')
     <script src="{{asset('plugins/sweetalerts/sweetalert2.min.js')}}"></script>
     <script src="{{asset('plugins/sweetalerts/custom-sweetalert.js')}}"></script>
-    <script src="{{asset('js/ingreso/ingreso_pendiente.js')}}"></script>
+    <script src="{{asset('js/ingreso/curso.js')}}"></script>
 
 @endsection

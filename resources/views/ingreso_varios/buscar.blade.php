@@ -10,7 +10,12 @@
 
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
-                <h2 class="">Ingreso Varios {{ ($id == 2 ? ' - Cobros Pendiente' : '') }} </h2>
+                @if ($id == 3)
+                    <h2 class=""> Cobro Curso </h2>
+                @else
+                    <h2 class="">Ingreso Varios {{ ($id == 2 ? ' - Cobros Pendiente' : '') }} </h2>
+                @endif
+
             </div>
 
             <div class="col-lg-12 col-md-12 col-sm-12">

@@ -5,6 +5,32 @@
     <link href="{{asset('plugins/sweetalerts/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('plugins/sweetalerts/sweetalert.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/css/components/custom-sweetalert.css')}}" rel="stylesheet" type="text/css" />
+    <style>
+        .caja{
+            width: 100%;
+            padding: 5px;
+            border: 1px solid;
+            height: auto;
+        }
+
+        .caja img{
+            width: 60%;
+            height: auto;
+            max-height: 100%;
+        }
+
+        .caja .datos{
+            color: white;
+            margin: 5px 5px;
+            font-weight: bold;
+            width: auto;
+        }
+
+        .caja .datos br{
+            margin-bottom: 2px;
+        }
+
+    </style>
 @endsection
 
 @section('content')
@@ -107,6 +133,7 @@
 
     </div>
 </div>
+
 
 @endsection
 

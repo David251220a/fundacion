@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CuentaVario;
 use App\Models\CuentaVarioDetalle;
+use App\Models\CursoAlumno;
 use App\Models\FormaPago;
 use App\Models\IngresoConcepto;
 use App\Models\IngresoVarios;
@@ -77,6 +78,24 @@ class IngresoVarioController extends Controller
                 }
 
 
+            }
+
+            if($id == 3){
+                if(empty($persona->alumno)){
+                    return redirect()->back()->withInput()->withErrors('La persona con este documento ' . $request->documento . ' no es un alumno.');
+                }
+
+                $alumno = $persona->alumno;
+                $alumno_curso = CursoAlumno::where('alumno_id', $alumno->id)
+                ->whereIn('curso_a_estado_id', [1, 2])
+                ->where('aprobado', 0)
+                ->get();
+
+                if(count($alumno_curso) > 0){
+                    return redirect()->route('ingreso_matricula.cobro_alumno', $alumno);
+                }else{
+                    return redirect()->back()->withInput()->withErrors('La persona con este documento ' . $request->documento . ' no tiene curso activos.');
+                }
             }
 
         }
@@ -257,9 +276,7 @@ class IngresoVarioController extends Controller
 
     public function ingreso_pendiente(Persona $persona)
     {
-        $pendiente = CuentaVario::where('persona_id', $persona->id)
-        ->where('estado_id', 1)->get();
-        return view('ingreso_varios.ingreso_pendiente', compact('persona', 'pendiente'));
+        return view('ingreso_varios.ingreso_pendiente', compact('persona'));
     }
 
     public function ingreso_pendiente_post(Persona $persona, Request $request)

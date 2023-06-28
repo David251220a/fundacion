@@ -59,11 +59,26 @@
                     </div>
                 </div>
 
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="card component-card_1 mb-4" style="background: white">
+                        <a href="{{route('ingreso_varios.buscar', 3)}}">
+                            <div class="card-body">
+                                <div class="user-info">
+                                    <img src="{{Storage::url('iconos/curso.png')}}" class="card-img-top" alt="...">
+                                    <div class="media-body">
+                                        <h5 class="card-user_name font-bold text-center mt-1" style="color: black; font-weight: bold">Cobro Curso</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </div>
 
     </div>
-
+    <a href="https://www.flaticon.es/iconos-gratis/curso" target="__blank" title="curso iconos">Curso iconos creados por xnimrodx - Flaticon</a>
 @endsection
 
 @section('js')
