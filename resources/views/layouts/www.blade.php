@@ -79,11 +79,11 @@
                     <a class="btn btn-link" href="">Cursos</a>
                     <a class="btn btn-link" href="">Contactanos</a>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-4 col-md-6">
                     <h4 class="text-white mb-3">Contacto</h4>
                     <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Ruta Nº 3, Elizado Aquino</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+595 983 602 155</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@fundacionkatupyry.com.py</p>
+                    <p class="mb-2"><a href="https://api.whatsapp.com/send?phone=595983602155"><i class="fa fa-phone-alt me-3"></i>+595 983 602 155</p></a>
+                    <p class="mb-2" st><i class="fa fa-envelope me-3"></i>administracion@fundacionkatupyry.org.py</p>
                     <div class="d-flex pt-2">
                         <a class="btn btn-outline-light btn-social" target="__blank" href="https://www.facebook.com/FundacionKatupyry"><i class="fab fa-facebook-f"></i></a>
                         <a class="btn btn-outline-light btn-social" target="__blank" href="https://www.instagram.com/fundacionkatupyry/"><i class="fab fa-instagram"></i></a>
