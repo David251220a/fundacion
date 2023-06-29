@@ -1,7 +1,7 @@
 <div class="mx-4">
     <div class="form-row">
         <div class="col-xl-12 col-lg-12 col-sm-12">
-            <h4 class="mb-2">Filtros {{$recibo}}</h4>
+            <h4 class="mb-2">Filtros </h4>
         </div>
 
         <div class="col-md-2  mb-4">
@@ -25,7 +25,7 @@
             </div>
         </div>
 
-        <div class="col-md-2 mb-4">
+        {{-- <div class="col-md-2 mb-4">
             <div class="custom-control custom-radio custom-control-inline">
                 <input type="radio" id="customRadioInline4" name="customRadioInline1" class="custom-control-input">
                 <label class="custom-control-label" for="customRadioInline4">Por Tipo de Curso</label>
@@ -37,7 +37,7 @@
                 <input type="radio" id="customRadioInline5" name="customRadioInline1" class="custom-control-input">
                 <label class="custom-control-label" for="customRadioInline5">Por Curso</label>
             </div>
-        </div>
+        </div> --}}
 
     </div>
 
@@ -54,7 +54,7 @@
 
         <div class="col-md-3  mb-4" id="ver_documento" style="display: {{$ver_documento}}">
             <label for="">Documento</label>
-            <input wire:model.defer="documento" type="text" class="form-control text-right" placeholder="">
+            <input wire:model.defer="documento" type="text" class="form-control text-right" onkeyup="punto_decimal(this)">
         </div>
 
         <div class="col-md-3  mb-4" id="ver_tipo_curso_id" style="display: none">
@@ -123,8 +123,8 @@
                                 {{$item->estado->descripcion}}
                             </td>
                             <td>
-                                <button type="button" class="btn btn-danger btn-sm">Anular</button>
-                                <button type="button" class="btn btn-info btn-sm">Ver recibo</button>
+                                <button type="button" onclick="anular({{$item->id}})" class="btn btn-danger btn-sm">Anular</button>
+                                <button onclick="datos({{$item->id}})" type="button" class="btn btn-info btn-sm">Ver recibo</button>
                             </td>
                         </tr>
                     @endforeach
@@ -132,5 +132,14 @@
             </table>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 mx-2 mt-4">
+            {{$data->links()}}
+        </div>
+
+    </div>
+
+    @include('modal.recibo_curso')
 
 </div>

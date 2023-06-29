@@ -47,9 +47,10 @@ class IngresoVarioController extends Controller
             $fecha_actual = date('Y-m-d', strtotime($fecha_actual));
             $buscar = 1;
             $data = $this->buscar_datos_fecha($fecha_actual);
+
         }
 
-        return view('ingreso_varios.consulta', compact('ingreso_concepto', 'buscar', 'fecha_actual'));
+        return view('ingreso_varios.consulta', compact('ingreso_concepto', 'buscar', 'fecha_actual', 'data'));
     }
 
     public function buscar_datos_fecha($fecha)

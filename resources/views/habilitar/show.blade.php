@@ -57,6 +57,7 @@
                         Alumnos
                     </a>
                 </li>
+
                 <li class="nav-item ml-2 mr-2">
                     <a class="nav-link mb-2 text-center" id="rounded-pills-icon-profile-tab" data-toggle="pill" href="#rounded-pills-icon-profile"
                     role="tab" aria-controls="rounded-pills-icon-profile" aria-selected="false">
@@ -65,15 +66,18 @@
                     </a>
                 </li>
 
-                <li class="nav-item ml-2 mr-2">
-                    <a class="nav-link mb-2 text-center" href="{{route('cursoAlumno.buscar', $cursoHabilitado)}}"
-                    role="tab" aria-controls="rounded-pills-icon-profile" aria-selected="false" style="background: rgb(78, 187, 87);
-                    color: white">
-                    <i class="fas fa-user-plus" style="font-size: 2.5rem"></i>
-                    <br>
-                        Inscribir
-                    </a>
-                </li>
+                @can('cursoAlumno.buscar')
+                    <li class="nav-item ml-2 mr-2">
+                        <a class="nav-link mb-2 text-center" href="{{route('cursoAlumno.buscar', $cursoHabilitado)}}"
+                        role="tab" aria-controls="rounded-pills-icon-profile" aria-selected="false" style="background: rgb(78, 187, 87);
+                        color: white">
+                        <i class="fas fa-user-plus" style="font-size: 2.5rem"></i>
+                        <br>
+                            Inscribir
+                        </a>
+                    </li>
+                @endcan
+
 
                 <li class="nav-item ml-2 mr-2">
                     <a class="nav-link mb-2 text-center" href="{{route('habilitado.index')}}"
@@ -93,9 +97,12 @@
                 </div>
 
                 <div class="tab-pane fade show " id="rounded-pills-icon-profile" role="tabpanel" aria-labelledby="rounded-pills-icon-profile-tab">
-                    <div class="col-xl-12 col-lg-12 col-sm-12">
-                        <a href="{{route('cursoAlumno.asistencia', $cursoHabilitado)}}" class="btn btn-info">Llamar Lista</a>
-                    </div>
+                    @can('cursoAlumno.asistencia')
+                        <div class="col-xl-12 col-lg-12 col-sm-12">
+                            <a href="{{route('cursoAlumno.asistencia', $cursoHabilitado)}}" class="btn btn-info">Llamar Lista</a>
+                        </div>
+                    @endcan
+
                     <div class="col-xl-12 col-lg-12 col-sm-12">
                         <div class="table-responsive widget-content widget-content-area br-6">
                             <table id="zero-config" class="table dt-table-hover" style="width:100%">

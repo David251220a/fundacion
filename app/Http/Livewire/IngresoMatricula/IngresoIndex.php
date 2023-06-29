@@ -3,18 +3,27 @@
 namespace App\Http\Livewire\IngresoMatricula;
 
 use App\Models\Curso;
+use App\Models\CursoAlumno;
 use App\Models\IngresoMatricula;
 use App\Models\Persona;
 use App\Models\TipoCurso;
 use Carbon\Carbon;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class IngresoIndex extends Component
 {
-    public $fecha_actual, $curso_id, $tipo_curso_id, $documento, $caso, $recibo;
+    public $fecha_actual, $curso_id, $tipo_curso_id, $documento, $caso, $recibo, $ingreso;
     public $ver_recibo, $ver_documento, $ver_fecha;
 
-    protected $listeners = ['render', 'filtro'];
+    protected $listeners = ['render', 'filtro', 'ver_recibo', 'anular'];
+    protected $paginationTheme = 'bootstrap';
+
+    use WithPagination;
+
+    public function updatingSearch(){
+        $this->resetPage();
+    }
 
     public function mount()
     {
@@ -76,6 +85,7 @@ class IngresoIndex extends Component
     public function datos_recibo()
     {
         $data = IngresoMatricula::where('numero_recibo', $this->recibo)
+        ->where('estado_id', 1)
         ->paginate(50);
 
         return $data;
@@ -92,6 +102,7 @@ class IngresoIndex extends Component
         }
 
         $data = IngresoMatricula::where('alumno_id', $alumno_id)
+        ->where('estado_id', 1)
         ->paginate(50);
 
         return $data;
@@ -119,4 +130,44 @@ class IngresoIndex extends Component
             $this->ver_documento = 'block';
         }
     }
+
+    public function ver_recibo($ingreso_id)
+    {
+        $this->ingreso = IngresoMatricula::find($ingreso_id);
+    }
+
+    public function anular($ingreso_id)
+    {
+        $ingreso = IngresoMatricula::find($ingreso_id);
+        $ingreso->estado_id = 2;
+        $ingreso->modif_user_id = auth()->user()->id;
+        $ingreso->update();
+
+        foreach ($ingreso->detalle as $item) {
+            $item->estado_id = 2;
+            $item->modif_user_id = auth()->user()->id;
+            $item->update();
+
+            $cursoAlumno = CursoAlumno::where('alumno_id', $item->alumno_id)
+            ->where('curso_habilitado_id', $item->curso_habilitado_id)
+            ->where('estado_id', 1)
+            ->first();
+
+            $cursoAlumno->total_pagar = $cursoAlumno->total_pagar + $item->monto_pagado;
+            $cursoAlumno->total_pagar = $cursoAlumno->monto_abonado - $item->monto_pagado;
+            $cursoAlumno->saldo = $cursoAlumno->saldo + $item->monto_pagado;
+            $cursoAlumno->estado_id = 1;
+            $cursoAlumno->modif_user_id = auth()->user()->id;
+            $cursoAlumno->update();
+            $this->resetUI();
+            $this->render();
+        }
+    }
+
+    public function resetUI()
+    {
+        $this->reset('ingreso');
+    }
+
+
 }

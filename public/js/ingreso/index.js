@@ -47,8 +47,36 @@ window.addEventListener('load', function() {
             padding: '2em'
         })
     });
+
 });
 
 function filtro(id){
     Livewire.emit('filtro', id);
+}
+
+function datos(ingreso_id)
+{
+    Livewire.emit('ver_recibo', ingreso_id);
+    $('#recibo_comprobante').modal('show');
+}
+
+function anular(ingreso_id)
+{
+    swal({
+        title: 'Desea anular este ingreso?',
+        text: "No podras revertir este cambio!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Anular',
+        padding: '2em'
+      }).then(function(result) {
+        if (result.value) {
+            Livewire.emit('anular', ingreso_id);
+          swal(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+        }
+      })
 }

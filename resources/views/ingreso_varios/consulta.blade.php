@@ -63,7 +63,7 @@
                         <label for="" class="w-full">Accion</label>
                         <br>
                         <button type="submit" class="btn btn-info">Filtrar</button>
-                        <button type="submit" class="btn btn-secondary "></button>
+                        <button type="submit" class="btn btn-warning ">Atras</button>
                     </div>
                 </div>
             </form>
@@ -74,14 +74,43 @@
                         <thead>
                             <tr>
                                 <th>N° Recibo</th>
-                                <th>Alumno</th>
-                                <th>Curso</th>
+                                <th>Persona</th>
+                                <th>Detalle</th>
                                 <th>Fecha Pago</th>
                                 <th>Monto</th>
                                 <th>Forma Pago</th>
                                 <th class="no-content">Actions</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            @foreach ($data as $item)
+                            <td>{{$item->numero_recibo}}</td>
+                            <td>
+                                {{number_format($item->persona->documento, 0, ".", ".")}} -
+                                {{$item->persona->nombre}}
+                                {{$item->persona->apellido}}
+                            </td>
+                            <td>
+                                @foreach ($item->detalle as $det)
+                                    <p>* {{$det->concepto->descripcion}}</p>
+                                @endforeach
+                            </td>
+                            <td>
+                                {{date('d/m/Y', strtotime($item->fecha_ingreso))}}
+                            </td>
+                            <td>
+                                {{number_format($item->total_pagado, 0, ".", ".")}}
+                            </td>
+                            <td>
+                                {{$item->forma_pago->descripcion}}
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-sm">Anular</button>
+                                <button type="button" class="btn btn-info btn-sm">Ver recibo</button>
+                            </td>
+                        </tr>
+                            @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>
