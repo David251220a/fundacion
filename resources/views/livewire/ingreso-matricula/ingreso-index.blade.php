@@ -54,7 +54,7 @@
 
         <div class="col-md-3  mb-4" id="ver_documento" style="display: {{$ver_documento}}">
             <label for="">Documento</label>
-            <input wire:model.defer="documento" type="text" class="form-control text-right" onkeyup="punto_decimal(this)">
+            <input wire:model.defer="documento" type="text" class="form-control text-right" onkeyup="punto_decimal(this)" onchange="punto_decimal(this)">
         </div>
 
         <div class="col-md-3  mb-4" id="ver_tipo_curso_id" style="display: none">
