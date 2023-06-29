@@ -119,7 +119,7 @@ class IngresoVarioController extends Controller
     {
         $ingreso_concepto = IngresoConcepto::orderBy('descripcion', 'ASC')->get();
         $forma_pago = FormaPago::all();
-        return view('ingreso_Varios.ingreso', compact('persona', 'ingreso_concepto', 'forma_pago'));
+        return view('ingreso_varios.ingreso', compact('persona', 'ingreso_concepto', 'forma_pago'));
     }
 
     public function crear_ingreso_concepto(Request $request)
