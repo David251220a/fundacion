@@ -50,7 +50,7 @@ function grabar_ingreso()
         }
 
         $(select).empty().trigger('change');
-        $(select_precio).empty().trigger('change');
+        // $(select_precio).empty().trigger('change');
 
         for(var i=0; i < respuesta.data.length; i++){
             var option = document.createElement('option');
@@ -145,11 +145,13 @@ function cambiar_precio(input){
     var index = 0;
     var precio = 0;
     html_precio = document.getElementById('concepto_precio');
-    index = input.selectedIndex;
-    precio = html_precio.options[index].value;
-    precio = precio.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
-    precio = precio.split('').reverse().join('').replace(/^[\.]/,'');
-    document.getElementById('precio').value = precio;
+    if (html_precio.options.length > 0) {
+        index = input.selectedIndex;
+        precio = html_precio.options[index].value;
+        precio = precio.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
+        precio = precio.split('').reverse().join('').replace(/^[\.]/,'');
+        document.getElementById('precio').value = precio;
+    }
 }
 
 function eliminar_fila(input)

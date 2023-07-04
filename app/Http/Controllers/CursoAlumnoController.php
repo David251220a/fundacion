@@ -52,10 +52,14 @@ class CursoAlumnoController extends Controller
                     'user_id' => auth()->user()->id,
                     'modif_user_id' => auth()->user()->id,
                 ]);
+
+                $aux = $alumno->id;
+            }else{
+                $aux = $persona->alumno->id;
             }
         }
 
-        $alumno = $persona->alumno;
+        $alumno = Alumno::find($aux);
 
         $curso_alumno = CursoAlumno::where('alumno_id', $alumno->id)
         ->where('curso_habilitado_id', $cursoHabilitado->id)
