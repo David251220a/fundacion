@@ -34,11 +34,13 @@ class AlumnoController extends Controller
             $data = Alumno::join('personas AS a', 'alumnos.persona_id', '=', 'a.id')
             ->select('alumnos.*')
             ->where('a.documento', $search)
+            ->take(1000)
             ->orderBy('a.documento')
             ->get();
         }else{
             $data = Alumno::join('personas AS a', 'alumnos.persona_id', '=', 'a.id')
             ->select('alumnos.*')
+            ->take(1000)
             ->orderBy('a.documento')
             ->get();
         }
