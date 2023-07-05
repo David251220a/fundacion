@@ -18,7 +18,8 @@
 
                         <div class="col-md-3 col-sm-6 mb-4">
                             <label for="">Documento</label>
-                            <input type="text" name="documento" id="documento" class="form-control text-right" placeholder="Documento" required>
+                            <input type="text" name="documento" id="documento" class="form-control text-right" placeholder="Documento"
+                            onkeyup="punto_decimal(this)" required>
                         </div>
                     </div>
 

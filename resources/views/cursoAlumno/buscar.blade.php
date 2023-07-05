@@ -23,7 +23,7 @@
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="">Documento</label>
-                    <input type="text" class="form-control w-full" style="width: 100%" name="documento">
+                    <input type="text" class="form-control text-right" style="width: 100%" name="documento" onkeyup="punto_decimal(this)">
                 </div>
             </div>
 

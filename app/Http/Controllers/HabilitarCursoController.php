@@ -64,10 +64,15 @@ class HabilitarCursoController extends Controller
         }
 
         if($request->publicar == 2){
+            if(empty($request->descripcion)){
+                return redirect()->back()->withInput()->withErrors('Si desea publicar el curso en las noticias debe de tener una descripcion para que sirva de titulo.');
+            }
+
             if(empty($request->observacion)){
                 return redirect()->back()->withInput()->withErrors('Si desea publicar el curso en las noticias debe de tener una observacion para que sirva de contenido.');
             }
         }
+
 
         $filePath = '';
         if($request->portada)

@@ -2,7 +2,8 @@
 
     <div class="col-md-3 col-sm-6 mb-4">
         <label for="">Documento</label>
-        <input type="text" name="documento" id="documento" class="form-control text-right" placeholder="Documento" value="{{old('documento', $data->documento)}}" required>
+        <input type="text" name="documento" id="documento" class="form-control text-right" placeholder="Documento" value="{{old('documento', $data->documento)}}"
+        onkeyup="punto_decimal(this)" required>
     </div>
 
     <div class="col-md-3 col-sm-6 mb-4">
@@ -59,14 +60,14 @@
         </select>
     </div>
 
-    <div class="col-md-3 col-sm-6 mb-4">
+    {{-- <div class="col-md-3 col-sm-6 mb-4">
         <label for="">P</label>
         <select name="partido_id" id="partido_id" class="form-control">
             @foreach ($partido as $item)
                 <option {{( old('', $data->partido_id) == $item->id ? 'selected' : '' )}} value="{{$item->id}}">{{$item->alias}}</option>
             @endforeach
         </select>
-    </div>
+    </div> --}}
 
     <div class="col-md-3 col-sm-6 mb-4">
         <label for="">Estado</label>
@@ -103,9 +104,10 @@
     <div class="col-md-1 col-sm-2 mb-4">
         <label for="">P</label>
         <select id="partido" class="form-control">
-            @foreach ($partido as $item)
+            <option value="1">S</option>
+            {{-- @foreach ($partido as $item)
                 <option value="{{$item->id}}">{{$item->alias}}</option>
-            @endforeach
+            @endforeach --}}
         </select>
     </div>
 
