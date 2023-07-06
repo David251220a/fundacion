@@ -167,6 +167,11 @@ class IngresoPendiente extends Component
         $this->render();
     }
 
+    public function confirmar()
+    {
+
+    }
+
     public function resetUI()
     {
         $this->reset('total_pagar_modal');

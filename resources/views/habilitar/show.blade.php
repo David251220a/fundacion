@@ -40,9 +40,80 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <h3 class="">Curso:</h3>
-                <h5>{{$cursoHabilitado->curso->descripcion}} - {{$cursoHabilitado->curso->modulo->descripcion}}</h5>
-                <p>Periodo: {{$cursoHabilitado->periodo_desde}} al {{$cursoHabilitado->periodo_hasta}}</p>
-                <p>Precio: {{number_format($cursoHabilitado->precio, 0, ".", ".")}}
+                <h3>{{$cursoHabilitado->curso->descripcion}} - {{$cursoHabilitado->curso->modulo->descripcion}}</h3>
+                <p style="font-size: 18px; line-height: 15px">Periodo: {{$cursoHabilitado->periodo_desde}} al {{$cursoHabilitado->periodo_hasta}}</p>
+                <p style="font-size: 18px; line-height: 15px">Precio: {{number_format($cursoHabilitado->precio, 0, ".", ".")}}
+                @php
+                    $lunes = 'Lunes';
+                    $martes = 'Martes';
+                    $miercoles = 'Miercoles';
+                    $jueves = 'Jueves';
+                    $viernes = 'Viernes';
+                    $sabado = 'Sabado';
+                    $domingo = 'domingo';
+                    $clase = '';
+                    $ant = 0;
+                    if($cursoHabilitado->lunes){
+                        $clases = $lunes;
+                        $ant = 1;
+                    }
+
+                    if($cursoHabilitado->martes){
+                        if($ant == 1){
+                            $clases = $clases . ', ' . $martes;
+                        }else {
+                            $clases = $martes;
+                            $ant = 1;
+                        }
+                    }
+
+                    if($cursoHabilitado->miercoles){
+                        if($ant == 1){
+                            $clases = $clases . ', ' . $miercoles;
+                        }else {
+                            $clases = $miercoles;
+                            $ant = 1;
+                        }
+                    }
+
+                    if($cursoHabilitado->jueves){
+                        if($ant == 1){
+                            $clases = $clases . ', ' . $jueves;
+                        }else {
+                            $clases = $jueves;
+                            $ant = 1;
+                        }
+                    }
+
+                    if($cursoHabilitado->viernes){
+                        if($ant == 1){
+                            $clases = $clases . ', ' . $viernes;
+                        }else {
+                            $clases = $viernes;
+                            $ant = 1;
+                        }
+                    }
+
+                    if($cursoHabilitado->sabado){
+                        if($ant == 1){
+                            $clases = $clases . ', ' . $sabado;
+                        }else {
+                            $clases = $sabado;
+                            $ant = 1;
+                        }
+                    }
+
+                    if($cursoHabilitado->domingo){
+                        if($ant == 1){
+                            $clases = $clases . ', ' . $domingo;
+                        }else {
+                            $clases = $domingo;
+                            $ant = 1;
+                        }
+                    }
+
+                @endphp
+                <p style="font-size: 18px; line-height: 15px">Días de Clase: {{$clases}}
             </div>
         </div>
 
@@ -105,7 +176,7 @@
 
                     <div class="col-xl-12 col-lg-12 col-sm-12">
                         <div class="table-responsive widget-content widget-content-area br-6">
-                            <table id="zero-config" class="table dt-table-hover" style="width:100%">
+                            <table id="" class="table dt-table-hover" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th width="5%">Documento</th>

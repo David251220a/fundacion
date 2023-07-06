@@ -71,6 +71,18 @@
             </li>
         @endcan
 
+        {{-- @can('agenda.index') --}}
+            <li class="menu">
+                <a href="{{ route('agenda.index') }}" {{(substr(Route::currentRouteName() , 0 , strpos(Route::currentRouteName(), '.')) == 'agenda' ? 'data-active=true' : '')}}
+                    aria-expanded="false" class="dropdown-toggle">
+                    <div class="">
+                        <i class="fas fa-bookmark mr-3"></i>
+                        <span>Agenda</span>
+                    </div>
+                </a>
+            </li>
+        {{-- @endcan --}}
+
         @can('ver_opciones')
             <li class="menu">
                 <a href="#components" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">

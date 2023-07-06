@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\Auth\LoginController;
@@ -94,6 +95,10 @@ Route::group([
     Route::get('ingreso/recibo/{ingreso}', [IngresoVarioController::class, 'ver_recibo'])->name('ingreso_varios.ver_recibo');
     Route::get('ingreso/varios/{persona}/ingreso/pendiente', [IngresoVarioController::class, 'ingreso_pendiente'])->name('ingreso_varios.ingreso_pendiente');
     Route::post('ingreso/varios/{persona}/ingreso/pendiente', [IngresoVarioController::class, 'ingreso_pendiente_post'])->name('ingreso_varios.ingreso_pendiente_post');
+
+    Route::get('/agenda', [AgendaController::class, 'index'])->name('agenda.index');
+    Route::get('/agenda/{tipoCurso}/show', [AgendaController::class, 'show'])->name('agenda.show');
+    Route::get('/agenda/{curso}/agendar', [AgendaController::class, 'agenda'])->name('agenda.agenda');
 
 
 });

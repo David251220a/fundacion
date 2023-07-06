@@ -26,4 +26,9 @@ class Curso extends Model
         return $this->belongsTo(TipoCurso::class, 'tipo_curso_id');
     }
 
+    public function habilitado()
+    {
+        return $this->hasMany(CursoHabilitado::class, 'curso_id')->where('concluido', 0);
+    }
+
 }

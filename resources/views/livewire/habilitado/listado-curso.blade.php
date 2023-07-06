@@ -45,7 +45,7 @@
                                 $color = 'background: rgb(99, 250, 53)';
                             }
                         @endphp
-                        <tr style="{{$color}};">
+                        <tr style="{{$color}}; ">
                             <td class="text-right text-bold" style="font-weight: bold; color:black; font-size:15px">{{number_format($item->alumno->persona->documento, 0, ".", ".")}}</td>
                             <td class="" style="font-weight: bold; color:black; font-size:15px">{{$item->alumno->persona->nombre}}</td>
                             <td class="" style="font-weight: bold; color:black; font-size:15px">{{$item->alumno->persona->apellido}}</td>
@@ -69,7 +69,10 @@
                     @endforeach
                 </tbody>
                 <tfoot style="color: white">
-                    <td colspan="4">
+                    <td>
+                        Cantidad Alumnos : {{count($alumnos)}}
+                    </td>
+                    <td colspan="3">
                         TOTAL SALDO
                     </td>
                     <td class="text-right">
