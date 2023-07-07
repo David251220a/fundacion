@@ -31,4 +31,9 @@ class Curso extends Model
         return $this->hasMany(CursoHabilitado::class, 'curso_id')->where('concluido', 0);
     }
 
+    public function agendado()
+    {
+        return $this->hasMany(Agenda::class, 'curso_id')->where('curso_a_estado_id', 4);
+    }
+
 }

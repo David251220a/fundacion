@@ -39,6 +39,11 @@
                         $estilo = '';
                         $desc = 'NO';
                     }
+
+                    $estilo = '';
+                    if(count($item->agendado) >= 10){
+                        $estilo = 'background: #ff0d90;border-radius: 8px;';
+                    }
                 @endphp
                 <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
                     <div class="card component-card_7 mb-4">
@@ -48,6 +53,7 @@
                                 <h5 class="card-text">{{$item->descripcion}}</h5>
                                 <h6 class="">Modulo: {{$item->modulo->descripcion}}</h6>
                                 <h6 class="">Habilitado: {{$desc}}</h6>
+                                <h6 class="">Agendado: {{count($item->agendado)}}</h6>
                             </div>
                         </a>
                     </div>

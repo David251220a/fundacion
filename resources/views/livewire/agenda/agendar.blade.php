@@ -49,6 +49,7 @@
                     <table id="zero-config" class="table dt-table-hover" style="width:100%">
                         <thead>
                             <tr>
+                                <th>Fecha</th>
                                 <th>Documento</th>
                                 <th>Nombre</th>
                                 <th>Apellido</th>
@@ -62,16 +63,24 @@
                         <tbody>
                             @foreach ($data as $item)
                                 <tr>
+                                    <td>{{date('d/m/Y', strtotime($item->fecha_agenda))}}</td>
                                     <td style="text-align: right">{{number_format($item->alumno->persona->documento, 0, ".", ".")}}</td>
                                     <td>{{$item->alumno->persona->nombre}}</td>
                                     <td>{{$item->alumno->persona->apellido}}</td>
                                     <td>{{$item->alumno->persona->celular}}</td>
                                     <td>{{$item->alumno->persona->email}}</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{$item->estado->descripcion}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="eliminar({{$item->id}})">Eliminar</button>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="7" class="text-white" style="font-size: 18px"> Cantidad de Alumnos Agendado: {{count($data)}}</td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>

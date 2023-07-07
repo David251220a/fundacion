@@ -23,6 +23,8 @@ class Agendar extends Component
         'apellido' => 'required',
     ];
 
+    protected $listeners = ['eliminar'];
+
     public function mount(Curso $curso)
     {
         $this->curso = $curso;
@@ -147,30 +149,43 @@ class Agendar extends Component
 
         $fecha_actual = Carbon::now();
 
-        Agenda::create([
-            'curso_id' => $this->curso->id,
-            'curso_modulo_id' => $this->curso->curso_modulo_id,
-            'tipo_curso_id' => $this->curso->tipo_curso_id,
-            'alumno_id' => $this->alumno_id,
-            'curso_a_estado_id' => 4,
-            'fecha_agenda' => $fecha_actual,
-            'observacion' => '',
-            'contacto' => 0,
-            'fecha_contacto' => null,
-            'estado_id' => 1,
-            'user_id' => auth()->user()->id,
-            'modif_user_id' => auth()->user()->id,
-        ]);
-
-        $persona = Persona::where('documento', str_replace('.', '', $this->buscar_documento))
+        $existe = Agenda::where('alumno_id', $this->alumno_id)
+        ->where('curso_id', $this->curso->id)
+        ->where('curso_a_estado_id', 4)
         ->first();
 
-        $persona->celular = $this->celular;
-        $persona->email = $this->email;
-        $persona->modif_user_id = auth()->user()->id;
-        $persona->update();
-        $this->resetUI();
-        $this->emit('guardado', 'Se agendo el alumno con exito.');
+        if (empty($existe)) {
+            Agenda::create([
+                'curso_id' => $this->curso->id,
+                'curso_modulo_id' => $this->curso->curso_modulo_id,
+                'tipo_curso_id' => $this->curso->tipo_curso_id,
+                'alumno_id' => $this->alumno_id,
+                'curso_a_estado_id' => 4,
+                'fecha_agenda' => $fecha_actual,
+                'observacion' => '',
+                'contacto' => 0,
+                'fecha_contacto' => null,
+                'estado_id' => 1,
+                'user_id' => auth()->user()->id,
+                'modif_user_id' => auth()->user()->id,
+            ]);
+
+            $persona = Persona::where('documento', str_replace('.', '', $this->buscar_documento))
+            ->first();
+
+            $persona->celular = $this->celular;
+            $persona->email = $this->email;
+            $persona->modif_user_id = auth()->user()->id;
+            $persona->update();
+            $this->resetUI();
+            $this->emit('guardado', 'Se agendo el alumno con exito.');
+        } else {
+            $this->resetUI();
+            $this->emit('existe', 'El alumno ya esta agendado.');
+        }
+
+
+
     }
 
     public function resetUI()
@@ -184,5 +199,12 @@ class Agendar extends Component
         $this->reset('fecha_nacimiento');
         $this->reset('buscar_documento');
         $this->emit('reloadClassCSs');
+    }
+
+    public function eliminar($id)
+    {
+        $alumno = Agenda::find($id);
+        $alumno->curso_a_estado_id = 6;
+        $alumno->update();
     }
 }

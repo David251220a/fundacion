@@ -53,10 +53,38 @@ window.addEventListener('load', function() {
             padding: '2em'
         })
     });
+
+    window.livewire.on('existe', msj => {
+        $('#modal_buscar').modal('hide');
+        $('#modal_agregar').modal('hide');
+        $('#modal_confirmar').modal('hide');
+        swalWithBootstrapButtons(
+            'Atención',
+            msj,
+            'error'
+        )
+    });
 });
 
-function actualizar(){
-    Livewire.emit('render');
+function eliminar(id){
+    swal({
+        title: 'Esta seguro de eliminar?',
+        text: "No puede revertir la eliminacion!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        padding: '2em'
+    }).then(function(result) {
+        if (result.value) {
+            Livewire.emit('eliminar', id);
+            swal(
+                'Eliminado!',
+                'El alumno agendado se elimino con exito.',
+                'success'
+            )
+        }
+    })
+
 }
 
 function datos(cursoAlumno){
