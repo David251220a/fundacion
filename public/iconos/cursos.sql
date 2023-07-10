@@ -11,41 +11,14 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES latin1 */;
-
---
--- Base de datos: `wweixrni_fundacion`
---
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cursos`
---
-
-CREATE TABLE `cursos` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `descripcion` varchar(191) NOT NULL,
-  `estado_id` bigint(20) UNSIGNED NOT NULL,
-  `tipo_curso_id` bigint(20) UNSIGNED NOT NULL,
-  `curso_modulo_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `modif_user_id` bigint(20) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ;
-
 --
 -- Volcado de datos para la tabla `cursos`
 --
 
 INSERT INTO `cursos` (`id`, `descripcion`, `estado_id`, `tipo_curso_id`, `curso_modulo_id`, `user_id`, `modif_user_id`, `created_at`, `updated_at`) VALUES
 (1, 'BOCADITOS DULCES Y SALADOS', 1, 1, 2, 1, 1, '2023-06-29 01:40:30', '2023-06-29 01:40:30'),
-(2, 'TORTAS Y PASTELES', 1, 1, 2, 1, 1, '2023-07-03 20:40:10', '2023-07-05 23:08:49'),
-(3, 'UÑAS ESCULPIDAS', 1, 3, 2, 3, 3, '2023-07-05 14:22:12', '2023-07-05 14:22:12'),
+(2, 'TORTAS Y PASTELES', 1, 1, 1, 1, 1, '2023-07-03 20:40:10', '2023-07-05 23:08:49'),
+(3, 'UÑAS ESCULPIDAS', 1, 3, 2, 1, 1, '2023-07-05 14:22:12', '2023-07-05 14:22:12'),
 (4, 'BOCADITOS DULCES Y SALADOS', 1, 1, 3, 1, 1, '2023-07-05 23:10:13', '2023-07-05 23:10:24'),
 (5, 'BOCADITOS DULCES Y SALADOS', 1, 1, 4, 1, 1, '2023-07-05 23:10:55', '2023-07-05 23:10:55'),
 (6, 'TORTAS Y PASTELES', 1, 1, 3, 1, 1, '2023-07-05 23:11:46', '2023-07-05 23:11:46'),
@@ -173,29 +146,3 @@ INSERT INTO `cursos` (`id`, `descripcion`, `estado_id`, `tipo_curso_id`, `curso_
 --
 -- Índices para tablas volcadas
 --
-
---
--- Indices de la tabla `cursos`
---
-ALTER TABLE `cursos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `cursos_estado_id_foreign` (`estado_id`),
-  ADD KEY `cursos_tipo_curso_id_foreign` (`tipo_curso_id`),
-  ADD KEY `cursos_curso_modulo_id_foreign` (`curso_modulo_id`),
-  ADD KEY `cursos_user_id_foreign` (`user_id`),
-  ADD KEY `cursos_modif_user_id_foreign` (`modif_user_id`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `cursos`
---
-ALTER TABLE `cursos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -99,6 +99,9 @@ Route::group([
     Route::get('/agenda', [AgendaController::class, 'index'])->name('agenda.index');
     Route::get('/agenda/{tipoCurso}/show', [AgendaController::class, 'show'])->name('agenda.show');
     Route::get('/agenda/{curso}/agendar', [AgendaController::class, 'agenda'])->name('agenda.agenda');
+    Route::get('/agenda/{curso}/habilitar', [AgendaController::class, 'habilitar'])->name('agenda.habilitar');
+    Route::post('/agenda/{curso}/habilitar', [AgendaController::class, 'habilitar_post'])->name('agenda.habilitar_post');
+    Route::get('/agenda/general', [AgendaController::class, 'general'])->name('agenda.general');
 
 
 });

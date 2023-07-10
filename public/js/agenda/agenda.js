@@ -35,6 +35,7 @@ window.addEventListener('load', function() {
     window.livewire.on('crear', msj => {
         $('#modal_buscar').modal('hide');
         $('#modal_agregar').modal('show');
+
     });
 
     window.livewire.on('confirmar_creacion', msj => {
@@ -63,6 +64,36 @@ window.addEventListener('load', function() {
             msj,
             'error'
         )
+    });
+
+    window.livewire.on('confirmar_creacion_general', msj => {
+        $('#modal_buscar').modal('hide');
+        $('#modal_agregar').modal('hide');
+        $('#modal_confirmar_general').modal('show');
+        console.log("llega");
+    });
+
+    window.livewire.on('existe_general', msj => {
+        $('#modal_buscar').modal('hide');
+        $('#modal_agregar').modal('hide');
+        $('#modal_confirmar_general').modal('hide');
+        swalWithBootstrapButtons(
+            'Atención',
+            msj,
+            'error'
+        )
+    });
+
+    window.livewire.on('guardado_general', msj => {
+        $('#modal_buscar').modal('hide');
+        $('#modal_agregar').modal('hide');
+        $('#modal_confirmar_general').modal('hide');
+        swal({
+            title: 'Buen Trabajo!',
+            text: msj,
+            type: 'success',
+            padding: '2em'
+        })
     });
 });
 
@@ -93,4 +124,14 @@ function datos(cursoAlumno){
 
 function estado_cuenta(cursoAlumno, alumno){
     Livewire.emit('estado_cuenta', cursoAlumno, alumno);
+}
+
+function cargar_curso()
+{
+    Livewire.emit('actualizar');
+}
+
+function modal_cargar_curso()
+{
+    Livewire.emit('modal_actualizar');
 }

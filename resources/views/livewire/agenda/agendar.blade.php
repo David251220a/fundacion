@@ -19,16 +19,17 @@
             </a>
         </li>
 
-        <li class="nav-item ml-2 mr-2">
-            <a class="nav-link mb-2 text-center" href="#"
-                role="tab" aria-controls="rounded-pills-icon-profile" aria-selected="false" style="background: rgb(78, 187, 87);
-                color: white">
-                <i class="fas fa-check" style="font-size: 2.5rem"></i>
-                <br>
-                habilitar
-            </a>
-        </li>
-
+        @can('agenda.habilitar')
+            <li class="nav-item ml-2 mr-2">
+                <a class="nav-link mb-2 text-center" href="{{route('agenda.habilitar', $curso)}}"
+                    role="tab" aria-controls="rounded-pills-icon-profile" aria-selected="false" style="background: rgb(78, 187, 87);
+                    color: white">
+                    <i class="fas fa-check" style="font-size: 2.5rem"></i>
+                    <br>
+                    habilitar
+                </a>
+            </li>
+        @endcan
 
         <li class="nav-item ml-2 mr-2">
             <a class="nav-link mb-2 text-center" href="{{route('agenda.show', $curso->tipo_curso_id)}}"

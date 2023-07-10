@@ -11,39 +11,14 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES latin1 */;
-
---
--- Base de datos: `wweixrni_fundacion`
---
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tipo_cursos`
---
-
-CREATE TABLE `tipo_cursos` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `descripcion` varchar(150) NOT NULL,
-  `estado_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `modif_user_id` bigint(20) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ;
-
 --
 -- Volcado de datos para la tabla `tipo_cursos`
 --
 
 INSERT INTO `tipo_cursos` (`id`, `descripcion`, `estado_id`, `user_id`, `modif_user_id`, `created_at`, `updated_at`) VALUES
 (1, 'GASTROMONIA', 1, 1, 1, '2023-06-29 01:40:21', '2023-06-29 01:40:21'),
-(2, 'ADMINISTRACION Y GESTION ', 1, 3, 3, '2023-07-05 14:19:39', '2023-07-05 14:19:39'),
-(3, 'BELLEZA Y ESTETICA', 1, 3, 3, '2023-07-05 14:21:45', '2023-07-05 14:21:45'),
+(2, 'ADMINISTRACION Y GESTION ', 1, 1, 1, '2023-07-05 14:19:39', '2023-07-05 14:19:39'),
+(3, 'BELLEZA Y ESTETICA', 1, 1, 1, '2023-07-05 14:21:45', '2023-07-05 14:21:45'),
 (4, 'INFORMÁTICA', 1, 1, 1, '2023-07-05 22:59:17', '2023-07-05 23:00:23'),
 (5, 'ARTE Y ARTESANIA', 1, 1, 1, '2023-07-05 22:59:35', '2023-07-05 22:59:35'),
 (6, 'ELECTRICIDAD Y ELECTRÓNICA', 1, 1, 1, '2023-07-05 23:00:09', '2023-07-05 23:00:09'),
@@ -65,24 +40,4 @@ INSERT INTO `tipo_cursos` (`id`, `descripcion`, `estado_id`, `user_id`, `modif_u
 
 --
 -- Indices de la tabla `tipo_cursos`
---
-ALTER TABLE `tipo_cursos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `tipo_cursos_estado_id_foreign` (`estado_id`),
-  ADD KEY `tipo_cursos_user_id_foreign` (`user_id`),
-  ADD KEY `tipo_cursos_modif_user_id_foreign` (`modif_user_id`);
 
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `tipo_cursos`
---
-ALTER TABLE `tipo_cursos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
