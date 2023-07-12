@@ -114,6 +114,15 @@
                 </div>
 
                 <div class="col-lg-3 col-md-3 col-sm-12">
+                    <label for="">Tipo Clase</label>
+                    <select name="tipo_clase" id="tipo_clase" class="form-control">
+                        <option value="0">NORMAL</option>
+                        <option value="1">PENULTIMA CLASE</option>
+                        <option value="2">ULTIMA</option>
+                    </select>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-12">
                     <label for="">Motivo</label>
                     <select name="motivo" id="motivo" class="form-control">
                         @foreach ($motivo as $item)
@@ -122,7 +131,7 @@
                     </select>
                 </div>
 
-                <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="col-lg-6 col-md-6    col-sm-12">
                     <Label>Observación</Label>
                     <input type="text" name="observacion" id="observacion" class="form-control">
                 </div>
@@ -134,7 +143,7 @@
                         <thead>
                             <tr>
                                 <th colspan="5">
-                                    Asistencia completa <input type="checkbox" name="completa" id="completa" value="{{old('completa', 0)}}"
+                                    Asistencia completa <input type="checkbox" name="completa" id="completa" value="{{old('completa', 0)}}" {{ old('completa') ? 'checked' : null }}
                                     onclick="asistencia_completo()">
                                 </th>
                             </tr>
@@ -174,7 +183,11 @@
             </div>
 
             <div class="row">
-                <button type="submit" class="btn btn-success mt-4">Grabar</button>
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-success">Grabar</button>
+                    <a href="{{route('habilitado.show', $cursoHabilitado)}}" class="btn btn-warning">Atras</a>
+                </div>
+
             </div>
         </form>
     </div>

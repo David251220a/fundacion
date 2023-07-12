@@ -24,7 +24,7 @@
 
     <div class="col-xl-12 col-lg-12 col-sm-12">
         <div class="table-responsive widget-content widget-content-area br-6">
-            <table id="zero-config" class="table dt-table-hover" style="width:100%">
+            <table id="" class="table dt-table-hover" style="width:100%">
                 <thead>
                     <tr>
                         <th>Documento</th>

@@ -179,29 +179,81 @@
                             <table id="" class="table dt-table-hover" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th width="5%">Documento</th>
-                                        <th width="10%">Nombre</th>
-                                        <th width="10%">Apellido</th>
-                                        @if (count($asistencia_fecha) > 0)
-                                            <th>Apellido</th>
-                                        @else
-                                            <th></th>
-                                        @endif
+                                        <th width="5%" rowspan="2">Nº</th>
+                                        <th width="5%" rowspan="2">Documento</th>
+                                        <th width="10%" rowspan="2">Nombre</th>
+                                        <th width="10%" rowspan="2">Apellido</th>
+                                        @php
+                                            $contador = count($asistencia_fecha);
+                                        @endphp
+                                        @for ($i = 0; $i < $contador; $i++)
+                                            <th width="10%">Clase {{$i + 1 }}</th>
+                                        @endfor
+
+                                    </tr>
+                                    </tr>
+                                        @foreach ($asistencia_fecha as $item)
+                                            <th width="10%">{{date('d/m/Y', strtotime($item->fecha_asistencia))}}</th>
+                                        @endforeach
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($alumnos_cursando as $item)
                                         <tr>
+                                            <td>{{$loop->iteration}}</td>
                                             <td class="text-right">{{number_format($item->alumno->persona->documento, 0, ".", ".")}}</td>
                                             <td class="">{{$item->alumno->persona->nombre}}</td>
                                             <td class="">{{$item->alumno->persona->apellido}}</td>
-                                            <td></td>
+                                            @foreach ($asistencia_fecha as $asis)
+                                                <td>
+                                                    @php
+                                                        $valor = 0;
+
+                                                        $existe = $asistencia->where('fecha', $asis->fecha_asistencia);
+
+                                                        if (count($existe) <= 0) {
+                                                            $valor = 3;
+                                                        }
+
+                                                        if ($valor != 3) {
+                                                            $data = $asistencia->where('fecha', $asis->fecha_asistencia)->where('alumno_id', $item->alumno_id);
+                                                            if (count($data) <= 0) {
+                                                                $valor = 0;
+                                                            } else {
+                                                                foreach ($data as $a) {
+                                                                    $valor = $a->asistencia;
+                                                                }
+                                                            }
+                                                        }
+
+                                                    @endphp
+
+                                                    @if ($valor == 0)
+                                                        <i class="fas fa-ban" style="color: rgb(253, 30, 30); font-size: 15px"></i>
+                                                    @endif
+
+                                                    @if ($valor == 1)
+                                                        <i class="fas fa-check-circle" style="color: rgb(19, 240, 19); font-size: 15px"></i>
+                                                    @endif
+
+                                                    @if ($valor == 3)
+                                                    <i class="fas fa-info-circle" style="color: rgb(230, 255, 8); font-size: 15px"></i>
+                                                    @endif
+
+                                                </td>
+                                            @endforeach
                                         </tr>
                                     @endforeach
                                 </tbody>
-                                <tbody>
+                                <tfoot>
+                                    <tr>
+                                        @php
+                                            $span = 4 + count($asistencia_fecha);
+                                        @endphp
+                                        <th colspan="{{$span}}" style="color:white">Cantidad de Alumnos : {{count($alumnos_cursando)}}</th>
+                                    </tr>
+                                </tfoot>
 
-                                </tbody>
                             </table>
                         </div>
                     </div>

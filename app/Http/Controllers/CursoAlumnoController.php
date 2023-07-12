@@ -268,6 +268,15 @@ class CursoAlumnoController extends Controller
             return redirect()->back()->withInput()->withErrors('Esta fecha no corresponde al dia que se deba de tener una clase.');
         }
 
+        // VALIDA SI YA HAY DEUPLICACION DE CLASE Y DIA
+        $exites_clase = Asistencia::where('fecha_asistencia', $fecha)
+        ->where('curso_habilitado_id', $cursoHabilitado->id)
+        ->first();
+
+        if(!(empty($exites_clase))){
+            return redirect()->back()->withInput()->withErrors('Ya se llamo lista en esta fecha: '. $fecha .'.');
+        }
+
         // PREGUNTA SI LA CLASE FUE SUSPENDIDA
         if($request->suspender == 0){
             // VALIDA SI NO HAY NINGUN ALUMNO PRESENTE
@@ -298,12 +307,23 @@ class CursoAlumnoController extends Controller
                     'user_id' => auth()->user()->id,
                     'modif_user_id' => auth()->user()->id,
                 ]);
+
+                if($presente == 1){
+                    $aux_alumno = CursoAlumno::where('curso_habilitado_id', $cursoHabilitado->id)
+                    ->where('alumno_id', $alumno_id[$i])
+                    ->first();
+
+                    $aux_alumno->update([
+                        'curso_a_estado_id' => 2,
+                        'modif_user_id' => auth()->user()->id,
+                    ]);
+                }
             }
         }else{
             Asistencia::create([
                 'curso_habilitado_id' => $cursoHabilitado->id,
                 'fecha_asistencia' => $fecha,
-                'asistencia_motivo' => $request->motivo,
+                'asistencia_motivo_id' => $request->motivo,
                 'observacion' => $request->observacion,
                 'clase' => 0,
                 'estado_id' => 1,
@@ -311,6 +331,7 @@ class CursoAlumnoController extends Controller
                 'modif_user_id' => auth()->user()->id,
             ]);
 
+            $fecha_fin = Carbon::parse($fecha_fin);
             $fecha_fin = $fecha_fin->addWeeks(2);
             $cursoHabilitado->periodo_hasta = $fecha_fin;
             $cursoHabilitado->update();

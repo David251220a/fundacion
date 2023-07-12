@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Asistencia;
 use App\Models\Curso;
 use App\Models\CursoAEstado;
 use App\Models\CursoAlumno;
@@ -156,12 +157,13 @@ class HabilitarCursoController extends Controller
         ->whereIn('curso_a_estado_id', [1, 2])
         ->get();
 
-        $asistencia_fecha = CursoAlumnoAsistencia::where('curso_habilitado_id', $cursoHabilitado->id)
-        ->select('fecha')
-        ->groupBy('fecha')
+        $asistencia_fecha = Asistencia::where('curso_habilitado_id', $cursoHabilitado->id)
+        ->where('estado_id', 1)
+        ->orderBy('fecha_asistencia', 'ASC')
         ->get();
 
         $asistencia = CursoAlumnoAsistencia::where('curso_habilitado_id', $cursoHabilitado->id)
+        ->orderBy('fecha', 'ASC')
         ->get();
 
         return view('habilitar.show', compact('cursoHabilitado', 'estados_alumno', 'alumnos_cursando', 'asistencia_fecha', 'asistencia'));

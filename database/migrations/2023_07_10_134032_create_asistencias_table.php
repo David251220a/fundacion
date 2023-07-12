@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('asistencia_motivo_id')->constrained();
             $table->string('observacion', 200)->nullable();
             $table->integer('clase')->default(0);
+            $table->integer('tipo_clase')->default(0);
             $table->foreignId('estado_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->unsignedBigInteger('modif_user_id');
