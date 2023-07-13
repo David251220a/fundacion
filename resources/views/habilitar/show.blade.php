@@ -41,7 +41,9 @@
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <h3 class="">Curso:</h3>
                 <h3>{{$cursoHabilitado->curso->descripcion}} - {{$cursoHabilitado->curso->modulo->descripcion}}</h3>
-                <p style="font-size: 18px; line-height: 15px">Periodo: {{$cursoHabilitado->periodo_desde}} al {{$cursoHabilitado->periodo_hasta}}</p>
+                <p style="font-size: 18px; line-height: 15px">Periodo: {{date('d/m/Y', strtotime($cursoHabilitado->periodo_desde))}}
+                    al {{date('d/m/Y', strtotime($cursoHabilitado->periodo_hasta))}}
+                </p>
                 <p style="font-size: 18px; line-height: 15px">Precio: {{number_format($cursoHabilitado->precio, 0, ".", ".")}}
                 @php
                     $lunes = 'Lunes';

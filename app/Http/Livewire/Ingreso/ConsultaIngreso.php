@@ -7,7 +7,6 @@ use App\Models\IngresoConcepto;
 use App\Models\IngresoVarios;
 use App\Models\Persona;
 use Carbon\Carbon;
-use IntlChar;
 use Livewire\Component;
 use Livewire\WithPagination;
 

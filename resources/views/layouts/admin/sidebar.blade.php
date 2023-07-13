@@ -95,13 +95,25 @@
             </li>
         @endcan
 
-        {{-- @can('profesor.index') --}}
+        @can('profesor.index')
             <li class="menu">
                 <a href="{{ route('profesor.index') }}" {{(substr(Route::currentRouteName() , 0 , strpos(Route::currentRouteName(), '.')) == 'profesor' ? 'data-active=true' : '')}}
                     aria-expanded="false" class="dropdown-toggle">
                     <div class="">
                         <i class="fas fa-user-tie mr-3"></i>
                         <span>Instructor</span>
+                    </div>
+                </a>
+            </li>
+        @endcan
+
+        {{-- @can('general.index') --}}
+            <li class="menu">
+                <a href="{{ route('general.index') }}" {{(substr(Route::currentRouteName() , 0 , strpos(Route::currentRouteName(), '.')) == 'general' ? 'data-active=true' : '')}}
+                    aria-expanded="false" class="dropdown-toggle">
+                    <div class="">
+                        <i class="fas fa-info-circle mr-3"></i>
+                        <span>General</span>
                     </div>
                 </a>
             </li>

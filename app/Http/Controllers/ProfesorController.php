@@ -12,6 +12,16 @@ use Illuminate\Http\Request;
 
 class ProfesorController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:profesor.index')->only('index');
+        $this->middleware('permission:profesor.asistencia')->only('asistencia');
+        $this->middleware('permission:profesor.asistencia')->only('asistencia_post');
+        $this->middleware('permission:profesor.show')->only('show');
+        $this->middleware('permission:profesor.calificar')->only('calificar');
+        $this->middleware('permission:profesor.calificar')->only('calificar_post');
+    }
+
     public function index()
     {
         $user = auth()->user();

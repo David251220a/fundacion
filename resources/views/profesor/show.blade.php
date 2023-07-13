@@ -167,11 +167,11 @@
                 </div>
 
                 <div class="tab-pane fade show " id="rounded-pills-icon-profile" role="tabpanel" aria-labelledby="rounded-pills-icon-profile-tab">
-                    {{-- @can('profesor.asistencia') --}}
+                    @can('profesor.asistencia')
                         <div class="col-xl-12 col-lg-12 col-sm-12">
                             <a href="{{route('profesor.asistencia', $cursoHabilitado)}}" class="btn btn-info">Llamar Lista</a>
                         </div>
-                    {{-- @endcan --}}
+                    @endcan
 
                     <div class="col-xl-12 col-lg-12 col-sm-12">
                         <div class="table-responsive widget-content widget-content-area br-6">

@@ -6,6 +6,7 @@ use App\Http\Controllers\InicioController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CursoAlumnoController;
 use App\Http\Controllers\CursoController;
+use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\HabilitarCursoController;
 use App\Http\Controllers\Limpiar;
 use App\Http\Controllers\NoticiasController;
@@ -111,5 +112,7 @@ Route::group([
     Route::post('/profesor/{cursoHabilitado}/asistencia', [ProfesorController::class, 'asistencia_post'])->name('profesor.asistencia_post');
     Route::get('/profesor/{cursoHabilitado}/calificar', [ProfesorController::class, 'calificar'])->name('profesor.calificar');
     Route::post('/profesor/{cursoHabilitado}/calificar', [ProfesorController::class, 'calificar_post'])->name('profesor.calificar_post');
+
+    Route::get('/general', [GeneralController::class, 'index'])->name('general.index');
 });
 
