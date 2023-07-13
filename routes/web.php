@@ -15,6 +15,7 @@ use App\Http\Controllers\GrupoUsuarioController;
 use App\Http\Controllers\IngresoMatriculaController;
 use App\Http\Controllers\IngresoVarioController;
 use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\ProfesorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -104,5 +105,11 @@ Route::group([
     Route::get('/agenda/general', [AgendaController::class, 'general'])->name('agenda.general');
 
 
+    Route::get('/profesor', [ProfesorController::class, 'index'])->name('profesor.index');
+    Route::get('/profesor/{cursoHabilitado}', [ProfesorController::class, 'show'])->name('profesor.show');
+    Route::get('/profesor/{cursoHabilitado}/asistencia', [ProfesorController::class, 'asistencia'])->name('profesor.asistencia');
+    Route::post('/profesor/{cursoHabilitado}/asistencia', [ProfesorController::class, 'asistencia_post'])->name('profesor.asistencia_post');
+    Route::get('/profesor/{cursoHabilitado}/calificar', [ProfesorController::class, 'calificar'])->name('profesor.calificar');
+    Route::post('/profesor/{cursoHabilitado}/calificar', [ProfesorController::class, 'calificar_post'])->name('profesor.calificar_post');
 });
 

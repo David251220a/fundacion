@@ -33,10 +33,8 @@ class IngresoCurso extends Component
     public function render()
     {
         $curso = CursoAlumno::where('alumno_id', $this->alumno->id)
-        ->where('curso_a_estado_id', 1)
-        ->where('aprobado', 0)
+        ->whereNotIn('curso_a_estado_id', [4, 5, 6])
         ->where('saldo', '>', 0)
-        ->orWhere('curso_a_estado_id', 2)
         ->get();
 
         $forma_pago = FormaPago::all();

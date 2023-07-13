@@ -8,6 +8,7 @@
 
 @section('content')
 
+
     <div class="col-lg-12 layout-spacing mt-4">
         <div class="widget-content widget-content-area">
             <div class="row">
@@ -92,49 +93,15 @@
             </div>
 
         </div>
-        <h2 class="mt-2">Lista de Asistencia</h2>
-        <form action="{{route('profesor.asistencia_post', $cursoHabilitado)}}" method="POST">
+        <h2 class="mt-2">Calificación de Alumnos</h2>
+
+        <div class="alert alert-light-danger border-0 mb-4" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">x</button>
+            <strong>Atención!</strong> Si califica los alumnos para este curso ya se dará por concluido y ya no podra mas llamar listado u otras funciones.</button>
+        </div>
+
+        <form action="{{route('profesor.calificar_post', $cursoHabilitado)}}" method="POST">
             @csrf
-            <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-12">
-                    @php
-                        $fecha = date('Y-m-d', strtotime($fecha_actual));
-                    @endphp
-                    <label for="">Fecha Asistencia</label>
-                    <input type="date" name="fecha" id="fecha" class="form-control" value="{{old('fecha', $fecha)}}" >
-                </div>
-
-                <div class="col-lg-3 col-md-3 col-sm-12">
-                    <label for="">Suspender Clase</label>
-                    <select name="suspender" id="suspender" class="form-control">
-                        <option value="0">NO</option>
-                        <option value="1">SI</option>
-                    </select>
-                </div>
-
-                <div class="col-lg-3 col-md-3 col-sm-12">
-                    <label for="">Tipo Clase</label>
-                    <select name="tipo_clase" id="tipo_clase" class="form-control">
-                        <option value="0">NORMAL</option>
-                        <option value="1">PENULTIMA CLASE</option>
-                        <option value="2">ULTIMA</option>
-                    </select>
-                </div>
-
-                <div class="col-lg-3 col-md-3 col-sm-12">
-                    <label for="">Motivo</label>
-                    <select name="motivo" id="motivo" class="form-control">
-                        @foreach ($motivo as $item)
-                            <option value="{{$item->id}}">{{$item->descripcion}}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="col-lg-6 col-md-6    col-sm-12">
-                    <Label>Observación</Label>
-                    <input type="text" name="observacion" id="observacion" class="form-control">
-                </div>
-            </div>
 
             <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 mt-4">
                 <div class="table-responsive widget-content widget-content-area br-6">
@@ -142,13 +109,13 @@
                         <thead>
                             <tr>
                                 <th colspan="5">
-                                    Asistencia completa <input type="checkbox" name="completa" id="completa" value="0"
+                                    Aprobación completa <input type="checkbox" name="completa" id="completa" value="0"
                                     onclick="asistencia_completo()">
                                 </th>
                             </tr>
                             <tr>
                                 <th width="5%">N#</th>
-                                <th width="5%" class="text-center">Presencia</th>
+                                <th width="5%" class="text-center">Aprobo?</th>
                                 <th width="10%">Documento</th>
                                 <th ">Nombre</th>
                                 <th ">Apellido</th>

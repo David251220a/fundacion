@@ -16,6 +16,14 @@ use Illuminate\Support\Facades\DB;
 
 class AgendaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:agenda.index')->only('index');
+        $this->middleware('permission:agenda.show')->only('show');
+        $this->middleware('permission:agenda.habilitar')->only('habilitar');
+        $this->middleware('permission:agenda.habilitar')->only('habilitar_post');
+    }
+
     public function index()
     {
 

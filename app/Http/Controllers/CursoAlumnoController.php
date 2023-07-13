@@ -231,6 +231,7 @@ class CursoAlumnoController extends Controller
 
         $asistencia = $request->asistencia;
         $alumno_id = $request->alumno_id;
+        $asistencia_valor = $request->asistencia_valor;
         $fecha = $request->fecha;
         $fecha_fin = $cursoHabilitado->periodo_hasta;
         $fecha_actual = Carbon::now();
@@ -281,7 +282,7 @@ class CursoAlumnoController extends Controller
         if($request->suspender == 0){
             // VALIDA SI NO HAY NINGUN ALUMNO PRESENTE
             if(empty($asistencia)){
-                return redirect()->back()->withInput()->withErrors('Debe seleccionar los alumnos que van a inscribirse');
+                return redirect()->back()->withInput()->withErrors('Debe seleccionar por lo menos alumno');
             }
             // CREA UN REGISTRO DE ASISTENCIA DE CLASE
             Asistencia::create([
@@ -295,8 +296,8 @@ class CursoAlumnoController extends Controller
                 'modif_user_id' => auth()->user()->id,
             ]);
             // RECORRE LA ASISTENCIA Y ALUMNI Y GUARDA EN SU TABLA
-            for ($i=0; $i < count($asistencia) ; $i++) {
-                $presente = ($asistencia[$i] == 'on' ? 1 : 0);
+            for ($i=0; $i < count($alumno_id) ; $i++) {
+                $presente = $asistencia_valor[$i];
 
                 CursoAlumnoAsistencia::create([
                     'curso_habilitado_id' => $cursoHabilitado->id,

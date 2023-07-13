@@ -6,6 +6,8 @@
                     <th>Accion</th>
                     <th>Curso</th>
                     <th>Periodo</th>
+                    <th>Curso Concluido</th>
+                    <th>Aprobo</th>
                     <th>Total a Pagar</th>
                     <th>Monto Pagado</th>
                     <th>Saldo</th>
@@ -23,6 +25,12 @@
                         <td class="text-left">
                             {{date('d/m/Y', strtotime($item->curso_habilitado->periodo_desde))}} a
                             {{date('d/m/Y', strtotime($item->curso_habilitado->periodo_hasta))}}
+                        </td>
+                        <td class="text-left">
+                            {{ ($item->curso_habilitado->concluido == 1 ? 'SI' : 'NO' ) }}
+                        </td>
+                        <td class="text-left">
+                            {{ ($item->aprobado == 1 ? 'SI' : 'NO' ) }}
                         </td>
                         <td class="text-right">
                             {{number_format($item->total_pagar, 0, ".", ".")}}

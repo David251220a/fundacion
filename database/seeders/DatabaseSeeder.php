@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-        // $this->call(RoleSeeder::class);
+        $this->call(RoleSeeder::class);
 
         // User::create([
         //     'name' => 'Admin',
@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
             // PersonaSeeder::class,
             // IngresoConceptoSeeder::class,
             // CursoModuloSeeder::class,
-            AsistenciaMotivoSeeder::class,
+            // AsistenciaMotivoSeeder::class,
         ]);
     }
 }

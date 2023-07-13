@@ -71,7 +71,7 @@
             </li>
         @endcan
 
-        {{-- @can('agenda.index') --}}
+        @can('agenda.index')
             <li class="menu">
                 <a href="{{ route('agenda.index') }}" {{(substr(Route::currentRouteName() , 0 , strpos(Route::currentRouteName(), '.')) == 'agenda' ? 'data-active=true' : '')}}
                     aria-expanded="false" class="dropdown-toggle">
@@ -81,19 +81,31 @@
                     </div>
                 </a>
             </li>
-        {{-- @endcan --}}
+        @endcan
 
-        {{-- @can('agenda.general') --}}
-        <li class="menu">
-            <a href="{{ route('agenda.general') }}" {{(substr(Route::currentRouteName() , 0 , strpos(Route::currentRouteName(), '.')) == 'agenda' ? 'data-active=true' : '')}}
-                aria-expanded="false" class="dropdown-toggle">
-                <div class="">
-                    <i class="fas fa-bookmark mr-3"></i>
-                    <span>Agenda General</span>
-                </div>
-            </a>
-        </li>
-    {{-- @endcan --}}
+        @can('agenda.general')
+            <li class="menu">
+                <a href="{{ route('agenda.general') }}" {{(substr(Route::currentRouteName() , 0 , strpos(Route::currentRouteName(), '.')) == 'agenda' ? 'data-active=true' : '')}}
+                    aria-expanded="false" class="dropdown-toggle">
+                    <div class="">
+                        <i class="fas fa-bookmark mr-3"></i>
+                        <span>Agenda General</span>
+                    </div>
+                </a>
+            </li>
+        @endcan
+
+        {{-- @can('profesor.index') --}}
+            <li class="menu">
+                <a href="{{ route('profesor.index') }}" {{(substr(Route::currentRouteName() , 0 , strpos(Route::currentRouteName(), '.')) == 'profesor' ? 'data-active=true' : '')}}
+                    aria-expanded="false" class="dropdown-toggle">
+                    <div class="">
+                        <i class="fas fa-user-tie mr-3"></i>
+                        <span>Instructor</span>
+                    </div>
+                </a>
+            </li>
+        {{-- @endcan --}}
 
         @can('ver_opciones')
             <li class="menu">
