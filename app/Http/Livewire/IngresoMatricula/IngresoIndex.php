@@ -153,12 +153,21 @@ class IngresoIndex extends Component
             ->where('estado_id', 1)
             ->first();
 
-            $cursoAlumno->total_pagar = $cursoAlumno->total_pagar + $item->monto_pagado;
-            $cursoAlumno->total_pagar = $cursoAlumno->monto_abonado - $item->monto_pagado;
-            $cursoAlumno->saldo = $cursoAlumno->saldo + $item->monto_pagado;
-            $cursoAlumno->estado_id = 1;
-            $cursoAlumno->modif_user_id = auth()->user()->id;
-            $cursoAlumno->update();
+            if($ingreso->tipo_cobro == 1){
+                $cursoAlumno->monto_abonado = $cursoAlumno->monto_abonado - $item->monto_pagado;
+                $cursoAlumno->saldo = $cursoAlumno->saldo + $item->monto_pagado;
+                $cursoAlumno->estado_id = 1;
+                $cursoAlumno->modif_user_id = auth()->user()->id;
+                $cursoAlumno->update();
+            }else{
+                $cursoAlumno->certificado_pagado = $cursoAlumno->certificado_pagado - $item->monto_pagado;
+                $cursoAlumno->certificado_saldo = $cursoAlumno->certificado_saldo + $item->monto_pagado;
+                $cursoAlumno->estado_id = 1;
+                $cursoAlumno->modif_user_id = auth()->user()->id;
+                $cursoAlumno->update();
+            }
+
+
             $this->resetUI();
             $this->render();
         }

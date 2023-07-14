@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
             // PersonaSeeder::class,
             // IngresoConceptoSeeder::class,
             // CursoModuloSeeder::class,
-            // AsistenciaMotivoSeeder::class,
+            AsistenciaMotivoSeeder::class,
         ]);
     }
 }

@@ -107,10 +107,10 @@ class RoleSeeder extends Seeder
         // $permission = Permission::create(['name' => 'ver_opciones', 'descripcion' => 'Ver mas opciones adicionales'])->syncRoles($admin);
 
         // DESDE ACA
-        // $permission = Permission::create(['name' => 'agenda.habilitar', 'descripcion' => 'Agenda: Habilitar Curso']);
         // $permission = Permission::create(['name' => 'agenda.index', 'descripcion' => 'Agenda: Vista']);
-        // $permission = Permission::create(['name' => 'agenda.show', 'descripcion' => 'Agenda: Ver Curso']);
-        // $permission = Permission::create(['name' => 'agenda.general', 'descripcion' => 'Agenda: Vista General']);
+        $permission = Permission::create(['name' => 'agenda.habilitar', 'descripcion' => 'Agenda: Habilitar Curso']);
+        $permission = Permission::create(['name' => 'agenda.show', 'descripcion' => 'Agenda: Ver Curso']);
+        $permission = Permission::create(['name' => 'agenda.general', 'descripcion' => 'Agenda: Vista General']);
 
         $permission = Permission::create(['name' => 'profesor.index', 'descripcion' => 'Profesor: Vista']);
         $permission = Permission::create(['name' => 'profesor.show', 'descripcion' => 'Profesor: Vista Curso']);

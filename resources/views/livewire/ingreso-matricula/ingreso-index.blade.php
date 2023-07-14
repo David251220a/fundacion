@@ -91,6 +91,7 @@
                         <th>N° Recibo</th>
                         <th>Alumno</th>
                         <th>Curso</th>
+                        <th>Tipo Cobro</th>
                         <th>Fecha Pago</th>
                         <th>Monto</th>
                         <th>Forma Pago</th>
@@ -109,6 +110,10 @@
                             </td>
                             <td>
                                 {{$item->detalle[0]->curso_habilitado->curso->descripcion}}
+                                - {{$item->detalle[0]->curso_habilitado->curso->modulo->descripcion}}
+                            </td>
+                            <td>
+                                {{($item->tipo_cobro == 1 ? 'MATRICULA' : 'CERTIFICADO')}}
                             </td>
                             <td>
                                 {{date('d/m/Y', strtotime($item->fecha_ingreso))}}
