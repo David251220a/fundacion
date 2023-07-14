@@ -32,7 +32,7 @@
                         <th width="20%">Nombre</th>
                         <th width="20%">Apellido</th>
                         <th>Estado</th>
-                        <th>Saldo</th>
+                        {{-- <th>Saldo</th> --}}
                         <th class="text-center no-content">Actions</th>
                     </tr>
                 </thead>
@@ -46,9 +46,9 @@
                             <td class="" style="font-weight: bold; font-size:15px">
                                 {{$item->estado_alumno->descripcion}}
                             </td>
-                            <td class="text-right" style="font-weight: bold; font-size:15px">
+                            {{-- <td class="text-right" style="font-weight: bold; font-size:15px">
                                 {{number_format($item->saldo, 0, ".", ".")}}
-                            </td>
+                            </td> --}}
                             <td class="text-center" style="font-weight: bold; font-size:15px">
                             </td>
                         </tr>
