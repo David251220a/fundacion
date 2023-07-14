@@ -1,0 +1,6 @@
+UPDATE `curso_alumnos` AS a
+INNER JOIN `curso_habilitados` AS b
+ON (a.`curso_habilitado_id` = b.id)
+	SET certificado_saldo = b.`precio_certificado`
+    , certificado_monto = b.`precio_certificado`
+WHERE a.`certificado_saldo` = 0

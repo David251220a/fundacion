@@ -13,7 +13,7 @@ class Limpiar extends Controller
         Artisan::call('config:cache');
         Artisan::call('cache:clear');
         Artisan::call('route:clear');
-        // Artisan::call('migrate:refresh', ['--force' => true]);
+        // Artisan::call('migrate', ['--force' => true]);
         // return "Migraciones ejecutadas correctamente.";
         // Artisan::call('db:seed', ['--force' => true]);
         return "Migraciones ejecutadas correctamente.";
@@ -21,8 +21,8 @@ class Limpiar extends Controller
 
     public function acceso()
     {
-        $target = '/home/zaqptb99qumc/laravel/storage/app/public';
-        $shortcut = '/home/zaqptb99qumc/public_html/storage';
+        $target = '/home/wweixrni/fundacion/storage/app/public';
+        $shortcut = '/home/wweixrni/public_html/storage';
         symlink($target, $shortcut);
     }
 }

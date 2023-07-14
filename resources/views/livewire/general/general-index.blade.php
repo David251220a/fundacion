@@ -15,16 +15,16 @@
 
                         <div class="form-group col-md-3">
                             <label for="inputEmail4">Curso</label>
-                            <select wire:model.defer="curso_id" class="form-control" onchange="cargar_curso()">
+                            <select wire:model.defer="curso_id" class="form-control">
                                 <option value="0">--TODOS--</option>
                                 @foreach ($cur as $item)
-                                    <option value="{{$item->id}}">{{$item->descripcion}}</option>
+                                    <option value="{{$item->id}}">{{$item->descripcion}} - {{$item->modulo->descripcion}}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group col-md-3">
                             <label for="inputEmail4">Curso</label> <br>
-                            <button type="button" class="btn btn-info">Filtro</button>
+                            <button type="button" wire:click="filtro()" class="btn btn-info">Filtro</button>
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
 
             <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
                 <div class="card component-card_7 mb-4">
-                    <a href="#" data-toggle="modal" data-target="#modal_buscar">
+                    <a href="#" data-toggle="modal" data-target="#modal_buscar_{{$loop->iteration}}">
                         <div class="card-body" style="">
                             <img src="{{Storage::url('iconos/instructor.png')}}" alt="" style="width: 20%">
                             <h5 class="card-text">{{$item->curso->descripcion}}</h5>
@@ -120,9 +120,10 @@
                     </a>
                 </div>
             </div>
+
+            @include('modal.general_opciones')
         @endforeach
 
-        @include('modal.general_opciones')
     </div>
 
 </div>

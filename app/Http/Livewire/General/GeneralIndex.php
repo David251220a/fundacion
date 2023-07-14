@@ -10,30 +10,59 @@ use Livewire\WithPagination;
 
 class GeneralIndex extends Component
 {
-    public  $familia_id, $curso_id = 0, $cur, $cursos;
+    public  $familia, $familia_id, $curso_id = 0, $cur, $cursos, $seleccionado = 0;
 
     use WithPagination;
 
-    protected $paginationTheme = 'bootstrap';
+    protected $paginationTheme = 'actualizar';
 
-    public function render()
+    protected $listeners = ['actualizar'];
+
+    public function mount()
     {
         $this->cursos = CursoHabilitado::where('concluido', 0)
         ->where('estado_id', 1)
         ->get();
 
-        $familia = TipoCurso::where('estado_id', 1)->get();
-        $this->familia_id =$familia[0]->id;
+        $this->familia = TipoCurso::where('estado_id', 1)->get();
+        $this->familia_id =$this->familia[0]->id;
 
         $this->cur = Curso::where('tipo_curso_id', $this->familia_id)
         ->where('estado_id', 1)
         ->get();
+    }
 
-        return view('livewire.general.general-index', compact('familia'));
+    public function render()
+    {
+        return view('livewire.general.general-index');
     }
 
     public function filtro()
     {
-        dd($this->curso_id);
+        if($this->curso_id == 0){
+            $this->cursos = CursoHabilitado::where('concluido', 0)
+            ->where('tipo_curso_id', $this->familia_id)
+            ->where('estado_id', 1)
+            ->get();
+        }else{
+            $this->cursos = CursoHabilitado::where('concluido', 0)
+            ->where('curso_id', $this->curso_id)
+            ->where('estado_id', 1)
+            ->get();
+        }
+    }
+
+    public function actualizar()
+    {
+        $this->cur = Curso::where('tipo_curso_id', $this->familia_id)
+        ->where('estado_id', 1)
+        ->get();
+
+        $this->curso_id = 0;
+    }
+
+    public function seleecionar($seleccionado)
+    {
+        $this->seleccionado = $seleccionado;
     }
 }

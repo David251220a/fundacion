@@ -107,7 +107,7 @@
             </li>
         @endcan
 
-        {{-- @can('general.index') --}}
+        @can('general.index')
             <li class="menu">
                 <a href="{{ route('general.index') }}" {{(substr(Route::currentRouteName() , 0 , strpos(Route::currentRouteName(), '.')) == 'general' ? 'data-active=true' : '')}}
                     aria-expanded="false" class="dropdown-toggle">
@@ -117,7 +117,7 @@
                     </div>
                 </a>
             </li>
-        {{-- @endcan --}}
+        @endcan
 
         @can('ver_opciones')
             <li class="menu">

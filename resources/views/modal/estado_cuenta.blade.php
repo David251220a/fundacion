@@ -1,5 +1,5 @@
-<div wire:ignore.self class="modal fade bd-example-modal-lg" id="moda_estado_cuenta" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+<div wire:ignore.self class="modal fade bd-example-modal-xl" id="moda_estado_cuenta" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="myLargeModalLabel">Estado de Cuenta</h5>
@@ -34,6 +34,7 @@
                                     <thead>
                                         <tr>
                                             <th>Nº Recibo</th>
+                                            <th>Tipo Cobro</th>
                                             <th>Fecha Ingreso</th>
                                             <th>Forma Pago</th>
                                             <th>Total a Pagar</th>
@@ -46,6 +47,9 @@
                                             <tr>
                                                 <td>
                                                     {{$item->ingreso_matricula->año}} - {{$item->ingreso_matricula->numero_recibo}}
+                                                </td>
+                                                <td>
+                                                    {{($item->ingreso_matricula->tipo_cobro == 1 ? 'MATRICULA' : 'CERTIFICADO' )}}
                                                 </td>
                                                 <td>
                                                     {{date('d/m/Y', strtotime($item->ingreso_matricula->fecha_ingreso))}}

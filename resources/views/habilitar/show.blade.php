@@ -5,6 +5,7 @@
     <link href="{{asset('plugins/sweetalerts/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('plugins/sweetalerts/sweetalert.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/css/components/custom-sweetalert.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/css/elements/popover.css')}}" rel="stylesheet" type="text/css" />
     <style>
         .caja{
             width: 100%;
@@ -45,6 +46,7 @@
                     al {{date('d/m/Y', strtotime($cursoHabilitado->periodo_hasta))}}
                 </p>
                 <p style="font-size: 18px; line-height: 15px">Precio: {{number_format($cursoHabilitado->precio, 0, ".", ".")}}
+                <p style="font-size: 18px; line-height: 15px">Cerificado Precio: {{number_format($cursoHabilitado->precio_certificado, 0, ".", ".")}}
                 @php
                     $lunes = 'Lunes';
                     $martes = 'Martes';
@@ -152,15 +154,30 @@
                 @endcan
 
 
-                <li class="nav-item ml-2 mr-2">
-                    <a class="nav-link mb-2 text-center" href="{{route('habilitado.index')}}"
-                    role="tab" aria-controls="rounded-pills-icon-profile" aria-selected="false" style="background: red;
-                    color: white">
-                    <i class="fas fa-undo" style="font-size: 2.5rem"></i>
-                    <br>
-                        Atras
-                    </a>
-                </li>
+                @can('habilitado.retroceder')
+                    <li class="nav-item ml-2 mr-2">
+                        <a class="nav-link mb-2 text-center" href="{{route('habilitado.index')}}"
+                        role="tab" aria-controls="rounded-pills-icon-profile" aria-selected="false" style="background: red;
+                        color: white">
+                        <i class="fas fa-undo" style="font-size: 2.5rem"></i>
+                        <br>
+                            Atras
+                        </a>
+                    </li>
+                @endcan
+
+                @can('general.retroceder')
+                    <li class="nav-item ml-2 mr-2">
+                        <a class="nav-link mb-2 text-center" href="{{route('general.index')}}"
+                        role="tab" aria-controls="rounded-pills-icon-profile" aria-selected="false" style="background: rgb(255, 174, 0);
+                        color: white">
+                        <i class="fas fa-undo" style="font-size: 2.5rem"></i>
+                        <br>
+                            Atras
+                        </a>
+                    </li>
+                @endcan
+
 
             </ul>
 
@@ -272,6 +289,7 @@
 @section('js')
     <script src="{{asset('plugins/sweetalerts/sweetalert2.min.js')}}"></script>
     <script src="{{asset('plugins/sweetalerts/custom-sweetalert.js')}}"></script>
+    <script src="{{asset('assets/js/elements/popovers.js')}}"></script>
     <script>
 
         const swalWithBootstrapButtons = swal.mixin({
@@ -296,6 +314,7 @@
 
             window.livewire.on('mensaje_error', msj => {
                 $('#modal_agregar').modal('hide');
+                $('#modal_agregar_certificado').modal('hide');
                 swalWithBootstrapButtons(
                     'Atención',
                     msj,
@@ -305,6 +324,7 @@
 
             window.livewire.on('cobro_exito', msj => {
                 $('#modal_agregar').modal('hide');
+                $('#modal_agregar_certificado').modal('hide');
                 swal({
                     title: 'Buen Trabajo',
                     text: msj,

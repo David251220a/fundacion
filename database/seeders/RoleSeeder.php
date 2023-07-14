@@ -117,6 +117,10 @@ class RoleSeeder extends Seeder
         $permission = Permission::create(['name' => 'profesor.asistencia', 'descripcion' => 'Profesor: LLamar asistencia']);
         $permission = Permission::create(['name' => 'profesor.calificar', 'descripcion' => 'Profesor: Calificar Alumno']);
 
+        $permission = Permission::create(['name' => 'general.index', 'descripcion' => 'General: Vista']);
+        $permission = Permission::create(['name' => 'general.retroceder', 'descripcion' => 'General: Vuelta a la Vista Principal']);
+        $permission = Permission::create(['name' => 'habilitado.retroceder', 'descripcion' => 'Habilitacion: Vuelta a la Vista Principal']);
+
 
 
     }

@@ -46,6 +46,8 @@ class HabilitarCursoController extends Controller
             'periodo_desde'  => 'required',
             'periodo_hasta' => 'required',
             'duracion' => 'required',
+            'precio' => 'required',
+            'certificado_precio' => 'required',
             'hora_entrada' => 'required',
             'hora_salida' => 'required',
             'portada' => 'required|image|mimes:jpeg,png,jpg',
@@ -97,6 +99,7 @@ class HabilitarCursoController extends Controller
             'hora_entrada' => $request->hora_entrada,
             'hora_salida' => $request->hora_salida,
             'precio'  => str_replace('.', '', $request->precio),
+            'precio_certificado'  => str_replace('.', '', $request->certificado_precio),
             'lunes' => $lunes,
             'martes' => $martes,
             'miercoles' => $miercoles,
@@ -175,6 +178,8 @@ class HabilitarCursoController extends Controller
             'periodo_desde'  => 'required',
             'periodo_hasta' => 'required',
             'duracion' => 'required',
+            'precio' => 'required',
+            'certificado_precio' => 'required',
             'hora_entrada' => 'required',
             'hora_salida' => 'required',
             'portada' => 'image|mimes:jpeg,png,jpg',
@@ -211,6 +216,7 @@ class HabilitarCursoController extends Controller
         $cursoHabilitado->hora_entrada = $request->hora_entrada;
         $cursoHabilitado->hora_salida = $request->hora_salida;
         $cursoHabilitado->precio  = str_replace('.', '', $request->precio);
+        $cursoHabilitado->precio_certificado  = str_replace('.', '', $request->certificado_precio);
         $cursoHabilitado->lunes = $lunes;
         $cursoHabilitado->martes = $martes;
         $cursoHabilitado->miercoles = $miercoles;

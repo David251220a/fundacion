@@ -20,3 +20,13 @@
     </div>
 
 @endsection
+
+@section('js')
+
+    <script>
+        function cargar_curso()
+        {
+            Livewire.emit('actualizar');
+        }
+    </script>
+@endsection

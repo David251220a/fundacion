@@ -151,3 +151,33 @@ function punto_decimal_limite_precio(input){
 function disableButton() {
     document.getElementById('submitBtn').disabled = true;
 }
+
+
+function punto_decimal_limite_precio_certificado(input){
+    var num = input.value.replace(/\./g,'');
+    var precio = parseInt(document.getElementById('precio_certificado').value.replace(/\./g,''));
+    if(!isNaN(num)){
+        if(num == ''){
+
+        }else{
+            if (num > precio) {
+                aux_num = num.toString().length;
+                aux_precio = precio.toString().length;
+                if(parseInt(aux_num) == parseInt(aux_precio)){
+                    cantidad = -1;
+                }else{
+                    cantidad = ((parseInt(aux_num) - parseInt(aux_precio)) * -1);
+                }
+                num = num.slice(0, cantidad);
+            }
+            num = parseInt(num);
+            num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
+            num = num.split('').reverse().join('').replace(/^[\.]/,'');
+            input.value = num;
+        }
+
+    }
+    else{
+        input.value = input.value.replace(/[^\d\.]*/g,'');
+    }
+}

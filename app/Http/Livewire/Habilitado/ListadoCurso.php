@@ -20,6 +20,7 @@ class ListadoCurso extends Component
     public $curso_id, $documento, $curso_precio, $comprobante, $observacion_modal, $estado_a_id, $estado_curso = 99;
     public $documento_modal, $forma_pago_id = 1, $nombre_modal, $total_pagar_modal = 0;
     public $cursoAlumno, $documento_e_modal, $nombre_e_modal, $cuenta = [];
+    public $precio_certificado, $cer_comprobante, $cer_total_pagar_modal;
 
     use WithFileUploads;
 
@@ -91,6 +92,8 @@ class ListadoCurso extends Component
         $this->nombre_modal = $cursoAlumno->alumno->persona->nombre . ' ' . $cursoAlumno->alumno->persona->apellido;
         $this->estado_a_id = $cursoAlumno->curso_a_estado_id;
         $this->cursoAlumno = $cursoAlumno;
+        $this->precio_certificado = number_format($cursoAlumno->certificado_saldo, 0, ".", ".");
+
     }
 
     public function estado_cuenta(CursoAlumno $cursoAlumno, Alumno $alumno)
@@ -190,6 +193,77 @@ class ListadoCurso extends Component
         $this->emit('estado_exito', 'Se actualizo con exito el alumno.');
     }
 
+    public function save_certificado()
+    {
+        if($this->cer_comprobante){
+            $filePath = $this->cer_comprobante->store('public/comprobante');
+            $this->validate([
+                'cer_total_pagar_modal' => 'required',
+                'cer_comprobante' => 'image|mimes:jpeg,png,jpg,gif'
+            ]);
+        }else{
+            $filePath = '';
+            $this->validate([
+                'cer_total_pagar_modal' => 'required',
+            ]);
+        }
+
+        $total_pagar = str_replace('.', '', $this->cer_total_pagar_modal);
+
+        if($total_pagar == 0){
+            $this->emit('mensaje_error', 'El total a pagar no pueder ser 0.');
+            $this->resetUI();
+
+            return false;
+        }
+
+        $cursoAlumno = $this->cursoAlumno;
+        $fecha_actual = Carbon::now();
+        $mes = intval(date('m', strtotime($fecha_actual)));
+        $anio = intval(date('Y', strtotime($fecha_actual)));
+        $numero_recibo = IngresoMatricula::where('año', $anio)
+        ->max('numero_recibo');
+        $numero_recibo += 1;
+
+        $ingreso = IngresoMatricula::create([
+            'alumno_id' => $cursoAlumno->alumno_id,
+            'fecha_ingreso' => $fecha_actual,
+            'forma_pago_id' => $this->forma_pago_id,
+            'año' => $anio,
+            'mes' => $mes,
+            'tipo_cobro' => 2,
+            'numero_recibo' => $numero_recibo,
+            'sucursal' => '000',
+            'general' => '000',
+            'factura_numero' => 0,
+            'total_pagado' => $total_pagar,
+            'comprobante' => $filePath,
+            'estado_id' => 1,
+            'user_id' => auth()->user()->id,
+            'modif_user_id' => auth()->user()->id,
+        ]);
+
+        $monto_total = str_replace('.', '', $this->precio_certificado);
+        $ingreso->detalle()->create([
+            'curso_habilitado_id' => $cursoAlumno->curso_habilitado_id,
+            'alumno_id' => $cursoAlumno->alumno_id,
+            'monto_total' => $monto_total,
+            'monto_pagado' => $total_pagar,
+            'saldo' => ($monto_total - $total_pagar),
+            'estado_id' => 1,
+            'user_id' => auth()->user()->id,
+            'modif_user_id' => auth()->user()->id,
+        ]);
+
+        $cursoAlumno->certificado_pagado = $cursoAlumno->certificado_pagado + $total_pagar;
+        $cursoAlumno->certificado_saldo = $cursoAlumno->certificado_saldo - $total_pagar;
+        $cursoAlumno->modif_user_id = auth()->user()->id;
+        $cursoAlumno->update();
+
+        $this->resetUI();
+        $this->emit('cobro_exito', 'Cobro realizado con exito.');
+    }
+
     public function resetUI()
     {
         $this->reset('curso_precio');
@@ -200,6 +274,8 @@ class ListadoCurso extends Component
         $this->reset('cursoAlumno');
         $this->reset('total_pagar_modal');
         $this->reset('observacion_modal');
+        $this->reset('precio_certificado');
+        $this->reset('cer_total_pagar_modal');
         $this->forma_pago_id = 1;
         $this->emit('reloadClassCSs');
 

@@ -27,6 +27,7 @@
                         <tr>
                             <th>Tipo Curso</th>
                             <th>Curso</th>
+                            <th>Concluido</th>
                             <th>Fecha Inicio</th>
                             <th>Dias</th>
                             <th>Precio</th>
@@ -38,7 +39,21 @@
                         @foreach ($data as $item)
                             <tr style="font-weight: bold">
                                 <td>{{$item->tipo_curso->descripcion}}</td>
-                                <td>{{$item->curso->descripcion }}</td>
+                                <td>{{$item->curso->descripcion }} - {{$item->curso->modulo->descripcion }}</td>
+                                <td>
+                                    @if ($item->concluido)
+                                        @php
+                                            $desc = 'SI';
+                                            $estilo = 'color: green';
+                                        @endphp
+                                    @else
+                                        @php
+                                            $desc = 'NO';
+                                            $estilo = 'color: red';
+                                        @endphp
+                                    @endif
+                                    <label for="" style="{{$estilo}}">{{$desc}}</label>
+                                </td>
                                 <td>
                                     {{date('d/m/Y', strtotime($item->periodo_desde))}}
                                 </td>

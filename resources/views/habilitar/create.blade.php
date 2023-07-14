@@ -28,6 +28,14 @@
                                 <input type="text" name="observacion" id="observacion" class="form-control" value="{{old('observacion')}}">
                             </div>
                             <div class="form-group col-md-3">
+                                <label for="inputPassword4">Precio</label>
+                                <input type="text" name="precio" id="precio" class="form-control text-right" onkeyup="punto_decimal_limite(this)" value="{{old('precio', 0)}}">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="inputPassword4">Precio Certificado</label>
+                                <input type="text" name="certificado_precio" id="certificado_precio" class="form-control text-right" onkeyup="punto_decimal_limite(this)" value="{{old('certificado_precio', 0)}}">
+                            </div>
+                            <div class="form-group col-md-3">
                                 <label for="inputPassword4">Fecha Inicio</label>
                                 <input type="date" name="periodo_desde" id="periodo_desde" class="form-control" value="{{old('periodo_desde')}}">
                             </div>
@@ -66,6 +74,9 @@
                                     <option {{ (old('publicar') == 2 ? 'selected' : '') }} value="2">SI</option>
                                 </select>
                             </div>
+                        </div>
+
+                        <div class="form-row">
                             <div class="form-group cold-md-12">
                                 <label for="w-full" style="width: 100%">Dias de clase</label>
                                 <input type="checkbox" name="lunes" id="lunes" class="" {{ (old('lunes') ? 'checked' : '' ) }}>

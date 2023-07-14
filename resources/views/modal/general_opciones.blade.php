@@ -1,4 +1,4 @@
-<div class="modal fade bd-example" id="modal_buscar" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade bd-example" id="modal_buscar_{{$loop->iteration}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -15,15 +15,11 @@
                 <div id="" class="col-lg-12">
                     <div class="form-row mb-2">
                         <div class="form-group col-md-6">
-                            <a href="{{route('home')}}" class="btn btn-info">Inscribir</a>
+                            <a href="{{route('habilitado.show', $item)}}" class="btn btn-info">Inscribir</a>
                         </div>
 
                         <div class="form-group col-md-6">
-                            <a href="{{route('home')}}" class="btn btn-info">Consulta Alumnos</a>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            <a href="{{route('home')}}" class="btn btn-info">Agendar</a>
+                            <a href="{{route('agenda.agenda', $item->curso_id)}}" class="btn btn-info">Agendar</a>
                         </div>
 
                     </div>
