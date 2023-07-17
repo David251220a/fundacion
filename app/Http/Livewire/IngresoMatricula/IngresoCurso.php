@@ -14,7 +14,7 @@ use Livewire\WithFileUploads;
 class IngresoCurso extends Component
 {
 
-    public $alumno, $forma_pago_id, $cursoAlumno, $titulo, $comprobante, $monto_pagar, $total_pagar_modal, $ingreso;
+    public $alumno, $forma_pago_id, $cursoAlumno, $titulo, $comprobante, $monto_pagar, $total_pagar_modal, $ingreso, $valor_id = 0;
 
     use WithFileUploads;
 
@@ -93,6 +93,7 @@ class IngresoCurso extends Component
             'forma_pago_id' => $this->forma_pago_id,
             'año' => $anio,
             'mes' => $mes,
+            'tipo_cobro' => 1,
             'numero_recibo' => $numero_recibo,
             'sucursal' => '000',
             'general' => '000',
@@ -122,6 +123,7 @@ class IngresoCurso extends Component
         $cursoAlumno->update();
 
         $this->ingreso = $ingreso;
+        $this->valor_id = $ingreso->id;
         $this->emit('ver_recibo', 'recibo');
         $this->render();
     }

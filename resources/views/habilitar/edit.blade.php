@@ -77,6 +77,9 @@
                                     <option {{ (old('estado_id', $cursoHabilitado->estado_id) == 2 ? 'selected' : '') }} value="2">INACTIVO</option>
                                 </select>
                             </div>
+                        </div>
+
+                        <div class="form-row">
                             <div class="form-group cold-md-12">
                                 <label for="w-full" style="width: 100%">Dias de clase</label>
                                 <input type="checkbox" name="lunes" id="lunes" class="" {{ (old('lunes', $cursoHabilitado->lunes) ? 'checked' : '' ) }}>

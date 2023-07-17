@@ -20,7 +20,7 @@ class ListadoCurso extends Component
     public $curso_id, $documento, $curso_precio, $comprobante, $observacion_modal, $estado_a_id, $estado_curso = 99;
     public $documento_modal, $forma_pago_id = 1, $nombre_modal, $total_pagar_modal = 0;
     public $cursoAlumno, $documento_e_modal, $nombre_e_modal, $cuenta = [];
-    public $precio_certificado, $cer_comprobante, $cer_total_pagar_modal;
+    public $precio_certificado, $cer_comprobante, $cer_total_pagar_modal, $ingreso, $valor_id = 0;
 
     use WithFileUploads;
 
@@ -147,6 +147,7 @@ class ListadoCurso extends Component
             'alumno_id' => $cursoAlumno->alumno_id,
             'fecha_ingreso' => $fecha_actual,
             'forma_pago_id' => $this->forma_pago_id,
+            'tipo_cobro' => 1,
             'año' => $anio,
             'mes' => $mes,
             'numero_recibo' => $numero_recibo,
@@ -176,6 +177,9 @@ class ListadoCurso extends Component
         $cursoAlumno->saldo = $cursoAlumno->saldo - $total_pagar;
         $cursoAlumno->modif_user_id = auth()->user()->id;
         $cursoAlumno->update();
+
+        $this->ingreso = $ingreso;
+        $this->valor_id = $ingreso->id;
 
         $this->resetUI();
         $this->emit('cobro_exito', 'Cobro realizado con exito.');

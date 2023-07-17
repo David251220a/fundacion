@@ -152,6 +152,16 @@
                         </tr>
                     @endforeach
                 </tbody>
+
+                <tfoot>
+                    <tr>
+                        <th colspan="4">Total General</th>
+                        <th colspan="2" class="text-right">{{number_format($total_general, 0, ".", ".")}}</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>

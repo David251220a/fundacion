@@ -14,7 +14,7 @@ use Livewire\WithPagination;
 class IngresoIndex extends Component
 {
     public $fecha_actual, $fecha_hasta, $curso_id, $tipo_curso_id, $documento, $caso, $recibo, $ingreso;
-    public $ver_recibo, $ver_documento, $ver_fecha, $valor_id = 0;
+    public $ver_recibo, $ver_documento, $ver_fecha, $valor_id = 0, $total_general = 0;
 
     protected $listeners = ['render', 'filtro', 'ver_recibo', 'anular'];
     protected $paginationTheme = 'bootstrap';
@@ -81,6 +81,13 @@ class IngresoIndex extends Component
         ->orderBy('fecha_ingreso', 'DESC')
         ->paginate(50);
 
+        $suma = IngresoMatricula::whereBetween('fecha_ingreso', [$fecha, $fecha_hasta])
+        ->where('estado_id', 1)
+        ->orderBy('fecha_ingreso', 'DESC')
+        ->sum('total_pagado');
+
+        $this->total_general = $suma;
+
         return $data;
     }
 
@@ -89,6 +96,12 @@ class IngresoIndex extends Component
         $data = IngresoMatricula::where('numero_recibo', $this->recibo)
         ->where('estado_id', 1)
         ->paginate(50);
+
+        $suma = IngresoMatricula::where('numero_recibo', $this->recibo)
+        ->where('estado_id', 1)
+        ->sum('total_pagado');
+
+        $this->total_general = $suma;
 
         return $data;
     }
@@ -106,6 +119,12 @@ class IngresoIndex extends Component
         $data = IngresoMatricula::where('alumno_id', $alumno_id)
         ->where('estado_id', 1)
         ->paginate(50);
+
+        $suma = IngresoMatricula::where('alumno_id', $alumno_id)
+        ->where('estado_id', 1)
+        ->sum('total_pagado');
+
+        $this->total_general = $suma;
 
         return $data;
     }

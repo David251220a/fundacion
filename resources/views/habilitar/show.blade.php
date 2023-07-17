@@ -325,12 +325,13 @@
             window.livewire.on('cobro_exito', msj => {
                 $('#modal_agregar').modal('hide');
                 $('#modal_agregar_certificado').modal('hide');
-                swal({
-                    title: 'Buen Trabajo',
-                    text: msj,
-                    type: 'success',
-                    padding: '2em'
-                })
+                $('#recibo_comprobante').modal('show');
+                // swal({
+                //     title: 'Buen Trabajo',
+                //     text: msj,
+                //     type: 'success',
+                //     padding: '2em'
+                // })
             });
 
             window.livewire.on('estado_exito', msj => {

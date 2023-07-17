@@ -142,4 +142,5 @@
     @include('modal.cambio_estado')
     @include('modal.estado_cuenta')
     @include('modal.cobrar_certificado')
+    @include('modal.recibo_curso')
 </div>

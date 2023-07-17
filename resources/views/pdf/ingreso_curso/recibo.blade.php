@@ -6,7 +6,7 @@
         {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> --}}
         <style>
             body{
-                border: 1px solid red;
+                /* border: 1px solid black; */
                 font-size: 14px;
                 margin-left: -25px;
                 margin-right: -25px;
@@ -71,6 +71,8 @@
                 Nombre: <b>{{$ingresoMatricula->alumno->persona->nombre}}</b>
                 <br>
                 Apellido: <b>{{$ingresoMatricula->alumno->persona->apellido}} </b>
+                <br>
+                Recibo: <b>{{$ingresoMatricula->año}}-A-{{str_pad($ingresoMatricula->numero_recibo, 5, "0", STR_PAD_LEFT)}}</b>
             </label>
         </div>
 
