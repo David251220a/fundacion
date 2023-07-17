@@ -6,7 +6,8 @@
                     <th>Accion</th>
                     <th>Curso</th>
                     <th>Periodo</th>
-                    <th>Curso Concluido</th>
+                    <th>Tipo Cobro</th>
+                    <th>Concluido</th>
                     <th>Aprobo</th>
                     <th>Total a Pagar</th>
                     <th>Monto Pagado</th>
@@ -26,6 +27,9 @@
                             {{date('d/m/Y', strtotime($item->curso_habilitado->periodo_desde))}} a
                             {{date('d/m/Y', strtotime($item->curso_habilitado->periodo_hasta))}}
                         </td>
+                        <td>
+                            MATRICULA
+                        </td>
                         <td class="text-left">
                             {{ ($item->curso_habilitado->concluido == 1 ? 'SI' : 'NO' ) }}
                         </td>
@@ -43,10 +47,44 @@
                         </td>
                     </tr>
                 @endforeach
+
+                @foreach ($certificado as $item)
+                    <tr>
+                        <td>
+                            <button type="button" onclick="datos({{$item->id}})" data-toggle="modal" data-target="#modal_agregar_certificado"  class="btn btn-warning btn-sm mr-2 mb-2">Cobrar</button>
+                        </td>
+                        <td class="text-left">
+                            {{$item->curso_habilitado->curso->descripcion}} - {{$item->curso_habilitado->curso->modulo->descripcion}}
+                        </td>
+                        <td class="text-left">
+                            {{date('d/m/Y', strtotime($item->curso_habilitado->periodo_desde))}} a
+                            {{date('d/m/Y', strtotime($item->curso_habilitado->periodo_hasta))}}
+                        </td>
+                        <td>
+                            CERTIFICADO
+                        </td>
+                        <td class="text-left">
+                            {{ ($item->curso_habilitado->concluido == 1 ? 'SI' : 'NO' ) }}
+                        </td>
+                        <td class="text-left">
+                            {{ ($item->aprobado == 1 ? 'SI' : 'NO' ) }}
+                        </td>
+                        <td class="text-right">
+                            {{number_format($item->certificado_monto, 0, ".", ".")}}
+                        </td>
+                        <td class="text-right">
+                            {{number_format($item->certificado_pagado, 0, ".", ".")}}
+                        </td>
+                        <td class="text-right">
+                            {{number_format($item->certificado_saldo, 0, ".", ".")}}
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
 
     @include('modal.cobro_pendiente')
     @include('modal.recibo_curso')
+    @include('modal.cobrar_certificado')
 </div>

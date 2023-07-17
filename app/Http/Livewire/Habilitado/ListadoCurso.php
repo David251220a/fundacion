@@ -93,6 +93,7 @@ class ListadoCurso extends Component
         $this->estado_a_id = $cursoAlumno->curso_a_estado_id;
         $this->cursoAlumno = $cursoAlumno;
         $this->precio_certificado = number_format($cursoAlumno->certificado_saldo, 0, ".", ".");
+        $this->cer_total_pagar_modal = $this->precio_certificado;
 
     }
 
@@ -263,6 +264,9 @@ class ListadoCurso extends Component
         $cursoAlumno->certificado_saldo = $cursoAlumno->certificado_saldo - $total_pagar;
         $cursoAlumno->modif_user_id = auth()->user()->id;
         $cursoAlumno->update();
+
+        $this->ingreso = $ingreso;
+        $this->valor_id = $ingreso->id;
 
         $this->resetUI();
         $this->emit('cobro_exito', 'Cobro realizado con exito.');

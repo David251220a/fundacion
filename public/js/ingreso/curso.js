@@ -33,6 +33,12 @@ window.addEventListener('load', function() {
 
     window.livewire.on('ver_recibo', msj => {
         $('#modal_agregar').modal('hide');
+        $('#modal_agregar_certificado').modal('hide');
         $('#recibo_comprobante').modal('show');
     });
+
 });
+
+function datos(cursoAlumno){
+    Livewire.emit('datos', cursoAlumno);
+}
