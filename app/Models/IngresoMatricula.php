@@ -30,4 +30,9 @@ class IngresoMatricula extends Model
     {
         return $this->belongsTo(Estado::class, 'estado_id');
     }
+
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

@@ -13,8 +13,8 @@ use Livewire\WithPagination;
 
 class IngresoIndex extends Component
 {
-    public $fecha_actual, $curso_id, $tipo_curso_id, $documento, $caso, $recibo, $ingreso;
-    public $ver_recibo, $ver_documento, $ver_fecha;
+    public $fecha_actual, $fecha_hasta, $curso_id, $tipo_curso_id, $documento, $caso, $recibo, $ingreso;
+    public $ver_recibo, $ver_documento, $ver_fecha, $valor_id = 0;
 
     protected $listeners = ['render', 'filtro', 'ver_recibo', 'anular'];
     protected $paginationTheme = 'bootstrap';
@@ -29,6 +29,7 @@ class IngresoIndex extends Component
     {
         $fecha_actual = Carbon::now();
         $this->fecha_actual = date('Y-m-d', strtotime($fecha_actual));
+        $this->fecha_hasta = date('Y-m-d', strtotime($fecha_actual));
         $this->caso = 1;
         $this->ver_recibo = 'none';
         $this->ver_documento = 'none';
@@ -74,7 +75,8 @@ class IngresoIndex extends Component
     public function datos_fecha()
     {
         $fecha = date('Y-m-d', strtotime($this->fecha_actual));
-        $data = IngresoMatricula::where('fecha_ingreso', $fecha)
+        $fecha_hasta = date('Y-m-d', strtotime($this->fecha_hasta));
+        $data = IngresoMatricula::whereBetween('fecha_ingreso', [$fecha, $fecha_hasta])
         ->where('estado_id', 1)
         ->orderBy('fecha_ingreso', 'DESC')
         ->paginate(50);
@@ -134,6 +136,7 @@ class IngresoIndex extends Component
     public function ver_recibo($ingreso_id)
     {
         $this->ingreso = IngresoMatricula::find($ingreso_id);
+        $this->valor_id = $this->ingreso->id;
     }
 
     public function anular($ingreso_id)

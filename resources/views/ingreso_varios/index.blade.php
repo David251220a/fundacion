@@ -39,7 +39,7 @@
                                     <div class="user-info">
                                         <img src="{{Storage::url('iconos/cobro_varios.png')}}" class="card-img-top" alt="...">
                                         <div class="media-body">
-                                            <h5 class="card-user_name font-bold text-center mt-1" style="color: black">Realizar Cobro</h5>
+                                            <h5 class="card-user_name font-bold text-center mt-1" style="color: black">Cobros Varios</h5>
                                         </div>
                                     </div>
                                 </div>

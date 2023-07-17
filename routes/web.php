@@ -16,6 +16,7 @@ use App\Http\Controllers\GrupoUsuarioController;
 use App\Http\Controllers\IngresoMatriculaController;
 use App\Http\Controllers\IngresoVarioController;
 use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProfesorController;
 use Illuminate\Support\Facades\Route;
 
@@ -114,5 +115,9 @@ Route::group([
     Route::post('/profesor/{cursoHabilitado}/calificar', [ProfesorController::class, 'calificar_post'])->name('profesor.calificar_post');
 
     Route::get('/general', [GeneralController::class, 'index'])->name('general.index');
+
+    Route::get('/pdf/ingreso-curso/detallado/{id}', [PDFController::class, 'ingreso_curso_detallado'])->name('ingreso_curso.detallado');
+    Route::get('/pdf/ingreso-curso/{ingresoMatricula}/recibo', [PDFController::class, 'recibo_curso'])->name('ingreso_curso.recibo');
+
 });
 

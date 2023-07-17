@@ -43,8 +43,13 @@
 
     <div class="form-row">
         <div class="col-md-3 mb-4" style="display:{{$ver_fecha}}">
-            <label for="">Fecha</label>
+            <label for="">Fecha Desde</label>
             <input wire:model.defer="fecha_actual" type="date" class="form-control text-right">
+        </div>
+
+        <div class="col-md-3 mb-4" style="display:{{$ver_fecha}}">
+            <label for="">Fecha Hasta</label>
+            <input wire:model.defer="fecha_hasta" type="date" class="form-control text-right">
         </div>
 
         <div class="col-md-3  mb-4" id="ver_recibo" style="display: {{$ver_recibo}}">
@@ -79,6 +84,19 @@
             <label for="" class="w-full">Accion</label>
             <br>
             <button wire:click="render" type="button" class="btn btn-info">Filtrar</button>
+        </div>
+
+        <div class="col-md-3  mb-4">
+            <form action="{{route('ingreso_curso.detallado', $caso)}}" method="get" target="__blank">
+                <label for="" class="w-full">PDF</label>
+                <input type="hidden" name="fecha_actual" value="{{$fecha_actual}}">
+                <input type="hidden" name="fecha_hasta" value="{{$fecha_hasta}}">
+                <input type="hidden" name="recibo" value="{{$recibo}}">
+                <input type="hidden" name="documento" value="{{$documento}}">
+                <br>
+                <button class="btn btn-info">Ver</button>
+            </form>
+
         </div>
     </div>
 
