@@ -36,8 +36,13 @@
         <form action="{{route('ingreso_varios.index')}}" method="GET" class="">
             <div class="form-row mx-4">
                 <div class="col-md-3 mb-4" style="display: {{$ver_fecha}}">
-                    <label for="">Fecha</label>
+                    <label for="">Fecha Desde</label>
                     <input wire:model.defer="fecha_actual" type="date" class="form-control text-right" required>
+                </div>
+
+                <div class="col-md-3 mb-4" style="display: {{$ver_fecha}}">
+                    <label for="">Fecha Hasta</label>
+                    <input wire:model.defer="fecha_hasta" type="date" class="form-control text-right" required>
                 </div>
 
                 <div class="col-md-3  mb-4" id="ver_recibo" style="display: {{$ver_recibo}}">

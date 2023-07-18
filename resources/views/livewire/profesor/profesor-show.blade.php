@@ -32,24 +32,28 @@
                         <th width="20%">Nombre</th>
                         <th width="20%">Apellido</th>
                         <th>Estado</th>
-                        {{-- <th>Saldo</th> --}}
-                        <th class="text-center no-content">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($alumnos as $item)
-                        <tr style="color: white">
-                            <td>{{$loop->iteration}}</td>
-                            <td class="text-right text-bold" style="font-weight: bold; font-size:15px">{{number_format($item->alumno->persona->documento, 0, ".", ".")}}</td>
-                            <td class="" style="font-weight: bold; font-size:15px">{{$item->alumno->persona->nombre}}</td>
-                            <td class="" style="font-weight: bold; font-size:15px">{{$item->alumno->persona->apellido}}</td>
-                            <td class="" style="font-weight: bold; font-size:15px">
+                        @php
+
+                            if($item->monto_abonado >=  $item->total_pagar){
+                                $color = 'background: rgb(148 235 122)';
+                            }
+                            elseif ($item->monto_abonado > 0){
+                                $color = 'background: rgb(241 226 46)';
+                            }elseif($item->saldo > 0) {
+                                $color = 'background: rgb(217 96 96)';
+                            }
+                        @endphp
+                        <tr style="color: black; {{$color}}">
+                            <td style="color: black;font-weight: bold; font-size:15px">{{$loop->iteration}}</td>
+                            <td class="text-right text-bold" style="color: black; font-weight: bold; font-size:15px">{{number_format($item->alumno->persona->documento, 0, ".", ".")}}</td>
+                            <td class="" style="color: black; font-weight: bold; font-size:15px">{{$item->alumno->persona->nombre}}</td>
+                            <td class="" style="color: black; font-weight: bold; font-size:15px">{{$item->alumno->persona->apellido}}</td>
+                            <td class="" style="color: black; font-weight: bold; font-size:15px">
                                 {{$item->estado_alumno->descripcion}}
-                            </td>
-                            {{-- <td class="text-right" style="font-weight: bold; font-size:15px">
-                                {{number_format($item->saldo, 0, ".", ".")}}
-                            </td> --}}
-                            <td class="text-center" style="font-weight: bold; font-size:15px">
                             </td>
                         </tr>
                     @endforeach
@@ -59,10 +63,9 @@
                         Cantidad Alumnos : {{count($alumnos)}}
                     </td>
                     <td colspan="3">
-                        TOTAL SALDO
+
                     </td>
                     <td class="text-right">
-                        {{number_format($total_saldo, 0, ".", ".")}}
                     </td>
                     <td></td>
                 </tfoot>

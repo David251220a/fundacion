@@ -12,7 +12,7 @@ use Livewire\WithPagination;
 
 class ConsultaIngreso extends Component
 {
-    public $fecha_actual, $caso, $ver_recibo, $ver_documento, $ver_fecha, $documento, $recibo, $ingreso;
+    public $fecha_actual, $fecha_hasta, $caso, $ver_recibo, $ver_documento, $ver_fecha, $documento, $recibo, $ingreso;
 
     use WithPagination;
 
@@ -24,6 +24,7 @@ class ConsultaIngreso extends Component
     {
         $fecha_actual = Carbon::now();
         $this->fecha_actual = date('Y-m-d', strtotime($fecha_actual));
+        $this->fecha_hasta = date('Y-m-d', strtotime($fecha_actual));
         $this->caso = 1;
         $this->ver_recibo = 'none';
         $this->ver_documento = 'none';
@@ -66,7 +67,7 @@ class ConsultaIngreso extends Component
         }
 
         if($id == 3){
-            $this->ver_fecha = 'none';
+            $this->ver_fecha = 'block';
             $this->ver_recibo = 'none';
             $this->ver_documento = 'block';
         }
@@ -75,7 +76,7 @@ class ConsultaIngreso extends Component
     public function datos_fecha()
     {
         $data = IngresoVarios::where('estado_id', 1)
-        ->where('fecha_ingreso', $this->fecha_actual)
+        ->whereBetween('fecha_ingreso', [$this->fecha_actual, $this->fecha_hasta])
         ->get();
 
         return $data;
@@ -101,6 +102,7 @@ class ConsultaIngreso extends Component
             $persona_id = $persona->id;
         }
         $data = IngresoVarios::where('persona_id', $persona_id)
+        ->whereBetween('fecha_ingreso', [$this->fecha_actual, $this->fecha_hasta])
         ->where('estado_id', 1)
         ->get();
 

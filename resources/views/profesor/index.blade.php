@@ -31,6 +31,78 @@
                                 <h6 class="">{{$item->curso->modulo->descripcion}}</h6>
                                 <h6 class="">Familia: {{$item->tipo_curso->descripcion}}</h6>
                                 <h6 class="">Cant Alumnos: {{ count($item->alumnos_cursando)}}</h6>
+                                <h6>Horario: {{date('H:i', strtotime($item->hora_entrada))}} a {{date('H:i', strtotime($item->hora_salida))}}</h6>
+                                @php
+                                    $lunes = 'Lunes';
+                                    $martes = 'Martes';
+                                    $miercoles = 'Miercoles';
+                                    $jueves = 'Jueves';
+                                    $viernes = 'Viernes';
+                                    $sabado = 'Sabado';
+                                    $domingo = 'domingo';
+                                    $clase = '';
+                                    $ant = 0;
+                                    if($item->lunes){
+                                        $clases = $lunes;
+                                        $ant = 1;
+                                    }
+
+                                    if($item->martes){
+                                        if($ant == 1){
+                                            $clases = $clases . ', ' . $martes;
+                                        }else {
+                                            $clases = $martes;
+                                            $ant = 1;
+                                        }
+                                    }
+
+                                    if($item->miercoles){
+                                        if($ant == 1){
+                                            $clases = $clases . ', ' . $miercoles;
+                                        }else {
+                                            $clases = $miercoles;
+                                            $ant = 1;
+                                        }
+                                    }
+
+                                    if($item->jueves){
+                                        if($ant == 1){
+                                            $clases = $clases . ', ' . $jueves;
+                                        }else {
+                                            $clases = $jueves;
+                                            $ant = 1;
+                                        }
+                                    }
+
+                                    if($item->viernes){
+                                        if($ant == 1){
+                                            $clases = $clases . ', ' . $viernes;
+                                        }else {
+                                            $clases = $viernes;
+                                            $ant = 1;
+                                        }
+                                    }
+
+                                    if($item->sabado){
+                                        if($ant == 1){
+                                            $clases = $clases . ', ' . $sabado;
+                                        }else {
+                                            $clases = $sabado;
+                                            $ant = 1;
+                                        }
+                                    }
+
+                                    if($item->domingo){
+                                        if($ant == 1){
+                                            $clases = $clases . ', ' . $domingo;
+                                        }else {
+                                            $clases = $domingo;
+                                            $ant = 1;
+                                        }
+                                    }
+
+                                @endphp
+                                <h6>Días de Clase: {{$clases}} </h6>
                             </div>
                         </a>
                     </div>
