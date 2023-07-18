@@ -14,9 +14,10 @@ use Livewire\WithPagination;
 class IngresoIndex extends Component
 {
     public $fecha_actual, $fecha_hasta, $curso_id, $tipo_curso_id, $documento, $caso, $recibo, $ingreso;
-    public $ver_recibo, $ver_documento, $ver_fecha, $valor_id = 0, $total_general = 0;
+    public $ver_recibo, $ver_documento, $ver_fecha, $ver_familia, $ver_curso, $valor_id = 0, $total_general = 0;
+    public $aux_familia, $aux_familia_id, $aux_curso, $aux_curso_id;
 
-    protected $listeners = ['render', 'filtro', 'ver_recibo', 'anular'];
+    protected $listeners = ['render', 'filtro', 'ver_recibo', 'anular', 'actualizar_curso'];
     protected $paginationTheme = 'bootstrap';
 
     use WithPagination;
@@ -33,26 +34,15 @@ class IngresoIndex extends Component
         $this->caso = 1;
         $this->ver_recibo = 'none';
         $this->ver_documento = 'none';
+        $this->ver_familia = 'none';
+        $this->ver_curso = 'none';
         $this->ver_fecha = 'block';
+        $this->cargar_familia();
+        $this->cargar_curso();
     }
 
     public function render()
     {
-
-        $tipo_curso = TipoCurso::where('estado_id', 1)
-        ->get();
-
-        $id = 0;
-
-        if(empty($this->tipo_curso_id)){
-            $id = $tipo_curso[0]->id;
-        }else{
-            $id = $this->tipo_curso_id;
-        }
-
-        $curso = Curso::where('tipo_curso_id', $id)
-        ->where('estado_id', 1)
-        ->get();
 
         if($this->caso == 1){
             $data = $this->datos_fecha();
@@ -66,11 +56,34 @@ class IngresoIndex extends Component
             $data = $this->datos_documentos();
         }
 
-        $this->curso_id = $curso[0]->id;
+        if($this->caso == 4){
+            $data = $this->datos_familia();
+        }
 
-        return view('livewire.ingreso-matricula.ingreso-index', compact('tipo_curso', 'curso', 'data'));
+        if($this->caso == 5){
+            $data = $this->datos_curso();
+        }
+
+
+        return view('livewire.ingreso-matricula.ingreso-index', compact('data'));
     }
 
+    public function cargar_familia()
+    {
+        $this->aux_familia = TipoCurso::all();
+        $this->aux_familia_id = $this->aux_familia[0]->id;
+    }
+
+    public function cargar_curso()
+    {
+        $this->aux_curso = Curso::where('tipo_curso_id', $this->aux_familia_id)
+        ->get();
+        if(count($this->aux_curso) > 0){
+            $this->aux_curso_id = $this->aux_curso[0]->id;
+        }else{
+            $this->aux_curso_id = 0;
+        }
+    }
 
     public function datos_fecha()
     {
@@ -84,6 +97,60 @@ class IngresoIndex extends Component
         $suma = IngresoMatricula::whereBetween('fecha_ingreso', [$fecha, $fecha_hasta])
         ->where('estado_id', 1)
         ->orderBy('fecha_ingreso', 'DESC')
+        ->sum('total_pagado');
+
+        $this->total_general = $suma;
+
+        return $data;
+    }
+
+    public function datos_familia()
+    {
+        $fecha = date('Y-m-d', strtotime($this->fecha_actual));
+        $fecha_hasta = date('Y-m-d', strtotime($this->fecha_hasta));
+        $data = IngresoMatricula::join('ingreso_matricula_detalles AS a', 'ingreso_matriculas.id', '=', 'a.ingreso_matricula_id')
+        ->join('curso_habilitados AS b', 'a.curso_habilitado_id', '=', 'b.id')
+        ->select('ingreso_matriculas.*')
+        ->whereBetween('ingreso_matriculas.fecha_ingreso', [$fecha, $fecha_hasta])
+        ->where('ingreso_matriculas.estado_id', 1)
+        ->where('b.tipo_curso_id', $this->aux_familia_id)
+        ->orderBy('ingreso_matriculas.created_at', 'DESC')
+        ->paginate(50);
+
+        $suma = IngresoMatricula::join('ingreso_matricula_detalles AS a', 'ingreso_matriculas.id', '=', 'a.ingreso_matricula_id')
+        ->join('curso_habilitados AS b', 'a.curso_habilitado_id', '=', 'b.id')
+        ->select('ingreso_matriculas.*')
+        ->whereBetween('ingreso_matriculas.fecha_ingreso', [$fecha, $fecha_hasta])
+        ->where('ingreso_matriculas.estado_id', 1)
+        ->where('b.tipo_curso_id', $this->aux_familia_id)
+        ->orderBy('ingreso_matriculas.created_at', 'DESC')
+        ->sum('total_pagado');
+
+        $this->total_general = $suma;
+
+        return $data;
+    }
+
+    public function datos_curso()
+    {
+        $fecha = date('Y-m-d', strtotime($this->fecha_actual));
+        $fecha_hasta = date('Y-m-d', strtotime($this->fecha_hasta));
+        $data = IngresoMatricula::join('ingreso_matricula_detalles AS a', 'ingreso_matriculas.id', '=', 'a.ingreso_matricula_id')
+        ->join('curso_habilitados AS b', 'a.curso_habilitado_id', '=', 'b.id')
+        ->select('ingreso_matriculas.*')
+        ->whereBetween('ingreso_matriculas.fecha_ingreso', [$fecha, $fecha_hasta])
+        ->where('ingreso_matriculas.estado_id', 1)
+        ->where('b.curso_id', $this->aux_curso_id)
+        ->orderBy('ingreso_matriculas.created_at', 'DESC')
+        ->paginate(50);
+
+        $suma = IngresoMatricula::join('ingreso_matricula_detalles AS a', 'ingreso_matriculas.id', '=', 'a.ingreso_matricula_id')
+        ->join('curso_habilitados AS b', 'a.curso_habilitado_id', '=', 'b.id')
+        ->select('ingreso_matriculas.*')
+        ->whereBetween('ingreso_matriculas.fecha_ingreso', [$fecha, $fecha_hasta])
+        ->where('ingreso_matriculas.estado_id', 1)
+        ->where('b.curso_id', $this->aux_curso_id)
+        ->orderBy('ingreso_matriculas.created_at', 'DESC')
         ->sum('total_pagado');
 
         $this->total_general = $suma;
@@ -137,18 +204,40 @@ class IngresoIndex extends Component
             $this->ver_fecha = 'block';
             $this->ver_recibo = 'none';
             $this->ver_documento = 'none';
+            $this->ver_familia = 'none';
+            $this->ver_curso = 'none';
         }
 
         if($id == 2){
             $this->ver_fecha = 'none';
             $this->ver_recibo = 'block';
             $this->ver_documento = 'none';
+            $this->ver_familia = 'none';
+            $this->ver_curso = 'none';
         }
 
         if($id == 3){
             $this->ver_fecha = 'none';
             $this->ver_recibo = 'none';
             $this->ver_documento = 'block';
+            $this->ver_familia = 'none';
+            $this->ver_curso = 'none';
+        }
+
+        if($id == 4){
+            $this->ver_fecha = 'block';
+            $this->ver_recibo = 'none';
+            $this->ver_documento = 'none';
+            $this->ver_familia = 'block';
+            $this->ver_curso = 'none';
+        }
+
+        if($id == 5){
+            $this->ver_fecha = 'block';
+            $this->ver_recibo = 'none';
+            $this->ver_documento = 'none';
+            $this->ver_familia = 'block';
+            $this->ver_curso = 'block';
         }
     }
 
@@ -193,6 +282,11 @@ class IngresoIndex extends Component
             $this->resetUI();
             $this->render();
         }
+    }
+
+    public function actualizar_curso()
+    {
+        $this->cargar_curso();
     }
 
     public function resetUI()

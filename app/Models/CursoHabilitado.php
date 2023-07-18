@@ -41,4 +41,9 @@ class CursoHabilitado extends Model
         return $this->hasMany(CursoAlumno::class, 'curso_habilitado_id')->whereIn('curso_a_estado_id',[1, 2]);
     }
 
+    public function instructor()
+    {
+        return $this->belongsTo(Instructor::class, 'instructor_id');
+    }
+
 }

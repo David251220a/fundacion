@@ -93,7 +93,7 @@
 
         </div>
         <h2 class="mt-2">Lista de Asistencia</h2>
-        <form action="{{route('profesor.asistencia_post', $cursoHabilitado)}}" method="POST">
+        <form action="{{route('cursoAlumno.asistencia_post', $cursoHabilitado)}}" method="POST">
             @csrf
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-12">
@@ -186,7 +186,7 @@
             <div class="row">
                 <div class="mt-4">
                     <button type="submit" class="btn btn-success">Grabar</button>
-                    <a href="{{route('profesor.show', $cursoHabilitado)}}" class="btn btn-warning">Atras</a>
+                    <a href="{{route('habilitado.show', $cursoHabilitado)}}" class="btn btn-warning">Atras</a>
                 </div>
 
             </div>

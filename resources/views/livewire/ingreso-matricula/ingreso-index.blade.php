@@ -14,30 +14,30 @@
         <div class="col-md-2 mb-4">
             <div class="custom-control custom-radio custom-control-inline">
                 <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" onclick="filtro(2)">
-                <label class="custom-control-label" for="customRadioInline2">Por numero de recibo</label>
+                <label class="custom-control-label" for="customRadioInline2">Nº de recibo</label>
             </div>
         </div>
 
         <div class="col-md-2 mb-4">
             <div class="custom-control custom-radio custom-control-inline">
                 <input type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input" onclick="filtro(3)">
-                <label class="custom-control-label" for="customRadioInline3">Por Documento</label>
-            </div>
-        </div>
-
-        {{-- <div class="col-md-2 mb-4">
-            <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="customRadioInline4" name="customRadioInline1" class="custom-control-input">
-                <label class="custom-control-label" for="customRadioInline4">Por Tipo de Curso</label>
+                <label class="custom-control-label" for="customRadioInline3">Documento</label>
             </div>
         </div>
 
         <div class="col-md-2 mb-4">
             <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="customRadioInline5" name="customRadioInline1" class="custom-control-input">
-                <label class="custom-control-label" for="customRadioInline5">Por Curso</label>
+                <input type="radio" id="customRadioInline4" name="customRadioInline1" class="custom-control-input" onclick="filtro(4)">
+                <label class="custom-control-label" for="customRadioInline4">Familia</label>
             </div>
-        </div> --}}
+        </div>
+
+        <div class="col-md-2 mb-4">
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInline5" name="customRadioInline1" class="custom-control-input" onclick="filtro(5)">
+                <label class="custom-control-label" for="customRadioInline5">Curso</label>
+            </div>
+        </div>
 
     </div>
 
@@ -62,20 +62,20 @@
             <input wire:model.defer="documento" type="text" class="form-control text-right" onkeyup="punto_decimal(this)" onchange="punto_decimal(this)">
         </div>
 
-        <div class="col-md-3  mb-4" id="ver_tipo_curso_id" style="display: none">
+        <div class="col-md-3  mb-4" id="ver_tipo_curso_id" style="display: {{$ver_familia}}">
             <label for="">Tipo de Curso</label>
-            <select wire:model.defer="tipo_curso_id" class="form-control">
-                @foreach ($tipo_curso as $item)
+            <select wire:model.defer="aux_familia_id" class="form-control" onchange="actualizar_curso()">
+                @foreach ($aux_familia as $item)
                     <option value="{{$item->id}}">{{$item->descripcion}}</option>
                 @endforeach
             </select>
         </div>
 
-        <div class="col-md-3  mb-4" id="ver_curso" style="display: none">
+        <div class="col-md-3  mb-4" id="ver_curso" style="display: {{$ver_curso}}">
             <label for="">Curso</label>
-            <select wire:model.defer="curso_id" class="form-control">
-                @foreach ($curso as $item)
-                    <option value="{{$item->id}}">{{$item->descripcion}}</option>
+            <select wire:model.defer="aux_curso_id" class="form-control">
+                @foreach ($aux_curso as $item)
+                    <option value="{{$item->id}}">{{$item->descripcion}} - {{$item->modulo->descripcion}}</option>
                 @endforeach
             </select>
         </div>
@@ -93,6 +93,8 @@
                 <input type="hidden" name="fecha_hasta" value="{{$fecha_hasta}}">
                 <input type="hidden" name="recibo" value="{{$recibo}}">
                 <input type="hidden" name="documento" value="{{$documento}}">
+                <input type="hidden" name="aux_familia_id" value="{{$aux_familia_id}}">
+                <input type="hidden" name="aux_curso_id" value="{{$aux_curso_id}}">
                 <br>
                 <button class="btn btn-info">Ver</button>
             </form>

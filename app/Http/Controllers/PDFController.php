@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Curso;
 use App\Models\IngresoMatricula;
+use App\Models\TipoCurso;
 use Illuminate\Http\Request;
 use PDF;
 
@@ -38,6 +40,40 @@ class PDFController extends Controller
             ->get();
 
             $titulo = 'Por documento: ' . $request->documento;
+        }
+
+        if($id == 4){
+            $fecha = date('Y-m-d', strtotime($request->fecha_actual));
+            $fecha_hasta = date('Y-m-d', strtotime($request->fecha_hasta));
+            $data = IngresoMatricula::join('ingreso_matricula_detalles AS a', 'ingreso_matriculas.id', '=', 'a.ingreso_matricula_id')
+            ->join('curso_habilitados AS b', 'a.curso_habilitado_id', '=', 'b.id')
+            ->select('ingreso_matriculas.*')
+            ->whereBetween('ingreso_matriculas.fecha_ingreso', [$fecha, $fecha_hasta])
+            ->where('ingreso_matriculas.estado_id', 1)
+            ->where('b.tipo_curso_id', $request->aux_familia_id)
+            ->orderBy('ingreso_matriculas.created_at', 'DESC')
+            ->get();
+
+            $familia = TipoCurso::find($request->aux_familia_id);
+
+            $titulo = 'Por Familia: ' . $familia->descripcion;
+        }
+
+        if($id == 5){
+            $fecha = date('Y-m-d', strtotime($request->fecha_actual));
+            $fecha_hasta = date('Y-m-d', strtotime($request->fecha_hasta));
+            $data = IngresoMatricula::join('ingreso_matricula_detalles AS a', 'ingreso_matriculas.id', '=', 'a.ingreso_matricula_id')
+            ->join('curso_habilitados AS b', 'a.curso_habilitado_id', '=', 'b.id')
+            ->select('ingreso_matriculas.*')
+            ->whereBetween('ingreso_matriculas.fecha_ingreso', [$fecha, $fecha_hasta])
+            ->where('ingreso_matriculas.estado_id', 1)
+            ->where('b.curso_id', $request->aux_curso_id)
+            ->orderBy('ingreso_matriculas.created_at', 'DESC')
+            ->get();
+
+            $curso = Curso::find($request->aux_familia_id);
+
+            $titulo = 'Por Curso: ' . $curso->descripcion;
         }
 
         $pdf = PDF::loadView('pdf.ingreso_curso.detallado', compact('data', 'titulo'));

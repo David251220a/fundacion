@@ -80,3 +80,9 @@ function anular(ingreso_id)
         }
       })
 }
+
+
+function actualizar_curso()
+{
+    Livewire.emit('actualizar_curso');
+}

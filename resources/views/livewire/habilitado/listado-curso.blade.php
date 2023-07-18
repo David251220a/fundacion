@@ -41,8 +41,8 @@
                         <th width="15%">Nombre</th>
                         <th width="15%">Apellido</th>
                         <th width="10%">Estado</th>
-                        <th>Saldo M</th>
-                        <th>Saldo C</th>
+                        <th style="text-align: right">Saldo M</th>
+                        <th style="text-align: right">Saldo C</th>
                         <th class="text-center no-content">Actions</th>
                     </tr>
                 </thead>

@@ -45,8 +45,8 @@
                 <p style="font-size: 18px; line-height: 15px">Periodo: {{date('d/m/Y', strtotime($cursoHabilitado->periodo_desde))}}
                     al {{date('d/m/Y', strtotime($cursoHabilitado->periodo_hasta))}}
                 </p>
-                <p style="font-size: 18px; line-height: 15px">Precio: {{number_format($cursoHabilitado->precio, 0, ".", ".")}}
-                <p style="font-size: 18px; line-height: 15px">Cerificado Precio: {{number_format($cursoHabilitado->precio_certificado, 0, ".", ".")}}
+                <p style="font-size: 18px; line-height: 15px">Precio: {{number_format($cursoHabilitado->precio, 0, ".", ".")}} : Cerificado Precio: {{number_format($cursoHabilitado->precio_certificado, 0, ".", ".")}}
+                </p>
                 @php
                     $lunes = 'Lunes';
                     $martes = 'Martes';
@@ -117,8 +117,9 @@
                     }
 
                 @endphp
-                <p style="font-size: 18px; line-height: 15px">Días de Clase: {{$clases}}
-                    <p style="font-size: 18px; line-height: 15px">Horario: {{date('H:i', strtotime($cursoHabilitado->hora_entrada))}} a {{date('H:i', strtotime($cursoHabilitado->hora_salida))}}
+                <p style="font-size: 18px; line-height: 15px">Días de Clase: {{$clases}} </p>
+                <p style="font-size: 18px; line-height: 15px">Horario: {{date('H:i', strtotime($cursoHabilitado->hora_entrada))}} a {{date('H:i', strtotime($cursoHabilitado->hora_salida))}}</p>
+                <p style="font-size: 18px; line-height: 15px">Instructor: {{$cursoHabilitado->instructor->persona->nombre}} {{$cursoHabilitado->instructor->persona->apellido}}</p>
             </div>
         </div>
 
