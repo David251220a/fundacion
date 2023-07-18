@@ -50,7 +50,7 @@ class HabilitarCursoController extends Controller
             'certificado_precio' => 'required',
             'hora_entrada' => 'required',
             'hora_salida' => 'required',
-            'portada' => 'required|image|mimes:jpeg,png,jpg',
+            'portada' => 'image|mimes:jpeg,png,jpg',
             'curso_id' => 'required',
         ]);
 

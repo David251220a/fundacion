@@ -118,6 +118,7 @@
 
                 @endphp
                 <p style="font-size: 18px; line-height: 15px">Días de Clase: {{$clases}}
+                    <p style="font-size: 18px; line-height: 15px">Horario: {{date('H:i', strtotime($cursoHabilitado->hora_entrada))}} a {{date('H:i', strtotime($cursoHabilitado->hora_salida))}}
             </div>
         </div>
 

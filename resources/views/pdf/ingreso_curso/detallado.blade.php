@@ -105,7 +105,7 @@
 
                     </tr>
                 </thead>
-                <tbody>
+                <tbody style="font-size: 10px">
                     @foreach ($data as $item)
                         <tr>
                             <td>{{$item->año}}-{{$item->numero_recibo}}</td>
@@ -127,7 +127,7 @@
                             <td>
                                 {{date('d/m/Y', strtotime($item->fecha_ingreso))}}
                             </td>
-                            <td>
+                            <td style="text-align: right">
                                 {{number_format($item->total_pagado, 0, ".", ".")}}
                             </td>
                         </tr>

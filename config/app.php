@@ -58,6 +58,7 @@ return [
 
     'asset_url' => env('ASSET_URL'),
 
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -195,7 +196,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
-
+        Barryvdh\DomPDF\ServiceProvider::class,
     ],
 
     /*

@@ -1,0 +1,9 @@
+$options = $app->make('dompdf.options');
+$dompdf = new Dompdf($options);
+$path = realpath(base_path(''));
+if ($path === false) {
+    throw new \RuntimeException('Cannot resolve public path');
+}
+$dompdf->setBasePath($path);
+
+return $dompdf;

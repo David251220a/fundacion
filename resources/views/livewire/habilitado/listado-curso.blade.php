@@ -6,13 +6,22 @@
             <input wire:model.defer="documento"  type="text" class="form-control text-right" onkeyup="punto_decimal(this)">
         </div>
 
-        <div class="col-md-4 col-sm-6 mb-4">
+        <div class="col-md-3 col-sm-6 mb-4">
             <label for="">Estado Alumno</label>
             <select wire:model.defer="estado_curso" class="form-control">
                 <option value="99">--TODOS--</option>
                 @foreach ($estado as $item)
                     <option value="{{$item->id}}">{{$item->descripcion}}</option>
                 @endforeach
+            </select>
+        </div>
+
+        <div class="col-md-3 col-sm-6 mb-4">
+            <label for="">Filtros</label>
+            <select wire:model.defer="saldos" class="form-control">
+                <option value="1">--TODOS--</option>
+                <option value="2">CON SALDO</option>
+                <option value="3">CANCELADO</option>
             </select>
         </div>
 
@@ -62,15 +71,20 @@
                                     background: #9e01a1;
                                     color:white;
                                     margin-right: 15px;';
+
                 @endphp
                 <tbody>
+
                     @foreach ($alumnos as $item)
                         @php
 
-                            if($item->saldo > 0){
-                                $color = 'background: rgb(250, 52, 52)';
-                            }else {
-                                $color = 'background: rgb(99, 250, 53)';
+                            if($item->monto_abonado >=  $item->total_pagar){
+                                $color = 'background: rgb(148 235 122)';
+                            }
+                            elseif ($item->monto_abonado > 0){
+                                $color = 'background: rgb(241 226 46)';
+                            }elseif($item->saldo > 0) {
+                                $color = 'background: rgb(217 96 96)';
                             }
                         @endphp
                         <tr style="{{$color}}; ">

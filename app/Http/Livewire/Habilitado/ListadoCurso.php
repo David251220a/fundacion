@@ -20,7 +20,7 @@ class ListadoCurso extends Component
     public $curso_id, $documento, $curso_precio, $comprobante, $observacion_modal, $estado_a_id, $estado_curso = 99;
     public $documento_modal, $forma_pago_id = 1, $nombre_modal, $total_pagar_modal = 0;
     public $cursoAlumno, $documento_e_modal, $nombre_e_modal, $cuenta = [];
-    public $precio_certificado, $cer_comprobante, $cer_total_pagar_modal, $ingreso, $valor_id = 0;
+    public $precio_certificado, $cer_comprobante, $cer_total_pagar_modal, $ingreso, $valor_id = 0, $saldos;
 
     use WithFileUploads;
 
@@ -35,6 +35,7 @@ class ListadoCurso extends Component
     {
         $this->curso_id = $cursoHabilitado->id;
         $this->curso_precio = number_format($cursoHabilitado->precio, 0, ".", ".");
+        $this->saldos = 1;
     }
 
     public function render()
@@ -56,24 +57,76 @@ class ListadoCurso extends Component
 
         if ($this->estado_curso == 99){
             if(!(empty($this->documento))){
-                $alumnos = CursoAlumno::where('curso_habilitado_id', $this->curso_id)
-                ->where('alumno_id', $alumno_id)
-                ->get();
+                if($this->saldos == 1){
+                    $alumnos = CursoAlumno::where('curso_habilitado_id', $this->curso_id)
+                    ->where('alumno_id', $alumno_id)
+                    ->get();
+                }elseif($this->saldos == 2){
+                    $alumnos = CursoAlumno::where('curso_habilitado_id', $this->curso_id)
+                    ->where('alumno_id', $alumno_id)
+                    ->where('saldo', '>', 0)
+                    ->get();
+                }else{
+                    $alumnos = CursoAlumno::where('curso_habilitado_id', $this->curso_id)
+                    ->where('alumno_id', $alumno_id)
+                    ->where('saldo', 0)
+                    ->get();
+                }
+
             }else{
-                $alumnos = CursoAlumno::where('curso_habilitado_id', $this->curso_id)
+
+                if($this->saldos == 1){
+                    $alumnos = CursoAlumno::where('curso_habilitado_id', $this->curso_id)
                 ->get();
+                }elseif($this->saldos == 2){
+                    $alumnos = CursoAlumno::where('curso_habilitado_id', $this->curso_id)
+                    ->where('saldo', '>', 0)
+                    ->get();
+                }else{
+                    $alumnos = CursoAlumno::where('curso_habilitado_id', $this->curso_id)
+                    ->where('saldo', 0)
+                    ->get();
+                }
+
             }
 
         }else{
             if(!(empty($this->documento))){
-                $alumnos = CursoAlumno::where('curso_habilitado_id', $this->curso_id)
-                ->where('alumno_id', $alumno_id)
-                ->where('curso_a_estado_id', $this->estado_curso)
-                ->get();
+                if($this->saldos == 1){
+                    $alumnos = CursoAlumno::where('curso_habilitado_id', $this->curso_id)
+                    ->where('alumno_id', $alumno_id)
+                    ->where('curso_a_estado_id', $this->estado_curso)
+                    ->get();
+                }elseif($this->saldos == 2){
+                    $alumnos = CursoAlumno::where('curso_habilitado_id', $this->curso_id)
+                    ->where('alumno_id', $alumno_id)
+                    ->where('curso_a_estado_id', $this->estado_curso)
+                    ->where('saldo', '>', 0)
+                    ->get();
+                }else{
+                    $alumnos = CursoAlumno::where('curso_habilitado_id', $this->curso_id)
+                    ->where('alumno_id', $alumno_id)
+                    ->where('curso_a_estado_id', $this->estado_curso)
+                    ->where('saldo', 0)
+                    ->get();
+                }
             }else{
-                $alumnos = CursoAlumno::where('curso_habilitado_id', $this->curso_id)
-                ->where('curso_a_estado_id', $this->estado_curso)
-                ->get();
+
+                if($this->saldos == 1){
+                    $alumnos = CursoAlumno::where('curso_habilitado_id', $this->curso_id)
+                    ->where('curso_a_estado_id', $this->estado_curso)
+                    ->get();
+                }elseif($this->saldos == 2){
+                    $alumnos = CursoAlumno::where('curso_habilitado_id', $this->curso_id)
+                    ->where('curso_a_estado_id', $this->estado_curso)
+                    ->where('saldo', '>', 0)
+                    ->get();
+                }else{
+                    $alumnos = CursoAlumno::where('curso_habilitado_id', $this->curso_id)
+                    ->where('curso_a_estado_id', $this->estado_curso)
+                    ->where('saldo', 0)
+                    ->get();
+                }
             }
 
         }

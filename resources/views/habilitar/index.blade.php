@@ -29,8 +29,8 @@
                             <th>Curso</th>
                             <th>Concluido</th>
                             <th>Fecha Inicio</th>
+                            <th>Horario</th>
                             <th>Dias</th>
-                            <th>Precio</th>
                             <th>Estado</th>
                             <th class="no-content">Actions</th>
                         </tr>
@@ -58,6 +58,9 @@
                                     {{date('d/m/Y', strtotime($item->periodo_desde))}}
                                 </td>
                                 <td>
+                                    {{date('H:i', strtotime($item->hora_entrada))}} a {{date('H:i', strtotime($item->hora_salida))}}
+                                </td>
+                                <td>
                                     {{ ($item->lunes == 1 ? 'LUNES' : '') }}
                                     {{ ($item->martes == 1 ? 'MARTES' : '')}}
                                     {{ ($item->miercoles == 1 ? 'MIERCOLES' : '')}}
@@ -66,9 +69,9 @@
                                     {{ ($item->sabado == 1 ? 'SABADO' : '')}}
                                     {{ ($item->domingo == 1 ? 'DOMINGO' : '')}}
                                 </td>
-                                <td>
+                                {{-- <td>
                                     {{number_format($item->precio, 0, ".", ".")}}
-                                </td>
+                                </td> --}}
                                 <td>
                                     {{$item->estado->descripcion}}
                                 </td>
