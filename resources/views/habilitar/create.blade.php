@@ -33,7 +33,7 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="inputPassword4">Precio Certificado</label>
-                                <input type="text" name="certificado_precio" id="certificado_precio" class="form-control text-right" onkeyup="punto_decimal_limite(this)" value="{{old('certificado_precio', 30.000)}}">
+                                <input type="text" name="certificado_precio" id="certificado_precio" class="form-control text-right" onkeyup="punto_decimal_limite(this)" value="{{old('certificado_precio', 30000)}}">
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="inputPassword4">Fecha Inicio</label>
