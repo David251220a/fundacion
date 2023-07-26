@@ -114,7 +114,7 @@
             <p>
                 Tipo de Cobro: <b>{{($ingresoMatricula->tipo_cobro == 1 ? 'MATRICULA' : 'CERTIFICADO')}}</b> <br>
                 Forma de Pago: <b>{{$ingresoMatricula->forma_pago->descripcion}}</b> <br>
-                Fecha: <b>{{date('d/m/Y', strtotime($ingresoMatricula->fecha_ingreso))}}</b> <br>
+                Fecha: <b>{{date('d/m/Y H:i', strtotime($ingresoMatricula->created_at))}}</b> <br>
                 Usuario: <b>{{$ingresoMatricula->usuario->name}}</b> <br>
             </p>
         </div>

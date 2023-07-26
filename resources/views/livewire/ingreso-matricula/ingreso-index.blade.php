@@ -136,7 +136,7 @@
                                 {{($item->tipo_cobro == 1 ? 'MATRICULA' : 'CERTIFICADO')}}
                             </td>
                             <td>
-                                {{date('d/m/Y', strtotime($item->fecha_ingreso))}}
+                                {{date('d/m/Y H:i', strtotime($item->created_at))}}
                             </td>
                             <td>
                                 {{number_format($item->total_pagado, 0, ".", ".")}}
