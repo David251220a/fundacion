@@ -6,6 +6,7 @@
     <link href="{{asset('plugins/sweetalerts/sweetalert.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/css/components/custom-sweetalert.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/css/elements/popover.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{asset('plugins/select2/select2.min.css')}}">
     <style>
         .caja{
             width: 100%;
@@ -136,6 +137,14 @@
                 </li>
 
                 <li class="nav-item ml-2 mr-2">
+                    <a class="nav-link mb-2 text-center" id="rounded-pills-icon-insumo-tab" data-toggle="pill"
+                    href="#rounded-pills-icon-insumo" role="tab" aria-controls="rounded-pills-icon-insumo" aria-selected="false">
+                    <i class="fas fa-tools" style="font-size: 2.5rem"></i>
+                        Insumos
+                    </a>
+                </li>
+
+                <li class="nav-item ml-2 mr-2">
                     <a class="nav-link mb-2 text-center" id="rounded-pills-icon-profile-tab" data-toggle="pill" href="#rounded-pills-icon-profile"
                     role="tab" aria-controls="rounded-pills-icon-profile" aria-selected="false">
                     <i class="fas fa-tasks" style="font-size: 2.5rem"></i>
@@ -186,6 +195,10 @@
             <div class="tab-content" id="rounded-pills-icon-tabContent">
                 <div class="tab-pane fade show active" id="rounded-pills-icon-home" role="tabpanel" aria-labelledby="rounded-pills-icon-home-tab">
                     @livewire('habilitado.listado-curso', ['cursoHabilitado' => $cursoHabilitado], key($cursoHabilitado->id))
+                </div>
+
+                <div class="tab-pane fade show" id="rounded-pills-icon-insumo" role="tabpanel" aria-labelledby="rounded-pills-icon-insumo-tab">
+                    @livewire('habilitado.listado-insumo', ['cursoHabilitado' => $cursoHabilitado], key($cursoHabilitado->id))
                 </div>
 
                 <div class="tab-pane fade show " id="rounded-pills-icon-profile" role="tabpanel" aria-labelledby="rounded-pills-icon-profile-tab">
@@ -289,75 +302,11 @@
 @endsection
 
 @section('js')
+    <script src="{{asset('plugins/select2/select2.min.js')}}"></script>
     <script src="{{asset('plugins/sweetalerts/sweetalert2.min.js')}}"></script>
     <script src="{{asset('plugins/sweetalerts/custom-sweetalert.js')}}"></script>
     <script src="{{asset('assets/js/elements/popovers.js')}}"></script>
-    <script>
+    <script src="{{asset('js/curso/curso.js')}}"></script>
 
-        const swalWithBootstrapButtons = swal.mixin({
-            confirmButtonClass: 'btn btn-success btn-rounded',
-            cancelButtonClass: 'btn btn-danger btn-rounded mr-3',
-            buttonsStyling: false,
-        })
-        window.addEventListener('load', function() {
-
-            window.livewire.on('reloadClassCSs', msj => {
-                let mensaje = document.getElementById("mensaje");
-                let mensaje_2 = document.getElementById("mensaje_2");
-                if(mensaje != null){
-                    document.getElementById("mensaje").style.display = "none";
-                }
-
-                if(mensaje_2 != null){
-                    document.getElementById("mensaje_2").style.display = "none";
-                }
-
-            });
-
-            window.livewire.on('mensaje_error', msj => {
-                $('#modal_agregar').modal('hide');
-                $('#modal_agregar_certificado').modal('hide');
-                swalWithBootstrapButtons(
-                    'Atención',
-                    msj,
-                    'error'
-                )
-            });
-
-            window.livewire.on('cobro_exito', msj => {
-                $('#modal_agregar').modal('hide');
-                $('#modal_agregar_certificado').modal('hide');
-                $('#recibo_comprobante').modal('show');
-                // swal({
-                //     title: 'Buen Trabajo',
-                //     text: msj,
-                //     type: 'success',
-                //     padding: '2em'
-                // })
-            });
-
-            window.livewire.on('estado_exito', msj => {
-                $('#modal_estado').modal('hide');
-                swal({
-                    title: 'Buen Trabajo',
-                    text: msj,
-                    type: 'success',
-                    padding: '2em'
-                })
-            });
-        });
-
-        function actualizar(){
-            Livewire.emit('render');
-        }
-
-        function datos(cursoAlumno){
-            Livewire.emit('datos', cursoAlumno);
-        }
-
-        function estado_cuenta(cursoAlumno, alumno){
-            Livewire.emit('estado_cuenta', cursoAlumno, alumno);
-        }
-    </script>
 @endsection
 

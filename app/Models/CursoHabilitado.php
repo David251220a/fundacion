@@ -46,4 +46,9 @@ class CursoHabilitado extends Model
         return $this->belongsTo(Instructor::class, 'instructor_id');
     }
 
+    public function insumos()
+    {
+        return $this->hasMany(CursoIngreso::class, 'curso_habilitado_id')->where('estado_id', 1);
+    }
+
 }
