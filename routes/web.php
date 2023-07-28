@@ -118,6 +118,7 @@ Route::group([
 
     Route::get('/pdf/ingreso-curso/detallado/{id}', [PDFController::class, 'ingreso_curso_detallado'])->name('ingreso_curso.detallado');
     Route::get('/pdf/ingreso-curso/{ingresoMatricula}/recibo', [PDFController::class, 'recibo_curso'])->name('ingreso_curso.recibo');
+    Route::get('/pdf/ingreso-vario/{ingresoVarios}/recibo', [PDFController::class, 'recibo_vario_insumo'])->name('ingreso_vario.recibo_vario_insumo');
 
 });
 

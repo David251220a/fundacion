@@ -41,18 +41,16 @@
                                 @php
                                     $relacion = $cab->alumnos;
                                     $existe = $relacion->where('alumno_id', $item->alumno_id)->where('estado_id', 1);
-                                    if($item->total_pagado >=  $item->total_pagar){
-                                        $color = 'background: rgb(148 235 122)';
-                                    }
-                                    elseif ($item->total_pagado > 0){
-                                        $color = 'background: rgb(241 226 46)';
-                                    }elseif($item->saldo > 0) {
-                                        $color = 'background: rgb(217 96 96)';
-                                    }
-
                                     foreach ($existe as $a) {
                                         $valor = $a->saldo;
                                         $id = $a->id;
+                                        if($a->total_pagado >=  $a->total_pagar){
+                                            $color = 'background: rgb(148 235 122)';
+                                        }elseif ($a->total_pagado > 0){
+                                            $color = 'background: rgb(241 226 46)';
+                                        }elseif($a->saldo > 0) {
+                                            $color = 'background: rgb(217 96 96)';
+                                        }
                                     }
                                 @endphp
                                 @if ($existe)
@@ -60,13 +58,12 @@
                                         {{number_format($valor, 0, ".", ".")}}
                                     </td>
                                     <td width="10%">
-                                        <button class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#modal_cobrar_insumo" onclick="datos_insumo({{$id}})">
+                                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_cobrar_insumo" onclick="datos_insumo({{$id}})">
                                             <i class="fas fa-coins"></i>
                                         </button>
                                     </td>
                                 @else
-                                    <td width="10%" >No hyay</td>
-                                    <td width="10%" >No hyay</td>
+                                    <td colspan="2" width="10%" >X</td>
                                 @endif
                             @endforeach
                         </tr>
@@ -78,4 +75,6 @@
 
     @include('modal.agregar_insumo')
     @include('modal.cobrar_insumo')
+    @include('modal.recibo_ingreso')
+
 </div>

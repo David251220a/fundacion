@@ -16,4 +16,9 @@ class CursoIngreso extends Model
     {
         return $this->hasMany(CursoInAlumno::class, 'curso_ingreso_id')->where('estado_id', 1);
     }
+
+    public function cursoHabilitado()
+    {
+        return $this->belongsTo(CursoHabilitado::class, 'curso_habilitado_id');
+    }
 }

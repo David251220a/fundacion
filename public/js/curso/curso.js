@@ -12,6 +12,8 @@ window.addEventListener('load', function() {
         let mensaje_2 = document.getElementById("mensaje_2");
         let mensaje_3 = document.getElementById("mensaje_insumo");
         let mensaje_4 = document.getElementById("mensaje_insumo_1");
+        let mensaje_5 = document.getElementById("total_cobrar_insumo");
+
         if(mensaje != null){
             document.getElementById("mensaje").style.display = "none";
         }
@@ -26,6 +28,10 @@ window.addEventListener('load', function() {
 
         if(mensaje_4 != null){
             document.getElementById("mensaje_insumo_1").style.display = "none";
+        }
+
+        if(mensaje_5 != null){
+            document.getElementById("total_cobrar_insumo").style.display = "none";
         }
 
     });
@@ -64,6 +70,7 @@ window.addEventListener('load', function() {
 
     window.livewire.on('validacion', msj => {
         $('#modal_insumo').modal('hide');
+        $('#modal_cobrar_insumo').modal('hide');
         swalWithBootstrapButtons(
             'Atención',
             msj,
@@ -80,6 +87,12 @@ window.addEventListener('load', function() {
             padding: '2em'
         })
     });
+
+    window.livewire.on('cobro_insumo_exitoso', msj => {
+        $('#modal_insumo').modal('hide');
+        $('#modal_cobrar_insumo').modal('hide');
+        $('#recibo_comprobante_ingreso').modal('show');
+    });
 });
 
 function actualizar(){
@@ -95,5 +108,5 @@ function estado_cuenta(cursoAlumno, alumno){
 }
 
 function datos_insumo(id){
-    Livewire.emit('datos', id);
+    Livewire.emit('datos_insumo', id);
 }

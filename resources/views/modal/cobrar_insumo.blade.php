@@ -45,9 +45,9 @@
 
                         <div class="form-group col-md-6">
                             <label for="inputPassword4">Total a Pagar</label>
-                            <input wire:model.defer="total_pagar_modal" type="text" class="form-control text-right" onkeyup="punto_decimal_limite_precio(this)" >
+                            <input wire:model.defer="total_pagar_modal" type="text" class="form-control text-right text-white" onkeyup="punto_decimal_limite_precio(this)" >
                             @error('total_pagar_modal')
-                                <span role="alert" id="mensaje" style="color: red; padding: 2px 2px">El total a pagar no pueder estar vacio o ser 0.</span>
+                                <span role="alert" id="total_cobrar_insumo" style="color: red; padding: 2px 2px">El total a pagar no pueder estar vacio o ser 0.</span>
                             @enderror
                         </div>
                     </div>
@@ -56,7 +56,7 @@
             </div>
             <div class="modal-footer">
                 <button wire:click="resetUI" class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Cancelar</button>
-                <button wire:click="save" type="button" class="btn btn-primary">Guardar</button>
+                <button wire:click="cobrar" type="button" class="btn btn-primary">Guardar</button>
             </div>
         </div>
     </div>

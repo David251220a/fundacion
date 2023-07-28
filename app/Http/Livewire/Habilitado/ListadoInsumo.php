@@ -8,6 +8,8 @@ use App\Models\CursoInAlumno;
 use App\Models\CursoIngreso;
 use App\Models\FormaPago;
 use App\Models\IngresoConcepto;
+use App\Models\IngresoVarios;
+use App\Models\IngresoVariosDetalle;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -16,12 +18,12 @@ class ListadoInsumo extends Component
 {
 
     public $curso_id, $curso_precio = 0, $saldos = 1, $cursoHabilitado, $insumos;
-    public $insumo_id, $descripcion, $precio = 0, $fecha;
-    public $nombre_modal, $forma_pago, $forma_pago_id, $comprobante, $total_pagar_modal = 0, $documento_modal;
+    public $insumo_id, $descripcion, $precio = 0, $fecha, $ingreso, $valor_id = 0;
+    public $nombre_modal, $forma_pago, $forma_pago_id, $comprobante, $total_pagar_modal = 0, $documento_modal, $cursoAIngreso=0;
 
     use WithFileUploads;
 
-    protected $listeners = ['datos'];
+    protected $listeners = ['datos_insumo'];
 
     public function mount(CursoHabilitado $cursoHabilitado)
     {
@@ -158,12 +160,99 @@ class ListadoInsumo extends Component
         $this->emit('confirma_ingreso', 'Se añadido insumo para la clase en fecha.');
     }
 
-    public function datos(CursoIngreso $cursoIngreso)
+    public function datos_insumo($id)
     {
+        $cursoIngreso = CursoInAlumno::find($id);
+        $this->cursoAIngreso = $cursoIngreso->id;
         $this->curso_precio = number_format($cursoIngreso->saldo, 0, ".", ".");
         $this->total_pagar_modal = $this->curso_precio;
         $this->nombre_modal = $cursoIngreso->alumno->persona->nombre . ' ' . $cursoIngreso->alumno->persona->apellido;
         $this->documento_modal = $cursoIngreso->alumno->persona->documento;
+
+    }
+
+
+    public function cobrar()
+    {
+        if($this->comprobante){
+            $filePath = $this->comprobante->store('public/comprobante');
+            $this->validate([
+                'total_pagar_modal' => 'required',
+                'comprobante' => 'image|mimes:jpeg,png,jpg,gif'
+            ]);
+        }else{
+            $filePath = '';
+            $this->validate([
+                'total_pagar_modal' => 'required',
+            ]);
+        }
+
+        $total_pagar = str_replace('.', '', $this->total_pagar_modal);
+
+        if($total_pagar == 0){
+            $this->emit('validacion', 'El total a pagar no pueder ser 0.');
+            $this->resetUI();
+
+            return false;
+        }
+
+        $fecha_actual = Carbon::now();
+        $mes = intval(date('m', strtotime($fecha_actual)));
+        $anio = intval(date('Y', strtotime($fecha_actual)));
+        $numero_recibo = IngresoVarios::where('año', $anio)
+        ->max('numero_recibo');
+
+        $numero_recibo += 1;
+
+        $cursoInAlumno = CursoInAlumno::find($this->cursoAIngreso);
+        $ingreso_Curso = CursoIngreso::find($cursoInAlumno->curso_ingreso_id);
+
+        // INGRESA LA CABEZERA DE INGRESO VARIOS
+        $ingreso = IngresoVarios::create([
+            'persona_id' => $cursoInAlumno->alumno->persona->id,
+            'forma_pago_id' => $this->forma_pago_id,
+            'fecha_ingreso' => $fecha_actual,
+            'mes' => $mes,
+            'año' => $anio,
+            'numero_recibo' => $numero_recibo,
+            'sucursal' => '000',
+            'general' => '000',
+            'factura_numero' => '0000000',
+            'total_pagado' => $total_pagar,
+            'comprobante' => '',
+            'cuenta_padre' => 0,
+            'tipo_curso_id' => $ingreso_Curso->cursoHabilitado->tipo_curso_id,
+            'curso_id' => $ingreso_Curso->cursoHabilitado->curso_id,
+            'curso_habilitado_id' => $ingreso_Curso->curso_habilitado_id,
+            'estado_id' => 1,
+            'user_id' => auth()->user()->id,
+            'modif_user_id' => auth()->user()->id,
+        ]);
+        // INGRESA EL DETALLE DE INGRESO VARIOS
+        $ingreso_detalle = IngresoVariosDetalle::create([
+            'persona_id' => $cursoInAlumno->alumno->persona->id,
+            'ingreso_vario_id' => $ingreso->id,
+            'ingreso_concepto_id' => $ingreso_Curso->ingreso_concepto_id,
+            'descripcion' => $ingreso_Curso->descripcion,
+            'precio_unitario' => $ingreso_Curso->precio,
+            'cantidad' => 1,
+            'total_pagar' => $ingreso_Curso->precio,
+            'monto_pagado' => $total_pagar,
+            'saldo' => $ingreso_Curso->precio - $total_pagar,
+            'estado_id' => 1,
+            'user_id' => auth()->user()->id,
+            'modif_user_id' => auth()->user()->id,
+        ]);
+
+        $cursoInAlumno->total_pagado = $cursoInAlumno->total_pagado + $total_pagar;
+        $cursoInAlumno->saldo = $cursoInAlumno->saldo - $total_pagar;
+        $cursoInAlumno->update();
+
+        $this->ingreso = $ingreso;
+        $this->valor_id = $ingreso->id;
+        $this->resetUI();
+        $this->emit('cobro_insumo_exitoso', 'Cobro realizado con exito.');
+
     }
 
     public function resetUI()
@@ -174,6 +263,7 @@ class ListadoInsumo extends Component
         $this->precio = 0;
         $this->curso_precio = 0;
         $this->total_pagar_modal = 0;
+        $this->cursoAIngreso = 0;
         $fecha_actual = Carbon::now();
         $this->fecha = (date('Y-m-d', strtotime($fecha_actual)));
         $this->emit('reloadClassCSs');

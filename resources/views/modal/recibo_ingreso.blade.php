@@ -1,4 +1,4 @@
-<div wire:ignore.self class="modal fade bd-example-modal-lg" id="recibo_comprobante" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div wire:ignore.self class="modal fade bd-example-modal-lg" id="recibo_comprobante_ingreso" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-body">
@@ -80,7 +80,7 @@
             </div>
             <div class="modal-footer">
                 <button wire:click="resetUI" class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Cerrar</button>
-                <a href="#" class="btn btn-primary">Imprimir</a>
+                <a href="{{route('ingreso_vario.recibo_vario_insumo', $valor_id)}}" class="btn btn-primary" target="__blank">Imprimir</a>
             </div>
         </div>
     </div>

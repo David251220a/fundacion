@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Curso;
 use App\Models\IngresoMatricula;
+use App\Models\IngresoVarios;
 use App\Models\TipoCurso;
 use Illuminate\Http\Request;
 use PDF;
@@ -88,5 +89,13 @@ class PDFController extends Controller
         $pdf->setPaper(array(0, 0, 226.772, 350.394), 'defaultPaperSize');
 
         return $pdf->stream('recibo_curso.pdf');
+    }
+
+    public function recibo_vario_insumo(IngresoVarios $ingresoVarios)
+    {
+        $pdf = PDF::loadView('pdf.ingreso_varios.recibo_insumo', compact('ingresoVarios'));
+        $pdf->setPaper(array(0, 0, 226.772, 350.394), 'defaultPaperSize');
+
+        return $pdf->stream('recibo_vario.pdf');
     }
 }
