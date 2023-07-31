@@ -130,6 +130,7 @@ class IngresoVarioController extends Controller
             'descripcion' => $descripcion_concepto,
             'precio' => $precio_concepto,
             'estado_id' => 1,
+            'tipo' => 1,
             'user_id' => auth()->user()->id,
             'modif_user_id' => auth()->user()->id,
         ]);

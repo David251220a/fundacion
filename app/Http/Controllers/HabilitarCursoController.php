@@ -28,9 +28,10 @@ class HabilitarCursoController extends Controller
 
     public function index()
     {
-        $data = CursoHabilitado::take(1000)
-        ->orderBy('created_at', 'DESC')
-        ->paginate(50);
+        $data = CursoHabilitado::latest()
+        ->take(1000)
+        ->get();
+        // dd($data);
         return view('habilitar.index', compact('data'));
     }
 

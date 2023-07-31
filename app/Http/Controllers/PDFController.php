@@ -94,7 +94,8 @@ class PDFController extends Controller
     public function recibo_vario_insumo(IngresoVarios $ingresoVarios)
     {
         $pdf = PDF::loadView('pdf.ingreso_varios.recibo_insumo', compact('ingresoVarios'));
-        $pdf->setPaper(array(0, 0, 226.772, 350.394), 'defaultPaperSize');
+        // $pdf->setPaper(array(0, 0, 226.772, 350.394), 'defaultPaperSize');
+        $pdf->setPaper(array(0, 0, 200.772, 400.394), 'defaultPaperSize');
 
         return $pdf->stream('recibo_vario.pdf');
     }

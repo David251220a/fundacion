@@ -70,7 +70,9 @@ window.addEventListener('load', function() {
 
     window.livewire.on('validacion', msj => {
         $('#modal_insumo').modal('hide');
-        $('#modal_cobrar_insumo').modal('hide');
+        $('#modal_insumo_mucho').modal('hide');
+        $('#modal_insumo_editar').modal('hide');
+        $('#modal_concepto_agregar').modal('hide');
         swalWithBootstrapButtons(
             'Atención',
             msj,
@@ -80,6 +82,9 @@ window.addEventListener('load', function() {
 
     window.livewire.on('confirma_ingreso', msj => {
         $('#modal_insumo').modal('hide');
+        $('#modal_insumo_mucho').modal('hide');
+        $('#modal_insumo_editar').modal('hide');
+        $('#modal_concepto_agregar').modal('hide');
         swal({
             title: 'Buen Trabajo',
             text: msj,
@@ -90,7 +95,10 @@ window.addEventListener('load', function() {
 
     window.livewire.on('cobro_insumo_exitoso', msj => {
         $('#modal_insumo').modal('hide');
+        $('#modal_insumo_mucho').modal('hide');
         $('#modal_cobrar_insumo').modal('hide');
+        $('#modal_insumo_editar').modal('hide');
+        $('#modal_concepto_agregar').modal('hide');
         $('#recibo_comprobante_ingreso').modal('show');
     });
 });
@@ -109,4 +117,20 @@ function estado_cuenta(cursoAlumno, alumno){
 
 function datos_insumo(id){
     Livewire.emit('datos_insumo', id);
+}
+
+function datos_clase_insumo(id){
+    Livewire.emit('datos_clase_insumo', id);
+}
+
+function cambiar_valor()
+{
+    let id = document.getElementById('id_agregar_insumo').value;
+    Livewire.emit('cambiar_valor', id);
+}
+
+function cambiar_valor_mucho()
+{
+    let id = document.getElementById('id_agregar_concepto_mucho').value;
+    Livewire.emit('cambiar_valor', id);
 }

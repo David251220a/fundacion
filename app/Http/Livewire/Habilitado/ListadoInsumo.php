@@ -20,10 +20,13 @@ class ListadoInsumo extends Component
     public $curso_id, $curso_precio = 0, $saldos = 1, $cursoHabilitado, $insumos;
     public $insumo_id, $descripcion, $precio = 0, $fecha, $ingreso, $valor_id = 0;
     public $nombre_modal, $forma_pago, $forma_pago_id, $comprobante, $total_pagar_modal = 0, $documento_modal, $cursoAIngreso=0;
+    public $s_insumo_id, $s_descripcion, $s_precio = 0, $s_activar= true;
+    public $editar_insumo_id, $editar_descripcion, $editar_precio = 0, $editar_fecha, $editar_id = 0, $editar_estado;
+    public $descripcion_concepto, $precio_concepto = 0;
 
     use WithFileUploads;
 
-    protected $listeners = ['datos_insumo'];
+    protected $listeners = ['datos_insumo', 'datos_clase_insumo', 'cambiar_valor'];
 
     public function mount(CursoHabilitado $cursoHabilitado)
     {
@@ -34,6 +37,9 @@ class ListadoInsumo extends Component
         $this->fecha = (date('Y-m-d', strtotime($fecha_actual)));
         $this->insumos = IngresoConcepto::where('estado_id', 1)->where('tipo', 2)->get();
         $this->insumo_id = $this->insumos[0]->id;
+        $this->precio = number_format($this->insumos[0]->precio, 0, ".", ".");
+        $this->s_precio = number_format($this->insumos[0]->precio, 0, ".", ".");
+        $this->s_insumo_id = $this->insumos[0]->id;
         $this->forma_pago = FormaPago::all();
         $this->forma_pago_id = $this->forma_pago[0]->id;
     }
@@ -41,6 +47,7 @@ class ListadoInsumo extends Component
     public function render()
     {
         $alumnos = $this->cursoHabilitado->alumnos_cursando;
+        $this->cursoHabilitado = CursoHabilitado::find($this->curso_id);
         return view('livewire.habilitado.listado-insumo', compact('alumnos'));
     }
 
@@ -114,7 +121,7 @@ class ListadoInsumo extends Component
         ->where('estado_id', 1)
         ->first();
 
-        if(!(empty($exites_clase))){
+        if(!(empty($exite_insumo))){
             $aux = date('d/m/Y', strtotime($this->fecha));
             $this->resetUI();
             $this->emit('validacion', 'Ya se cargo un insumo para esta fecha: ' . $aux .'.');
@@ -160,6 +167,182 @@ class ListadoInsumo extends Component
         $this->emit('confirma_ingreso', 'Se añadido insumo para la clase en fecha.');
     }
 
+
+    public function save_mucho()
+    {
+
+        $this->validate([
+            's_precio' => 'required'
+        ]);
+
+        $this->s_activar= false;
+
+        $fecha_inicial = Carbon::parse($this->cursoHabilitado->periodo_desde);
+
+        if(str_replace('.', '', $this->s_precio) == 0){
+            $this->resetUI();
+            $this->emit('validacion', 'El precio no puede ser 0');
+            return false;
+        }
+
+        $aux_fecha_inicial = $fecha_inicial;
+
+        for ($i=1; $i <= 6; $i++) {
+
+            $insumo = CursoIngreso::create([
+                'curso_habilitado_id' => $this->cursoHabilitado->id,
+                'ingreso_concepto_id' => $this->s_insumo_id,
+                'fecha' => $aux_fecha_inicial->format('Y-m-d'),
+                'descripcion' => $this->s_descripcion,
+                'utilizado' => 0,
+                'clase' => $i,
+                'precio' => str_replace('.', '', $this->s_precio),
+                'estado_id' => 1,
+                'user_id' => auth()->user()->id,
+                'modif_user_id' => auth()->user()->id,
+            ]);
+
+            $alumnos = $this->cursoHabilitado->alumnos_cursando;
+            foreach ($alumnos as $item) {
+                CursoInAlumno::create([
+                    'curso_ingreso_id' => $insumo->id,
+                    'alumno_id' => $item->alumno_id,
+                    'total_pagar' => str_replace('.', '', $this->s_precio),
+                    'total_pagado' => 0,
+                    'saldo' => str_replace('.', '', $this->s_precio),
+                    'estado_id' => 1,
+                    'user_id' => auth()->user()->id,
+                    'modif_user_id' => auth()->user()->id,
+                ]);
+            }
+
+            $nuevo = $aux_fecha_inicial->addWeeks(1);
+            $aux_fecha_inicial = $nuevo;
+            // dd($fecha_inicial->format('d/m/Y'), $nuevo->format('d/m/Y'));
+
+        }
+
+        $this->resetUI();
+        $this->emit('confirma_ingreso', 'Se añadido insumo para las clases siguientes.');
+    }
+
+    public function update(CursoIngreso $cursoIngreso)
+    {
+        $this->validate([
+            'editar_fecha' => 'required',
+            'editar_precio' => 'required'
+        ]);
+
+        if(str_replace('.', '', $this->editar_precio) == 0){
+            $this->resetUI();
+            $this->emit('validacion', 'El precio no puede ser 0');
+            return false;
+        }
+
+        $detalle = CursoInAlumno::where('curso_ingreso_id', $cursoIngreso->id)
+        ->where('estado_id', 1)
+        ->where('total_pagado', '>', '0')
+        ->get();
+
+        if($this->editar_estado == 2){
+            if(count($detalle)){
+                $this->resetUI();
+                $this->emit('validacion', 'No puede anular este insumo por que ya hay cobros realizados.');
+                return false;
+            }else{
+                $cursoIngreso->update([
+                    'ingreso_concepto_id' => $this->editar_insumo_id,
+                    'descripcion' => $this->editar_descripcion,
+                    'utilizado' => 0,
+                    'precio' => str_replace('.', '', $this->editar_precio),
+                    'estado_id' => $this->editar_estado,
+                    'modif_user_id' => auth()->user()->id,
+                ]);
+
+                foreach ($cursoIngreso->alumnos as $item) {
+                    $item->estado_id = 2;
+                    $item->update();
+                }
+            }
+        }else{
+
+            if(count($detalle)){
+                if(str_replace('.', '', $this->editar_precio) < $cursoIngreso->precio ){
+                    $this->resetUI();
+                    $this->emit('validacion', 'No puede poner un monto menor al precio inicial por que hay cobros realizados.');
+                    return false;
+                }
+            }
+
+            if(str_replace('.', '', $this->editar_precio) == $cursoIngreso->precio){
+                $cursoIngreso->update([
+                    'ingreso_concepto_id' => $this->editar_insumo_id,
+                    'descripcion' => $this->editar_descripcion,
+                    'utilizado' => 0,
+                    'precio' => str_replace('.', '', $this->editar_precio),
+                    'estado_id' => $this->editar_estado,
+                    'modif_user_id' => auth()->user()->id,
+                ]);
+            }else{
+
+                $cursoIngreso->update([
+                    'ingreso_concepto_id' => $this->editar_insumo_id,
+                    'descripcion' => $this->editar_descripcion,
+                    'utilizado' => 0,
+                    'precio' => str_replace('.', '', $this->editar_precio),
+                    'estado_id' => $this->editar_estado,
+                    'modif_user_id' => auth()->user()->id,
+                ]);
+
+                foreach ($cursoIngreso->alumnos as $item) {
+                    $item->total_pagar = str_replace('.', '', $this->editar_precio);
+                    $item->saldo = str_replace('.', '', $this->editar_precio) - $item->total_pagado;
+                    $item->update();
+                }
+            }
+
+        }
+
+
+        $this->resetUI();
+        $this->emit('confirma_ingreso', 'Se editado insumo correctamente.');
+    }
+
+    public function agregar_concepto()
+    {
+        if(empty($this->descripcion_concepto)){
+            $this->resetUI();
+            $this->emit('validacion', 'La descripcion de concepto no puede estar vacio.');
+            return false;
+        }
+
+        $precio = str_replace('.', '', $this->precio_concepto);
+
+        if(empty($this->precio_concepto)){
+            $this->resetUI();
+            $this->emit('validacion', 'El precio no puede estar vacio.');
+            return false;
+        }
+
+        if($precio == 0){
+            $this->resetUI();
+            $this->emit('validacion', 'El precio no puede ser cero.');
+            return false;
+        }
+
+        IngresoConcepto::create([
+            'descripcion' => $this->descripcion_concepto,
+            'precio' => str_replace('.', '', $this->precio_concepto),
+            'tipo' => 2,
+            'estado_id' => 1,
+            'user_id' => auth()->user()->id,
+            'modif_user_id' => auth()->user()->id,
+        ]);
+        $this->insumos = IngresoConcepto::where('estado_id', 1)->where('tipo', 2)->get();
+        $this->resetUI();
+        $this->emit('confirma_ingreso', 'Se agregado concepto insumo correctamente.');
+    }
+
     public function datos_insumo($id)
     {
         $cursoIngreso = CursoInAlumno::find($id);
@@ -171,6 +354,23 @@ class ListadoInsumo extends Component
 
     }
 
+    public function datos_clase_insumo($id)
+    {
+        $insumo = CursoIngreso::find($id);
+        $this->editar_descripcion = $insumo->descripcion;
+        $this->editar_insumo_id = $insumo->ingreso_concepto_id;
+        $this->editar_precio = number_format($insumo->precio, 0, ".", ".");
+        $this->editar_fecha = $insumo->fecha;
+        $this->editar_id = $insumo->id;
+        $this->editar_estado = $insumo->estado_id;
+    }
+
+    public function cambiar_valor($id)
+    {
+        $concepto = IngresoConcepto::find($id);
+        $this->precio = number_format($concepto->precio, 0, ".", ".");
+        $this->s_precio = number_format($concepto->precio, 0, ".", ".");
+    }
 
     public function cobrar()
     {
@@ -258,14 +458,27 @@ class ListadoInsumo extends Component
     public function resetUI()
     {
         $this->reset('descripcion');
+        $this->reset('s_descripcion');
         $this->reset('nombre_modal');
         $this->reset('documento_modal');
-        $this->precio = 0;
+        $this->reset('editar_estado');
+        $this->reset('editar_descripcion');
+        $this->reset('editar_fecha');
+        $this->reset('editar_id');
+        $this->reset('descripcion_concepto');
+        $this->precio_concepto = 0;
+        $this->editar_precio = 0;
         $this->curso_precio = 0;
         $this->total_pagar_modal = 0;
         $this->cursoAIngreso = 0;
+        $this->insumo_id = $this->insumos[0]->id;
+        $this->s_insumo_id = $this->insumos[0]->id;
+        $this->precio = number_format($this->insumos[0]->precio, 0, ".", ".");
+        $this->s_precio = number_format($this->insumos[0]->precio, 0, ".", ".");
+        $this->editar_insumo_id = $this->insumos[0]->id;
         $fecha_actual = Carbon::now();
         $this->fecha = (date('Y-m-d', strtotime($fecha_actual)));
+        $this->s_activar= true;
         $this->emit('reloadClassCSs');
 
     }

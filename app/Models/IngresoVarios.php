@@ -25,4 +25,14 @@ class IngresoVarios extends Model
     {
         return $this->belongsTo(FormaPago::class, 'forma_pago_id');
     }
+
+    public function curso()
+    {
+        return $this->belongsTo(CursoHabilitado::class, 'curso_habilitado_id');
+    }
+
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

@@ -73,25 +73,30 @@
                 Apellido: <b>{{$ingresoVarios->persona->apellido}} </b>
                 <br>
                 Recibo: <b>{{$ingresoVarios->año}}-B-{{str_pad($ingresoVarios->numero_recibo, 5, "0", STR_PAD_LEFT)}}</b>
+                <br>
+                Familia: <b>{{$ingresoVarios->curso->tipo_curso->descripcion}}</b>
+                <br>
+                Curso: <b>{{$ingresoVarios->curso->curso->descripcion}}</b>
+                <br>
+                Modulo: <b>{{$ingresoVarios->curso->curso->modulo->descripcion}}</b>
             </label>
         </div>
 
-        {{-- <div style="margin-top: 10px">
+        <div style="margin-top: 10px">
             <table>
                 <thead>
                     <tr>
                         <th width="80%" style="text-align: left">
-                            Curso
+                            Concepto
                         </th>
                         <th width="20%">Monto</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($ingresoMatricula->detalle as $item)
+                    @foreach ($ingresoVarios->detalle as $item)
                         <tr style="">
                             <td style="">
-                                {{$item->curso_habilitado->curso->descripcion}} -
-                                {{$item->curso_habilitado->curso->modulo->descripcion}}
+                                {{$item->concepto->descripcion}}
                             </td>
                             <td style="text-align: right; ">{{number_format($item->monto_pagado, 0, ".", ".")}}</td>
                         </tr>
@@ -102,7 +107,7 @@
                         <th width="80%" style="text-align: left">
                             Total Pagado
                         </th>
-                        <th width="20%">{{number_format($ingresoMatricula->detalle->sum('monto_pagado'), 0, ".", ".")}}</th>
+                        <th width="20%">{{number_format($ingresoVarios->detalle->sum('monto_pagado'), 0, ".", ".")}}</th>
                     </tr>
                 </tfoot>
             </table>
@@ -112,12 +117,11 @@
         <div>
             <p class="detalle">Detalles</p>
             <p>
-                Tipo de Cobro: <b>{{($ingresoMatricula->tipo_cobro == 1 ? 'MATRICULA' : 'CERTIFICADO')}}</b> <br>
-                Forma de Pago: <b>{{$ingresoMatricula->forma_pago->descripcion}}</b> <br>
-                Fecha: <b>{{date('d/m/Y H:i', strtotime($ingresoMatricula->created_at))}}</b> <br>
-                Usuario: <b>{{$ingresoMatricula->usuario->name}}</b> <br>
+                Forma de Pago: <b>{{$ingresoVarios->forma_pago->descripcion}}</b> <br>
+                Fecha: <b>{{date('d/m/Y H:i', strtotime($ingresoVarios->created_at))}}</b> <br>
+                Usuario: <b>{{$ingresoVarios->usuario->name}}</b> <br>
             </p>
-        </div> --}}
+        </div>
     </body>
 
 </html>

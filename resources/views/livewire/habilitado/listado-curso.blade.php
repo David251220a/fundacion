@@ -40,6 +40,7 @@
                         <th width="5%">Documento</th>
                         <th width="15%">Nombre</th>
                         <th width="15%">Apellido</th>
+                        <th width="5%">Celular</th>
                         <th width="10%">Estado</th>
                         <th style="text-align: right">Saldo M</th>
                         <th style="text-align: right">Saldo C</th>
@@ -92,6 +93,9 @@
                             <td class="text-right text-bold" style="font-weight: bold; color:black; font-size:15px">{{number_format($item->alumno->persona->documento, 0, ".", ".")}}</td>
                             <td class="" style="font-weight: bold; color:black; font-size:15px">{{$item->alumno->persona->nombre}}</td>
                             <td class="" style="font-weight: bold; color:black; font-size:15px">{{$item->alumno->persona->apellido}}</td>
+                            <td class="" style="font-weight: bold; color:black; font-size:15px">
+                                {{ str_replace('-', '', $item->alumno->persona->celular)}}
+                            </td>
                             <td class="" style="font-weight: bold; color:black; font-size:15px">
                                 {{-- <button type="button" data-toggle="modal" data-target="#modal_estado" onclick="datos({{$item->id}})" class="btn btn-dark btn-sm mb-2">
                                     {{$item->estado_alumno->descripcion}}

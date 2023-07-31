@@ -8,6 +8,8 @@ use App\Models\AsistenciaMotivo;
 use App\Models\CursoAlumno;
 use App\Models\CursoAlumnoAsistencia;
 use App\Models\CursoHabilitado;
+use App\Models\CursoInAlumno;
+use App\Models\CursoIngreso;
 use App\Models\EstadoCivil;
 use App\Models\FormaPago;
 use App\Models\IngresoMatricula;
@@ -210,6 +212,24 @@ class CursoAlumnoController extends Controller
                 'monto_total' => $cursoHabilitado->precio,
                 'monto_pagado' => $monto_abonado,
                 'saldo' => ($cursoHabilitado->precio - $monto_abonado),
+                'estado_id' => 1,
+                'user_id' => auth()->user()->id,
+                'modif_user_id' => auth()->user()->id,
+            ]);
+        }
+
+        $existe_insumo = CursoIngreso::where('curso_habilitado_id', $cursoHabilitado->id)
+        ->where('fecha','>=',date('Y-m-d', strtotime($fecha_actual)))
+        ->where('estado_id', 1)
+        ->get();
+
+        foreach ($existe_insumo as $item) {
+            CursoInAlumno::create([
+                'curso_ingreso_id' => $item->id,
+                'alumno_id' => $alumno->id,
+                'total_pagar' => str_replace('.', '', $item->precio),
+                'total_pagado' => 0,
+                'saldo' => str_replace('.', '', $item->precio),
                 'estado_id' => 1,
                 'user_id' => auth()->user()->id,
                 'modif_user_id' => auth()->user()->id,

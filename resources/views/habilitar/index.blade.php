@@ -38,8 +38,15 @@
                     <tbody>
                         @foreach ($data as $item)
                             <tr style="font-weight: bold">
-                                <td>{{$item->tipo_curso->descripcion}}</td>
-                                <td>{{$item->curso->descripcion }} - {{$item->curso->modulo->descripcion }}</td>
+                                <td>
+                                    {{str_pad($item->tipo_curso->id, 2, '0', STR_PAD_LEFT)}}00 -
+                                    {{$item->tipo_curso->descripcion}}
+                                </td>
+                                <td>
+                                    {{-- {{str_pad($item->tipo_curso->id, 2, '0', STR_PAD_LEFT)}} --}}
+                                    {{str_pad($item->curso->id, 3, '0', STR_PAD_LEFT)}}
+                                    - {{$item->curso->descripcion }} - {{$item->curso->modulo->descripcion }}
+                                </td>
                                 <td>
                                     @if ($item->concluido)
                                         @php
@@ -116,7 +123,8 @@
             },
             "stripeClasses": [],
             "lengthMenu": [10, 20, 50, 100],
-            "pageLength": 10
+            "pageLength": 10,
+            "ordering": false
         });
     </script>
 @endsection

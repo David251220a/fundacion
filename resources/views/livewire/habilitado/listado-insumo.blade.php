@@ -8,8 +8,10 @@
 
         <div class="col-md-8 col-sm-4 mb-4">
             <label for="" class="w-full" style="width: 100%">Accion</label>
-            <button type="button" class="btn btn-info" onclick="actualizar()">Filtrar</button>
-            <button type="button" class="btn btn-warning"  data-toggle="modal" data-target="#modal_insumo">Agregar Insumo</button>
+            <button type="button" class="btn btn-info mb-2" onclick="actualizar()">Filtrar</button>
+            <button type="button" class="btn btn-warning mb-2"  data-toggle="modal" data-target="#modal_insumo">Insumo</button>
+            <button type="button" class="btn mb-2"  data-toggle="modal" data-target="#modal_insumo_mucho">Insumo (x6)</button>
+            <button type="button" class="btn btn-secondary mb-2"  data-toggle="modal" data-target="#modal_concepto_agregar">Insumo (+)</button>
         </div>
     </div>
 
@@ -23,10 +25,13 @@
                         <th width="10%" rowspan="2">Nombre</th>
                         <th width="10%" rowspan="2">Apellido</th>
                         @foreach ($cursoHabilitado->insumos as $item)
-                            <th colspan="2" class="text-center">
-                                Clase {{$item->clase}}
-                                <br>
-                                {{date('d/m/Y', strtotime($item->fecha))}}
+                            <th width="10%" colspan="2" class="text-center">
+                                <a data-toggle="modal" data-target="#modal_insumo_editar" onclick="datos_clase_insumo({{$item->id}})">
+                                    Clase {{$item->clase}}
+                                    <br>
+                                    {{date('d/m/Y', strtotime($item->fecha))}}
+                                </a>
+
                             </th>
                         @endforeach
                 </thead>
@@ -53,17 +58,17 @@
                                         }
                                     }
                                 @endphp
-                                @if ($existe)
+                                @if (count($existe) > 0)
                                     <td width="10%" class="text-right" style="font-weight: bold; color:black;{{$color}}">
                                         {{number_format($valor, 0, ".", ".")}}
                                     </td>
-                                    <td width="10%">
-                                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_cobrar_insumo" onclick="datos_insumo({{$id}})">
+                                    <td width="5%">
+                                        <a class="" data-toggle="modal" data-target="#modal_cobrar_insumo" onclick="datos_insumo({{$id}})">
                                             <i class="fas fa-coins"></i>
-                                        </button>
+                                        </a>
                                     </td>
                                 @else
-                                    <td colspan="2" width="10%" >X</td>
+                                    <td colspan="2" class="text-center" width="10%" style="font-weight: bold" >X</td>
                                 @endif
                             @endforeach
                         </tr>
@@ -74,7 +79,9 @@
     </div>
 
     @include('modal.agregar_insumo')
+    @include('modal.agregar_insumo_mucho')
     @include('modal.cobrar_insumo')
     @include('modal.recibo_ingreso')
-
+    @include('modal.editar_clase_insumo')
+    @include('modal.ingreso_concepto_aux')
 </div>
