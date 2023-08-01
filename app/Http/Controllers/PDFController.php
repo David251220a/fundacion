@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Curso;
 use App\Models\IngresoMatricula;
 use App\Models\IngresoVarios;
+use App\Models\Persona;
 use App\Models\TipoCurso;
 use Illuminate\Http\Request;
 use PDF;
@@ -98,5 +99,93 @@ class PDFController extends Controller
         $pdf->setPaper(array(0, 0, 200.772, 400.394), 'defaultPaperSize');
 
         return $pdf->stream('recibo_vario.pdf');
+    }
+
+    public function recibo_vario(IngresoVarios $ingresoVarios)
+    {
+
+        if($ingresoVarios->curso_ingreso_id == 0){
+            $pdf = PDF::loadView('pdf.ingreso_varios.recibo', compact('ingresoVarios'));
+        }else{
+            $pdf = PDF::loadView('pdf.ingreso_varios.recibo_insumo', compact('ingresoVarios'));
+        }
+
+        // $pdf->setPaper(array(0, 0, 226.772, 350.394), 'defaultPaperSize');
+        $pdf->setPaper(array(0, 0, 200.772, 400.394), 'defaultPaperSize');
+
+        return $pdf->stream('recibo_vario.pdf');
+
+    }
+
+    public function ingreso_varios_reporte($id, Request $request)
+    {
+        $fecha_actual = date('Y-m-d', strtotime($request->fecha_actual));
+        $fecha_hasta = date('Y-m-d', strtotime($request->fecha_hasta));
+
+        switch ($id) {
+            case 1:
+                $data = IngresoVarios::where('estado_id', 1)
+                ->whereBetween('fecha_ingreso', [$fecha_actual, $fecha_hasta])
+                ->orderBy('id', 'DESC')
+                ->get();
+
+                $titulo = 'Desde Fecha: ' . date('d/m/Y', strtotime($request->fecha_actual)) .
+                ' Hasta Fecha: ' . date('d/m/Y', strtotime($request->fecha_hasta));
+
+                break;
+
+            case 2:
+                $data = IngresoVarios::where('numero_recibo', $request->recibo)
+                ->where('estado_id', 1)
+                ->orderBy('id', 'DESC')
+                ->get();
+                $titulo = 'Por numero de recibo: ' . $request->recibo;
+                break;
+
+            case 3:
+                $documento = str_replace('.', '', $request->documento);
+                $persona = Persona::where('documento', $documento)->first();
+
+                if(empty($persona)){
+                    $persona_id = null;
+                }else{
+                    $persona_id = $persona->id;
+                }
+
+                $data = IngresoVarios::where('persona_id', $persona_id)
+                ->whereBetween('fecha_ingreso', [$fecha_actual, $fecha_hasta])
+                ->where('estado_id', 1)
+                ->orderBy('id', 'DESC')
+                ->get();
+                $titulo = 'Por documento: ' . $request->documento;
+                break;
+
+            case 4:
+                $data = IngresoVarios::where('estado_id', 1)
+                ->whereBetween('fecha_ingreso', [$fecha_actual, $fecha_hasta])
+                ->where('tipo_curso_id', $request->aux_familia_id)
+                ->orderBy('id', 'DESC')
+                ->get();
+
+                $familia = TipoCurso::find($request->aux_familia_id);
+                $titulo = 'Por Familia: ' . $familia->descripcion;
+                break;
+            case 5:
+                $data = IngresoVarios::where('estado_id', 1)
+                ->whereBetween('fecha_ingreso', [$fecha_actual, $fecha_hasta])
+                ->where('curso_id', $request->aux_curso_id)
+                ->orderBy('id', 'DESC')
+                ->get();
+
+                $curso = Curso::find($request->aux_familia_id);
+                $titulo = 'Por Curso: ' . $curso->descripcion;
+                break;
+
+        }
+
+        $pdf = PDF::loadView('pdf.ingreso_varios.detallado', compact('data', 'titulo'));
+        $pdf->setPaper('A4', 'landscape');
+
+        return $pdf->stream('ingreso_varios_detallado.pdf');
     }
 }

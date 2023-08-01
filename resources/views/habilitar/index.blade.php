@@ -25,6 +25,7 @@
                 <table id="zero-config" class="table dt-table-hover" style="width:100%">
                     <thead>
                         <tr>
+                            <th>Id#</th>
                             <th>Tipo Curso</th>
                             <th>Curso</th>
                             <th>Concluido</th>
@@ -38,6 +39,7 @@
                     <tbody>
                         @foreach ($data as $item)
                             <tr style="font-weight: bold">
+                                <td class="text-right">{{$item->id}}</td>
                                 <td>
                                     {{str_pad($item->tipo_curso->id, 2, '0', STR_PAD_LEFT)}}00 -
                                     {{$item->tipo_curso->descripcion}}

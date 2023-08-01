@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('tipo_curso_id')->after('cuenta_padre')->default(0);
             $table->unsignedBigInteger('curso_id')->after('cuenta_padre')->default(0);
             $table->unsignedBigInteger('curso_habilitado_id')->after('cuenta_padre')->default(0);
+            $table->unsignedBigInteger('curso_ingreso_id')->after('cuenta_padre')->default(0);
         });
     }
 
@@ -31,6 +32,7 @@ return new class extends Migration
             $table->dropColumn('tipo_curso_id');
             $table->dropColumn('curso_id');
             $table->dropColumn('curso_habilitado_id');
+            $table->dropColumn('curso_ingreso_id');
         });
     }
 };

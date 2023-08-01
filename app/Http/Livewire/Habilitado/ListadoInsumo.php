@@ -424,6 +424,7 @@ class ListadoInsumo extends Component
             'tipo_curso_id' => $ingreso_Curso->cursoHabilitado->tipo_curso_id,
             'curso_id' => $ingreso_Curso->cursoHabilitado->curso_id,
             'curso_habilitado_id' => $ingreso_Curso->curso_habilitado_id,
+            'curso_ingreso_id' => $ingreso_Curso->id,
             'estado_id' => 1,
             'user_id' => auth()->user()->id,
             'modif_user_id' => auth()->user()->id,

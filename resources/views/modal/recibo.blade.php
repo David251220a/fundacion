@@ -80,7 +80,7 @@
             </div>
             <div class="modal-footer">
                 <button wire:click="resetUI" class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Cerrar</button>
-                <a href="#" class="btn btn-primary">Imprimir</a>
+                <a href="{{route('ingreso_vario.recibo_vario', $valor_id)}}" target="__blank" class="btn btn-primary">Imprimir</a>
             </div>
         </div>
     </div>

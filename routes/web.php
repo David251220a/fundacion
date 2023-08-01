@@ -62,6 +62,8 @@ Route::group([
         'habilitacion' => 'cursoHabilitado',
     ],
     ])->names('habilitado');
+    Route::get('/habilitacion/{cursoHabilitado}/califar', [HabilitarCursoController::class, 'calificar'])->name('habilitado.calificar');
+    Route::post('/habilitacion/{cursoHabilitado}/califar', [HabilitarCursoController::class, 'calificar_post'])->name('habilitado.calificar_post');
 
     Route::get('/curso/alumno/{cursoHabilitado}', [CursoAlumnoController::class, 'buscar'])->name('cursoAlumno.buscar');
     Route::post('/curso/alumno/{cursoHabilitado}', [CursoAlumnoController::class, 'buscar_post'])->name('cursoAlumno.buscar_post');
@@ -118,7 +120,9 @@ Route::group([
 
     Route::get('/pdf/ingreso-curso/detallado/{id}', [PDFController::class, 'ingreso_curso_detallado'])->name('ingreso_curso.detallado');
     Route::get('/pdf/ingreso-curso/{ingresoMatricula}/recibo', [PDFController::class, 'recibo_curso'])->name('ingreso_curso.recibo');
-    Route::get('/pdf/ingreso-vario/{ingresoVarios}/recibo', [PDFController::class, 'recibo_vario_insumo'])->name('ingreso_vario.recibo_vario_insumo');
+    Route::get('/pdf/ingreso-vario/{ingresoVarios}/insumo', [PDFController::class, 'recibo_vario_insumo'])->name('ingreso_vario.recibo_vario_insumo');
+    Route::get('/pdf/ingreso-vario/{ingresoVarios}/recibo', [PDFController::class, 'recibo_vario'])->name('ingreso_vario.recibo_vario');
+    Route::get('/pdf/ingreso-vario/{id}/reporte', [PDFController::class, 'ingreso_varios_reporte'])->name('ingreso_vario.ingreso_varios_reporte');
 
 });
 

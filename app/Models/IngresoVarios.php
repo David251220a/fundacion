@@ -35,4 +35,14 @@ class IngresoVarios extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function familia()
+    {
+        return $this->belongsTo(TipoCurso::class, 'tipo_curso_id');
+    }
+
+    public function cursos()
+    {
+        return $this->belongsTo(Curso::class, 'curso_id');
+    }
 }

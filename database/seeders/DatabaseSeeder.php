@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         //     'password' => Hash::make('admin123456'),
         // ])->assignRole('admin');
 
-        $this->call([
+        // $this->call([
             // EstadoSeeder::class,
             // TagsSeeder::class,
             // DatosPaisSeeder::class,
@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
             // PersonaSeeder::class,
             // IngresoConceptoSeeder::class,
             // CursoModuloSeeder::class,
-            AsistenciaMotivoSeeder::class,
-        ]);
+            // AsistenciaMotivoSeeder::class,
+        // ]);
     }
 }

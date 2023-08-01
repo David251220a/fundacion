@@ -191,7 +191,7 @@
 
         <div class="row">
             <a href="{{route('ingreso_varios.index')}}" class="btn btn-warning mr-3">Volver al Inicio</a>
-            <a href="#" class="btn btn-info">Imprimir</a>
+            <a href="{{route('ingreso_vario.recibo_vario', $ingreso->id)}}" target="__blank" class="btn btn-info">Imprimir</a>
         </div>
 
     </div>

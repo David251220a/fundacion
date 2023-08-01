@@ -4,6 +4,7 @@
             <thead>
                 <tr>
                     <th>Accion</th>
+                    <th>Fecha Cobro</th>
                     <th>Total a Pagar</th>
                     <th>Monto Pagado</th>
                     <th>Saldo</th>
@@ -15,6 +16,9 @@
                     <tr>
                         <td>
                             <button type="button" wire:click="detalle({{$item->id}})" class="btn btn-info btn-sm mr-2 mb-2">Cobrar</button>
+                        </td>
+                        <td>
+                            {{date('d/m/Y H:i', strtotime($item->created_at))}}
                         </td>
                         <td class="text-right">
                             {{number_format($item->detalle->sum('total_pagar'), 0, ".", ".")}}

@@ -5,6 +5,10 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <style>
+
+            body{
+                margin-bottom: -10px;
+            }
             .cabezera{
                 padding: 0;
                 margin: 0;
@@ -55,9 +59,9 @@
             }
 
             .content td{
-                padding: 3px;
+                padding: 1px;
                 font-size: 12px;
-                line-height: 15px;
+                line-height: 12px;
                 border: 1px solid black;
                 border-collapse: collapse;
             }
@@ -87,7 +91,7 @@
         </div>
 
         <div>
-            <h4>Reporte de Ingreso Curso - Detallado</h4>
+            <h4>Reporte de Ingreso Varios - Detallado</h4>
             <h6>{{$titulo}} - {{Auth::user()->name}}</h6>
         </div>
 
@@ -96,39 +100,51 @@
                 <thead class="table thead-light table-bordered ">
                     <tr>
                         <th width="10%">N° Recibo</th>
-                        <th width="20%">Alumno</th>
-                        <th width="20%">Curso</th>
-                        <th width="2%">Tipo</th>
+                        <th width="20%">Persona</th>
+                        <th width="30%">Detalle</th>
                         <th width="8%">Forma Pago</th>
-                        <th width="2%">Fecha</th>
-                        <th width="8%">Monto</th>
+                        <th width="10%">Usuario</th>
+                        <th width="10%">Fecha</th>
+                        <th class="text-right" width="15%">Monto</th>
 
                     </tr>
                 </thead>
                 <tbody style="font-size: 10px">
                     @foreach ($data as $item)
                         <tr>
-                            <td>A-{{$item->numero_recibo}}</td>
+                            <td>B-{{$item->numero_recibo}}</td>
                             <td>
-                                {{number_format($item->alumno->persona->documento, 0, ".", ".")}} -
-                                {{$item->alumno->persona->nombre}}
-                                {{$item->alumno->persona->apellido}}
+                                {{number_format($item->persona->documento, 0, ".", ".")}} -
+                                {{$item->persona->nombre}}
+                                {{$item->persona->apellido}}
                             </td>
                             <td>
-                                {{$item->detalle[0]->curso_habilitado->curso->descripcion}}
-                                - {{$item->detalle[0]->curso_habilitado->curso->modulo->descripcion}}
-                            </td>
-                            <td>
-                                {{($item->tipo_cobro == 1 ? 'M' : 'C')}}
+                                @if ($item->curso_ingreso_id > 0)
+                                    Familia: {{ $item->familia->descripcion }}
+                                    <br>
+                                    Curso: {{$item->cursos->descripcion}} - {{$item->cursos->modulo->descripcion}} <br>
+                                @endif
+
+                                @foreach ($item->detalle as $det)
+                                    * {{$det->concepto->descripcion}} * {{$det->cantidad}} Cant <br>
+                                @endforeach
                             </td>
                             <td>
                                 {{$item->forma_pago->descripcion}}
                             </td>
                             <td>
-                                {{date('d/m/Y', strtotime($item->fecha_ingreso))}}
+                                {{$item->usuario->name}}
+                            </td>
+                            <td>
+                                {{date('d/m/Y H:i', strtotime($item->created_at))}}
                             </td>
                             <td style="text-align: right">
-                                {{number_format($item->total_pagado, 0, ".", ".")}}
+                                @if ($item->detalle->sum('saldo') > 0)
+                                    <i> {{number_format($item->total_pagado, 0, ".", ".")}}</i>
+                                @else
+                                    <b>{{number_format($item->total_pagado, 0, ".", ".")}}</b>
+                                @endif
+
                             </td>
                         </tr>
                     @endforeach
@@ -144,6 +160,13 @@
                 </tfoot>
             </table>
 
+        </div>
+
+        <div style="margin-top: 10px">
+            <p style="font-size: 10px">
+                Observación: Los cobros con descripcion de familia y cursos son insumos que son identificados por las mismas. Los montos con estilo cursiva
+                son cobros que no fueron realizados en su totalidad y queda con un saldo.
+            </p>
         </div>
 
     </body>

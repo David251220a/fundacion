@@ -237,4 +237,39 @@ class HabilitarCursoController extends Controller
 
         return redirect()->route('habilitado.edit', $cursoHabilitado)->with('message', 'Curso habilitado con exito.');
     }
+
+    public function calificar(CursoHabilitado $cursoHabilitado)
+    {
+        return view('habilitar.calificar', compact('cursoHabilitado'));
+    }
+
+    public function calificar_post(CursoHabilitado $cursoHabilitado, Request $request)
+    {
+        $auxiliar = $request->asistencia;
+        $alumno_id = $request->alumno_id;
+        $calificacion = $request->asistencia_valor;
+        if(empty($auxiliar)){
+            return redirect()->back()->withInput()->withErrors('Debe seleccionar por lo menos alumno.');
+        }
+
+        for ($i=0; $i < count($alumno_id) ; $i++) {
+            $presente = $calificacion[$i];
+
+            $cursoAlumno = CursoAlumno::where('curso_habilitado_id', $cursoHabilitado->id)
+            ->where('alumno_id', $alumno_id[$i])
+            ->where('estado_id', 1)
+            ->first();
+
+            $cursoAlumno->update([
+                'aprobado' => $presente,
+                'modif_user_id' => auth()->user()->id,
+            ]);
+
+        }
+
+        $cursoHabilitado->concluido = 1;
+        $cursoHabilitado->update();
+
+        return redirect()->route('habilitado.show', $cursoHabilitado)->with('message', 'Calificacion de alumnos completado. Este curso ya esta finalizado.');
+    }
 }

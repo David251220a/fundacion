@@ -41,8 +41,9 @@
     <div class="widget-content widget-content-area">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
-                <h3 class="">Curso:</h3>
-                <h3>{{$cursoHabilitado->curso->descripcion}} - {{$cursoHabilitado->curso->modulo->descripcion}}</h3>
+                <h3 class="">Curso: {{$cursoHabilitado->curso->descripcion}} - {{$cursoHabilitado->curso->modulo->descripcion}}</h3>
+
+                <p style="font-size: 18px; line-height: 15px">Familia: {{$cursoHabilitado->tipo_curso->descripcion}} </p>
                 <p style="font-size: 18px; line-height: 15px">Periodo: {{date('d/m/Y', strtotime($cursoHabilitado->periodo_desde))}}
                     al {{date('d/m/Y', strtotime($cursoHabilitado->periodo_hasta))}}
                 </p>
@@ -121,6 +122,18 @@
                 <p style="font-size: 18px; line-height: 15px">Días de Clase: {{$clases}} </p>
                 <p style="font-size: 18px; line-height: 15px">Horario: {{date('H:i', strtotime($cursoHabilitado->hora_entrada))}} a {{date('H:i', strtotime($cursoHabilitado->hora_salida))}}</p>
                 <p style="font-size: 18px; line-height: 15px">Instructor: {{$cursoHabilitado->instructor->persona->nombre}} {{$cursoHabilitado->instructor->persona->apellido}}</p>
+                @if ($cursoHabilitado->concluido)
+                    @php
+                        $desc = 'SI';
+                        $estilo = 'color: green';
+                    @endphp
+                @else
+                    @php
+                        $desc = 'NO';
+                        $estilo = 'color: red';
+                    @endphp
+                @endif
+                <p style="font-size: 18px; line-height: 15px;">Curso Concluido: <b style="{{$estilo}}">{{ ($cursoHabilitado->concluido == 1 ? 'SI' : 'NO')}}</b></p>
             </div>
         </div>
 
@@ -144,13 +157,16 @@
                     </a>
                 </li>
 
-                <li class="nav-item ml-2 mr-2">
-                    <a class="nav-link mb-2 text-center" id="rounded-pills-icon-profile-tab" data-toggle="pill" href="#rounded-pills-icon-profile"
-                    role="tab" aria-controls="rounded-pills-icon-profile" aria-selected="false">
-                    <i class="fas fa-tasks" style="font-size: 2.5rem"></i>
-                        Asistencia
-                    </a>
-                </li>
+                @if ($cursoHabilitado->tipo_curso_id <> 11)
+                    <li class="nav-item ml-2 mr-2">
+                        <a class="nav-link mb-2 text-center" id="rounded-pills-icon-profile-tab" data-toggle="pill" href="#rounded-pills-icon-profile"
+                        role="tab" aria-controls="rounded-pills-icon-profile" aria-selected="false">
+                        <i class="fas fa-tasks" style="font-size: 2.5rem"></i>
+                            Asistencia
+                        </a>
+                    </li>
+                @endif
+
 
                 @can('cursoAlumno.buscar')
                     <li class="nav-item ml-2 mr-2">
@@ -160,6 +176,18 @@
                         <i class="fas fa-user-plus" style="font-size: 2.5rem"></i>
                         <br>
                             Inscribir
+                        </a>
+                    </li>
+                @endcan
+
+                @can('habilitado.calificar')
+                    <li class="nav-item ml-2 mr-2">
+                        <a class="nav-link mb-2 text-center" href="{{route('habilitado.calificar', $cursoHabilitado)}}"
+                        role="tab" aria-controls="rounded-pills-icon-profile" aria-selected="false" style="background: #ffbb44;
+                        color: white">
+                        <i class="fas fa-clipboard-check" style="font-size: 2.5rem"></i>
+                        <br>
+                            Calificar
                         </a>
                     </li>
                 @endcan

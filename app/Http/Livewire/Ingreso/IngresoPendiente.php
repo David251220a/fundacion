@@ -14,7 +14,7 @@ use Livewire\WithFileUploads;
 
 class IngresoPendiente extends Component
 {
-    public $persona, $forma_pago_id, $comprobante, $monto_pagar, $total_pagar_modal, $cuenta, $ingreso, $titulo ;
+    public $persona, $forma_pago_id, $comprobante, $monto_pagar, $total_pagar_modal, $cuenta, $ingreso, $titulo, $valor_id = 0;
 
     use WithFileUploads;
 
@@ -34,7 +34,9 @@ class IngresoPendiente extends Component
     public function render()
     {
         $pendiente = CuentaVario::where('persona_id', $this->persona->id)
-        ->where('estado_id', 1)->get();
+        ->where('estado_id', 1)
+        ->orderBy('id', 'DESC')
+        ->get();
 
         $forma_pago = FormaPago::all();
         $this->forma_pago_id = 1;
@@ -163,6 +165,7 @@ class IngresoPendiente extends Component
         $cuenta->update();
 
         $this->ingreso = $ingreso;
+        $this->valor_id = $this->ingreso->id;
         $this->emit('ver_recibo', 'recibo');
         $this->render();
     }

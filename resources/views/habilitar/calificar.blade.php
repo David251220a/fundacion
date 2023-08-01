@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <form action="{{route('profesor.calificar_post', $cursoHabilitado)}}" method="POST">
+    <form action="{{route('habilitado.calificar_post', $cursoHabilitado)}}" method="POST">
         @csrf
         @include('ui.calificar')
     </form>

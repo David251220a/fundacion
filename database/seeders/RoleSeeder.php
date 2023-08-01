@@ -108,20 +108,20 @@ class RoleSeeder extends Seeder
 
         // DESDE ACA
         // $permission = Permission::create(['name' => 'agenda.index', 'descripcion' => 'Agenda: Vista']);
-        $permission = Permission::create(['name' => 'agenda.habilitar', 'descripcion' => 'Agenda: Habilitar Curso']);
-        $permission = Permission::create(['name' => 'agenda.show', 'descripcion' => 'Agenda: Ver Curso']);
-        $permission = Permission::create(['name' => 'agenda.general', 'descripcion' => 'Agenda: Vista General']);
+        // $permission = Permission::create(['name' => 'agenda.habilitar', 'descripcion' => 'Agenda: Habilitar Curso']);
+        // $permission = Permission::create(['name' => 'agenda.show', 'descripcion' => 'Agenda: Ver Curso']);
+        // $permission = Permission::create(['name' => 'agenda.general', 'descripcion' => 'Agenda: Vista General']);
 
-        $permission = Permission::create(['name' => 'profesor.index', 'descripcion' => 'Profesor: Vista']);
-        $permission = Permission::create(['name' => 'profesor.show', 'descripcion' => 'Profesor: Vista Curso']);
-        $permission = Permission::create(['name' => 'profesor.asistencia', 'descripcion' => 'Profesor: LLamar asistencia']);
-        $permission = Permission::create(['name' => 'profesor.calificar', 'descripcion' => 'Profesor: Calificar Alumno']);
+        // $permission = Permission::create(['name' => 'profesor.index', 'descripcion' => 'Profesor: Vista']);
+        // $permission = Permission::create(['name' => 'profesor.show', 'descripcion' => 'Profesor: Vista Curso']);
+        // $permission = Permission::create(['name' => 'profesor.asistencia', 'descripcion' => 'Profesor: LLamar asistencia']);
+        // $permission = Permission::create(['name' => 'profesor.calificar', 'descripcion' => 'Profesor: Calificar Alumno']);
 
-        $permission = Permission::create(['name' => 'general.index', 'descripcion' => 'General: Vista']);
-        $permission = Permission::create(['name' => 'general.retroceder', 'descripcion' => 'General: Vuelta a la Vista Principal']);
-        $permission = Permission::create(['name' => 'habilitado.retroceder', 'descripcion' => 'Habilitacion: Vuelta a la Vista Principal']);
+        // $permission = Permission::create(['name' => 'general.index', 'descripcion' => 'General: Vista']);
+        // $permission = Permission::create(['name' => 'general.retroceder', 'descripcion' => 'General: Vuelta a la Vista Principal']);
+        // $permission = Permission::create(['name' => 'habilitado.retroceder', 'descripcion' => 'Habilitacion: Vuelta a la Vista Principal']);
 
-
+        $permission = Permission::create(['name' => 'habilitado.calificar', 'descripcion' => 'Habilitacion de Curso: Calificar']);
 
     }
 
