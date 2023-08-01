@@ -26,4 +26,14 @@ class Persona extends Model
         return $this->hasOne(Alumno::class, 'persona_id');
     }
 
+    public function ciudad ()
+    {
+        return $this->belongsTo(Ciudad::class, 'ciudad_id');
+    }
+
+    public function barrio()
+    {
+        return $this->belongsTo(Barrio::class, 'barrio_id');
+    }
+
 }

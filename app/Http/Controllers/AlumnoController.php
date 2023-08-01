@@ -213,6 +213,11 @@ class AlumnoController extends Controller
         return view('alumno.validar');
     }
 
+    public function show(Alumno $alumno)
+    {
+        return view('alumno.show', compact('alumno'));
+    }
+
     public function validar_post(Request $request)
     {
         $documento = str_replace('.', '', $request->documento);

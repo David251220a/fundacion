@@ -358,7 +358,21 @@ class CursoAlumnoController extends Controller
             $fecha_fin = Carbon::parse($fecha_fin);
             $fecha_fin = $fecha_fin->addWeeks(2);
             $cursoHabilitado->periodo_hasta = $fecha_fin;
+            $cursoHabilitado->modif_user_id = auth()->user()->id;
             $cursoHabilitado->update();
+
+            $ingreso = CursoIngreso::where('curso_habilitado_id', $cursoHabilitado->id)
+            ->where('fecha', '>=', $fecha)
+            ->where('estado_id', 1)
+            ->get();
+
+            foreach ($ingreso as $item) {
+                $fecha_viejo = Carbon::parse($item->fecha);
+                $fecha_nuevo = $fecha_viejo->addWeeks(1);
+                $item->fecha = $fecha_nuevo;
+                $item->modif_user_id = auth()->user()->id;
+                $item->update();
+            }
 
         }
 
