@@ -142,7 +142,7 @@
                     <td colspan="3">
                         Cantidad Alumnos : {{count($alumnos)}}
                     </td>
-                    <td colspan="2">
+                    <td colspan="3">
                         TOTAL SALDO
                     </td>
                     <td class="text-right">

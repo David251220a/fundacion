@@ -140,6 +140,14 @@
                 </li>
 
                 <li class="nav-item ml-2 mr-2">
+                    <a class="nav-link mb-2 text-center" id="rounded-pills-icon-insumo-tab" data-toggle="pill"
+                    href="#rounded-pills-icon-insumo" role="tab" aria-controls="rounded-pills-icon-insumo" aria-selected="false">
+                    <i class="fas fa-tools" style="font-size: 2.5rem"></i>
+                        Insumos
+                    </a>
+                </li>
+
+                <li class="nav-item ml-2 mr-2">
                     <a class="nav-link mb-2 text-center" href="{{route('profesor.calificar', $cursoHabilitado)}}"
                     role="tab" aria-controls="rounded-pills-icon-profile" aria-selected="false" style="background: #ffbb44;
                     color: white">
@@ -164,6 +172,10 @@
             <div class="tab-content" id="rounded-pills-icon-tabContent">
                 <div class="tab-pane fade show active" id="rounded-pills-icon-home" role="tabpanel" aria-labelledby="rounded-pills-icon-home-tab">
                     @livewire('profesor.profesor-show', ['cursoHabilitado' => $cursoHabilitado], key($cursoHabilitado->id))
+                </div>
+
+                <div class="tab-pane fade show" id="rounded-pills-icon-insumo" role="tabpanel" aria-labelledby="rounded-pills-icon-insumo-tab">
+                    @livewire('profesor.profesor-insumo', ['cursoHabilitado' => $cursoHabilitado], key($cursoHabilitado->id))
                 </div>
 
                 <div class="tab-pane fade show " id="rounded-pills-icon-profile" role="tabpanel" aria-labelledby="rounded-pills-icon-profile-tab">
