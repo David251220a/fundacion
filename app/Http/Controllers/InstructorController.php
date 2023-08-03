@@ -28,7 +28,8 @@ class InstructorController extends Controller
 
     public function index()
     {
-        $data = Instructor::take(500)
+        $data = Instructor::where('estado_id', 1)
+        ->take(500)
         ->get();
 
         return view('instructor.index', compact('data'));
@@ -156,6 +157,7 @@ class InstructorController extends Controller
         ]);
 
         $instructor->update([
+            'estado_id' => $request->estado_id,
             'modif_user_id' => auth()->user()->id,
         ]);
 
