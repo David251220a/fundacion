@@ -21,10 +21,10 @@
                             <button type="button" wire:click="detalle({{$item->id}})" class="btn btn-info btn-sm mr-2 mb-2">Cobrar</button>
                         </td>
                         <td class="text-left">
-                            {{$item->curso_habilitado->curso->descripcion}} - {{$item->curso_habilitado->curso->modulo->descripcion}}
+                            {{$item->curso_habilitado->id}}-{{$item->curso_habilitado->curso->descripcion}} - {{$item->curso_habilitado->curso->modulo->descripcion}}
                         </td>
                         <td class="text-left">
-                            {{date('d/m/Y', strtotime($item->curso_habilitado->periodo_desde))}} a
+                            {{date('d/m/Y', strtotime($item->curso_habilitado->periodo_desde))}} - <br>
                             {{date('d/m/Y', strtotime($item->curso_habilitado->periodo_hasta))}}
                         </td>
                         <td>
@@ -54,10 +54,11 @@
                             <button type="button" onclick="datos({{$item->id}})" data-toggle="modal" data-target="#modal_agregar_certificado"  class="btn btn-warning btn-sm mr-2 mb-2">Cobrar</button>
                         </td>
                         <td class="text-left">
+                            {{$item->curso_habilitado->id}}-
                             {{$item->curso_habilitado->curso->descripcion}} - {{$item->curso_habilitado->curso->modulo->descripcion}}
                         </td>
                         <td class="text-left">
-                            {{date('d/m/Y', strtotime($item->curso_habilitado->periodo_desde))}} a
+                            {{date('d/m/Y', strtotime($item->curso_habilitado->periodo_desde))}} - <br>
                             {{date('d/m/Y', strtotime($item->curso_habilitado->periodo_hasta))}}
                         </td>
                         <td>

@@ -1,7 +1,9 @@
 @extends('layouts.admin')
 
 @section('styles')
-
+    <link href="{{asset('plugins/sweetalerts/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('plugins/sweetalerts/sweetalert.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/css/components/custom-sweetalert.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -29,21 +31,27 @@
                         <label for="">Apellido</label>
                         <input type="text" class="form-control w-full text-right" value="{{$alumno->persona->apellido}}" readonly>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="">Cursos a Inscribirse</label>
-                        <input type="text" class="form-control w-full text-right" value="{{$cursoHabilitado->curso->descripcion}}" readonly>
+                    <div class="form-group col-md-3">
+                        <label for="">Celular</label>
+                        <input type="text" name="celular" class="form-control w-full" value="{{$alumno->persona->celular}}">
                     </div>
                 </div>
 
                 <h3>Detalle de Pago</h3>
                 <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="">Cursos a Inscribirse</label>
+                        <input type="text" class="form-control w-full text-right" value="{{$cursoHabilitado->curso->descripcion}}" readonly>
+                    </div>
+
                     <div class="form-group col-md-2">
                         <label for="">Curso Precio</label>
                         <input type="text" class="form-control w-full text-right" value="{{number_format($cursoHabilitado->precio, 0, ".", ".")}}" id="curso_precio" readonly>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="">Total a pagar</label>
-                        <input type="text" class="form-control w-full text-right" name="total_pagar" id="total_pagar" value="0" onkeyup="punto_decimal_limite_precio(this)">
+                        <input type="text" class="form-control w-full text-right" name="total_pagar" id="total_pagar"
+                        value="0" onkeyup="punto_decimal_limite_precio(this)" readonly>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="">Forma de Pago</label>
@@ -61,10 +69,15 @@
                 </div>
             </form>
         </div>
+
     </div>
+
+    {{-- @livewire('ingreso-matricula.ingreso-curso', ['alumno' => $alumno], key($alumno->id)) --}}
 
 @endsection
 
 @section('js')
-
+    <script src="{{asset('plugins/sweetalerts/sweetalert2.min.js')}}"></script>
+    <script src="{{asset('plugins/sweetalerts/custom-sweetalert.js')}}"></script>
+    <script src="{{asset('js/ingreso/curso.js')}}"></script>
 @endsection

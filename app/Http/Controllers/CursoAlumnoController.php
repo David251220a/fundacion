@@ -164,6 +164,11 @@ class CursoAlumnoController extends Controller
     {
         $monto_abonado = ( empty($request->total_pagar) ? 0 : str_replace('.', '', $request->total_pagar));
 
+        $persona = $alumno->persona;
+        $persona->celular = $request->celular;
+        $persona->modif_user_id = auth()->user()->id;
+        $persona->update();
+
         $cursoAlumno = CursoAlumno::create([
             'curso_habilitado_id' => $cursoHabilitado->id,
             'curso_a_estado_id' => 1,
