@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('unidad_medidas', function (Blueprint $table) {
             $table->id();
             $table->string('descripcion', 200);
-        // $table->foreignId('estado_id')->constrained();
+            $table->foreignId('estado_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->unsignedBigInteger('modif_user_id');
             $table->foreign('modif_user_id')->references('id')->on('users');
