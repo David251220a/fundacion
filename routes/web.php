@@ -16,6 +16,7 @@ use App\Http\Controllers\GrupoUsuarioController;
 use App\Http\Controllers\IngresoMatriculaController;
 use App\Http\Controllers\IngresoVarioController;
 use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\PagoInstructorController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProfesorController;
 use Illuminate\Support\Facades\Route;
@@ -123,6 +124,9 @@ Route::group([
     Route::get('/pdf/ingreso-vario/{ingresoVarios}/insumo', [PDFController::class, 'recibo_vario_insumo'])->name('ingreso_vario.recibo_vario_insumo');
     Route::get('/pdf/ingreso-vario/{ingresoVarios}/recibo', [PDFController::class, 'recibo_vario'])->name('ingreso_vario.recibo_vario');
     Route::get('/pdf/ingreso-vario/{id}/reporte', [PDFController::class, 'ingreso_varios_reporte'])->name('ingreso_vario.ingreso_varios_reporte');
+
+
+    Route::get('/pago/instructores', [PagoInstructorController::class, 'index'])->name('pago_instructor.index');
 
 });
 

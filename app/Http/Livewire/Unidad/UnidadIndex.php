@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Unidad;
 
+use App\Models\UnidadMedida;
 use Livewire\Component;
 
 class UnidadIndex extends Component
@@ -27,7 +28,7 @@ class UnidadIndex extends Component
     }
 
 
-    public cambiar(){
+    public function cambiar(){
         if($this->accion == 1){
             $this->titulo = 'Agregar Unidad de Medida';
         }else{
