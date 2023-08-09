@@ -29,10 +29,16 @@ class HabilitarCursoController extends Controller
     public function index()
     {
         $data = CursoHabilitado::latest()
+        ->where('concluido', 0)
         ->take(1000)
         ->get();
-        // dd($data);
-        return view('habilitar.index', compact('data'));
+
+        $data_d = CursoHabilitado::latest()
+        ->where('concluido', 1)
+        ->take(1000)
+        ->get();
+
+        return view('habilitar.index', compact('data', 'data_d'));
     }
 
     public function create()
