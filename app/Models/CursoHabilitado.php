@@ -51,4 +51,16 @@ class CursoHabilitado extends Model
         return $this->hasMany(CursoIngreso::class, 'curso_habilitado_id')->where('estado_id', 1);
     }
 
+    public function salario_instructor($param)
+    {
+        return $this->hasMany(SalarioInstructor::class, 'curso_habilitado_id')
+                ->where('instructor_id', $param)
+                ->where('estado_id', 1)
+                ->where('salario_concepto_id', 1);
+    }
+
+    public function salario()
+    {
+        return $this->hasMany(SalarioInstructor::class, 'curso_habilitado_id');
+    }
 }

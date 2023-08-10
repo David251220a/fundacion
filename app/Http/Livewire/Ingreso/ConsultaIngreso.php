@@ -14,7 +14,6 @@ use App\Models\TipoCurso;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Psy\CodeCleaner\AssignThisVariablePass;
 
 class ConsultaIngreso extends Component
 {
