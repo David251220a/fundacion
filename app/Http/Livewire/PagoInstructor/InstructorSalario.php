@@ -3,16 +3,20 @@
 namespace App\Http\Livewire\PagoInstructor;
 
 use App\Models\CursoHabilitado;
+use App\Models\FormaPago;
+use App\Models\Pago;
+use App\Models\PagoInstructor;
 use App\Models\SalarioInstructor;
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class InstructorSalario extends Component
 {
 
-    public $titulo, $instructor, $salario = [], $curso;
+    public $titulo, $instructor, $salario = [], $curso, $reporte_id = 0, $pago, $anticipo_detalle = [];
     public $codigo = 0, $concepto_id = [], $monto_concepto = [], $descripcion_concepto = [], $neto=0, $neto_salario=0, $egreso=0;
-    public $e_concepto_id = [], $e_monto_concepto = [], $e_descripcion_concepto = [];
+    public $e_concepto_id = [], $e_monto_concepto = [], $e_descripcion_concepto = [], $monto_anticipo = 0, $forma_pago, $forma_pago_id = 1;
 
     use WithPagination;
 
@@ -21,6 +25,8 @@ class InstructorSalario extends Component
     public function mount()
     {
         $this->titulo = 'Editar Salario';
+        $this->forma_pago = FormaPago::all();
+        $this->forma_pago_id = $this->forma_pago[0]->id;
     }
 
     protected $paginationTheme = 'bootstrap';
@@ -46,6 +52,12 @@ class InstructorSalario extends Component
         ->where('curso_habilitado_id', $this->curso->id)
         ->where('estado_id', 1)
         ->where('importe','>', 0)
+        ->get();
+
+        $this->anticipo_detalle = PagoInstructor::where('instructor_id', $this->instructor->id)
+        ->where('curso_habilitado_id', $this->curso->id)
+        ->where('salario_concepto_id', 2)
+        ->where('estado_id', 1)
         ->get();
 
         if(count($salario) <= 0){
@@ -169,6 +181,91 @@ class InstructorSalario extends Component
         $this->resetUI();
     }
 
+    public function save()
+    {
+        $anticipo = str_replace('.', '', $this->monto_anticipo);
+        if($anticipo == 0){
+            $this->emit('mensaje_error', 'El monto del anticpo no puede ser cero.');
+            $this->resetUI();
+            return false;
+        }
+
+        if(empty($anticipo)){
+            $this->emit('mensaje_error', 'El monto del anticipo no puede ser vacio.');
+            $this->resetUI();
+            return false;
+        }
+
+        $neto = str_replace('.', '', $this->neto);
+        if($neto <= 0){
+            $this->emit('mensaje_error', 'No puedo solicitar un anticipo.');
+            $this->resetUI();
+            return false;
+        }
+
+        $fecha_actual = Carbon::now();
+        $mes = intval(date('m', strtotime($fecha_actual)));
+        $anio = intval(date('Y', strtotime($fecha_actual)));
+        $numero_recibo = Pago::where('año', $anio)
+        ->max('numero_recibo');
+
+        $numero_recibo = $numero_recibo + 1;
+
+        $pago = Pago::create([
+            'pago_tipo_id' => 2,
+            'fecha' => $fecha_actual,
+            'mes' => $mes,
+            'año' => $anio,
+            'importe' => $anticipo,
+            'forma_pago_id' => $this->forma_pago_id,
+            'procesado' => 0,
+            'sucursal' => '0000',
+            'general' => '0000',
+            'factura_numero' => 0,
+            'numero_recibo' => $numero_recibo,
+            'estado_id' => 1,
+            'user_id' => auth()->user()->id,
+            'modif_user_id' => auth()->user()->id,
+        ]);
+
+        $pago->pago_instructor()->create([
+            'instructor_id' => $this->instructor->id,
+            'curso_habilitado_id' => $this->curso->id,
+            'salario_concepto_id' => 2,
+            'importe' => $anticipo,
+            'estado_id' => 1,
+            'user_id' => auth()->user()->id,
+            'modif_user_id' => auth()->user()->id,
+        ]);
+
+        $aux_existe = SalarioInstructor::where('instructor_id', $this->instructor->id)
+        ->where('curso_habilitado_id', $this->curso->id)
+        ->where('salario_concepto_id', 2)
+        ->first();
+
+        if(empty($aux_existe)){
+            SalarioInstructor::create([
+                'instructor_id' => $this->instructor->id,
+                'curso_habilitado_id' => $this->curso->id,
+                'forma_pago_id' => 1,
+                'salario_concepto_id' => 2,
+                'importe' => $anticipo,
+                'concluido' => 0,
+                'estado_id' => 1,
+                'user_id' => auth()->user()->id,
+                'modif_user_id' => auth()->user()->id,
+            ]);
+        }else{
+            $aux_existe->importe = $aux_existe->importe + $anticipo;
+            $aux_existe->modif_user_id = auth()->user()->id;
+            $aux_existe->update();
+        }
+
+        $this->reporte_id = $pago->id;
+        $this->pago = $pago;
+        $this->emit('reporte', 'Se cargo con exito el anticipo.');
+    }
+
     public function cambiar_titulo()
     {
         if($this->codigo == 0){
@@ -188,14 +285,20 @@ class InstructorSalario extends Component
         $this->reset('salario');
         $this->reset('concepto_id');
         $this->reset('monto_concepto');
+        $this->anticipo_detalle = [];
         $this->reset('descripcion_concepto');
         $this->reset('e_concepto_id');
         $this->reset('e_monto_concepto');
         $this->reset('e_descripcion_concepto');
+        $this->reset('pago');
         $this->codigo = 0;
         $this->egreso = 0;
+        $this->reporte_id = 0;
+
         $this->neto = 0;
         $this->neto_salario = 0;
+        $this->monto_anticipo = 0;
+        $this->forma_pago_id = 1;
         $this->cambiar_titulo();
         $this->emit('reloadClassCSs');
 

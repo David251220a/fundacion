@@ -71,9 +71,20 @@
         </table>
     </div>
 
-    <div class="col-12">
-        <label for="">Monto Anticipo</label>
-        <input type="text" class="form-control" onkeyup="punto_decimal_limite_precio(this)">
+    <div class="form-row">
+        <div class="col-md-6 col-sm-6">
+            <label for="">Monto Anticipo</label>
+            <input type="text" wire:model.defer="monto_anticipo" class="form-control text-right" onkeyup="punto_decimal_limite_precio(this)">
+        </div>
+
+        <div class="col-6">
+            <label for="">Forma Pago</label>
+            <select wire:model.defer="forma_pago_id" class="form-control">
+                @foreach ($forma_pago as $item)
+                    <option value="{{$item->id}}">{{$item->descripcion}}</option>
+                @endforeach
+            </select>
+        </div>
     </div>
 </div>
 

@@ -83,4 +83,5 @@
 
     @include('modal.salario_edit')
     @include('modal.salario_anticipo')
+    @include('modal.recibo_anticipo')
 </div>

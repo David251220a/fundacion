@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignId('salario_concepto_id')->constrained();
             $table->decimal('importe', 12, 0)->default(0);
             $table->integer('concluido')->default(0);
+            $table->integer('procesado')->default(0);
             $table->date('fecha_concluido')->nullable();
             $table->foreignId('estado_id')->constrained();
             $table->foreignId('user_id')->constrained();

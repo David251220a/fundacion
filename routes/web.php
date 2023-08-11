@@ -124,6 +124,7 @@ Route::group([
     Route::get('/pdf/ingreso-vario/{ingresoVarios}/insumo', [PDFController::class, 'recibo_vario_insumo'])->name('ingreso_vario.recibo_vario_insumo');
     Route::get('/pdf/ingreso-vario/{ingresoVarios}/recibo', [PDFController::class, 'recibo_vario'])->name('ingreso_vario.recibo_vario');
     Route::get('/pdf/ingreso-vario/{id}/reporte', [PDFController::class, 'ingreso_varios_reporte'])->name('ingreso_vario.ingreso_varios_reporte');
+    Route::get('/pdf/pago-instructor/{id}/anticpo', [PDFController::class, 'recibo_anticipo_instructor'])->name('pdf.recibo_anticipo_instructor');
 
 
     Route::get('/pago/instructores', [PagoInstructorController::class, 'index'])->name('pago_instructor.index');

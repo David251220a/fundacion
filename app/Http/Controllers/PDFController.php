@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Curso;
 use App\Models\IngresoMatricula;
 use App\Models\IngresoVarios;
+use App\Models\Pago;
 use App\Models\Persona;
 use App\Models\TipoCurso;
 use Illuminate\Http\Request;
@@ -187,5 +188,15 @@ class PDFController extends Controller
         $pdf->setPaper('A4', 'landscape');
 
         return $pdf->stream('ingreso_varios_detallado.pdf');
+    }
+
+    public function recibo_anticipo_instructor($id)
+    {
+        $data = Pago::find($id);
+        $pdf = PDF::loadView('pdf.salario.recibo_anticipo_instructor', compact('data'));
+        $pdf->setPaper(array(0, 0, 200.772, 400.394), 'defaultPaperSize');
+
+        return $pdf->stream('recibo_anticipo_instructor.pdf');
+
     }
 }

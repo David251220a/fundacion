@@ -84,6 +84,7 @@
 
             window.livewire.on('mensaje_error', msj => {
                 $('#modal_heredado_tab').modal('hide');
+                $('#modal_anticipo_heredado_tab').modal('hide');
                 swalWithBootstrapButtons(
                     'Atención',
                     msj,
@@ -91,8 +92,15 @@
                 )
             });
 
+            window.livewire.on('reporte', msj => {
+                $('#modal_heredado_tab').modal('hide');
+                $('#modal_anticipo_heredado_tab').modal('hide');
+                $('#recibo_anticipo').modal('show');
+            });
+
             window.livewire.on('correcto', msj => {
                 $('#modal_heredado_tab').modal('hide');
+                $('#modal_anticipo_heredado_tab').modal('hide');
                 swal({
                     title: 'Buen Trabajo',
                     text: msj,

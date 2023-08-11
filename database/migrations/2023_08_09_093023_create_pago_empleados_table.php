@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreignId('pago_id')->constrained();
             $table->foreignId('empleado_id')->constrained();
             $table->foreignId('salario_concepto_id')->constrained();
-            $table->foreignId('forma_pago_id')->constrained();
             $table->decimal('importe', 12, 0);
             $table->foreignId('estado_id')->constrained();
             $table->foreignId('user_id')->constrained();

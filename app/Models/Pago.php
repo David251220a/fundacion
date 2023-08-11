@@ -8,4 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Pago extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
+
+    public function pago_instructor()
+    {
+        return $this->hasMany(PagoInstructor::class, 'pago_id');
+    }
+
+    public function forma_pago()
+    {
+        return $this->belongsTo(FormaPago::class, 'forma_pago_id');
+    }
+
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

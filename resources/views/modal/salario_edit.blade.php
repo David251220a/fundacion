@@ -81,7 +81,7 @@
                         <label for="">{{$e_descripcion_concepto[$i]}}</label>
                     </div>
                     <div class="col-md-6 col-sm-6 mb-1 text-right">
-                        <label class="text-right" for="">{{$e_monto_concepto[$i]}}</label>
+                        <label class="text-right" for="">-{{$e_monto_concepto[$i]}}</label>
                     </div>
                 @endfor
 
@@ -101,10 +101,46 @@
         </div>
 
         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <p class="modal-text">Fusce ac fringilla ex. Sed ligula ipsum, fringilla ut orci nec, suscipit commodo felis. Sed imperdiet eros
-                dignissim, vehicula erat vel, rutrum lorem. In porttitor id ante nec laoreet. Etiam quis sapien ac nunc ullamcorper elementum.
-                Fusce ullamcorper ante convallis nisl eleifend, sit amet dapibus urna eleifend.
-            </p>
+            <div class="table-responsive col-xl-12 col-lg-12 col-sm-12" style="margin-top: -40px">
+                <table id="" class="table table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th width="60%">Concepto</th>
+                            <th width="20%">Fecha</th>
+                            <th width="20%">Importe</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (count($anticipo_detalle) > 0)
+                            @foreach ($anticipo_detalle as $item)
+                                <tr>
+                                    <td style="font-size: 11px">
+                                        {{$item->concepto->descripcion}}
+                                    </td>
+                                    <td style="font-size: 11px">
+                                        {{date('d/m/Y H:i', strtotime($item->created_at))}}
+                                    </td>
+                                    <td class="text-right" style="font-size: 11px">
+                                        {{number_format($item->importe, 0, ".", ".")}}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th style="color: white;font-size: 15px">Total Egreso</th>
+                            <th colspan="2" class="text-right" style="color: white;font-size: 15px">
+                                @if (count($anticipo_detalle) > 0)
+                                    <b> {{number_format($anticipo_detalle->sum('importe'), 0, ".", ".")}}</b>
+                                @else
+                                    <b>0</b>
+                                @endif
+                            </th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
 
     </div>

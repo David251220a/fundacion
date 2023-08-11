@@ -18,8 +18,9 @@ return new class extends Migration
             $table->foreignId('pago_tipo_id')->constrained();
             $table->date('fecha');
             $table->integer('mes')->default(0);
-            $table->integer('anio')->default(0);
+            $table->integer('año')->default(0);
             $table->decimal('importe', 12, 0)->default(0);
+            $table->foreignId('forma_pago_id')->constrained();
             $table->integer('procesado')->default(0);
             $table->string('sucursal', 4)->default('0000');
             $table->string('general', 4)->default('0000');
