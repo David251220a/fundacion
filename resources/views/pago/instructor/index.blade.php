@@ -95,12 +95,24 @@
             window.livewire.on('reporte', msj => {
                 $('#modal_heredado_tab').modal('hide');
                 $('#modal_anticipo_heredado_tab').modal('hide');
+                $('#modal_salario_instructor').modal('hide');
+                $('#recibo_salario_reporte').modal('hide');
                 $('#recibo_anticipo').modal('show');
+            });
+
+            window.livewire.on('reporte_salario', msj => {
+                $('#modal_heredado_tab').modal('hide');
+                $('#modal_anticipo_heredado_tab').modal('hide');
+                $('#recibo_anticipo').modal('hide');
+                $('#modal_salario_instructor').modal('hide');
+                $('#recibo_salario_reporte').modal('show');
             });
 
             window.livewire.on('correcto', msj => {
                 $('#modal_heredado_tab').modal('hide');
                 $('#modal_anticipo_heredado_tab').modal('hide');
+                $('#modal_salario_instructor').modal('hide');
+                $('#recibo_salario_reporte').modal('hide');
                 swal({
                     title: 'Buen Trabajo',
                     text: msj,

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->decimal('importe', 12, 0)->default(0);
             $table->integer('concluido')->default(0);
             $table->integer('procesado')->default(0);
+            $table->integer('tipo')->default(1);
             $table->date('fecha_concluido')->nullable();
             $table->foreignId('estado_id')->constrained();
             $table->foreignId('user_id')->constrained();

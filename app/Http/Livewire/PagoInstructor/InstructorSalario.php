@@ -34,9 +34,15 @@ class InstructorSalario extends Component
     public function render()
     {
 
-        $cursos = CursoHabilitado::where('concluido', 0)
-        ->where('instructor_id', '>', 1)
+        // $cursos = CursoHabilitado::where('concluido', 0)
+        // ->where('instructor_id', '>', 1)
+        // ->where('estado_id', 1)
+        // ->paginate(20);
+
+        $cursos = SalarioInstructor::where('salario_concepto_id', 1)
+        ->where('concluido', 0)
         ->where('estado_id', 1)
+        ->where('procesado', 0)
         ->paginate(20);
 
         return view('livewire.pago-instructor.instructor-salario', compact('cursos'));
@@ -67,6 +73,7 @@ class InstructorSalario extends Component
                 'forma_pago_id' => 1,
                 'salario_concepto_id' => 1,
                 'importe' => 1,
+                'tipo' => 1,
                 'concluido' => 0,
                 'estado_id' => 1,
                 'user_id' => auth()->user()->id,
@@ -119,6 +126,7 @@ class InstructorSalario extends Component
                 'forma_pago_id' => 1,
                 'salario_concepto_id' => 1,
                 'importe' => 1,
+                'tipo' => 1,
                 'concluido' => 0,
                 'estado_id' => 1,
                 'user_id' => auth()->user()->id,
@@ -132,22 +140,11 @@ class InstructorSalario extends Component
         ->where('importe','>', 0)
         ->get();
 
-        foreach($this->salario AS $item){
-            if ($item->concepto->tipo == 1){
-                $this->neto = $this->neto + $item->importe;
-                $this->neto_salario = $this->neto_salario + $item->importe;
-            }
+        $this->neto_salario = number_format($this->salario->where('tipo', 1)->sum('importe'), 0, ".", ".");
+        $this->egreso = number_format($this->salario->where('tipo', 2)->sum('importe'), 0, ".", ".");
+        $this->neto = number_format($this->salario->where('tipo', 1)->sum('importe') - $this->salario->where('tipo', 2)->sum('importe') , 0, ".", ".");
 
-            if ($item->concepto->tipo == 2){
 
-                $this->egreso = $this->egreso + $item->importe;
-                $this->neto = $this->neto - $item->importe;
-            }
-        }
-
-        $this->neto_salario = number_format($this->neto_salario, 0, ".", ".");
-        $this->neto = number_format($this->neto, 0, ".", ".");
-        $this->egreso = number_format($this->egreso, 0, ".", ".");
     }
 
     public function update()
@@ -233,6 +230,7 @@ class InstructorSalario extends Component
             'curso_habilitado_id' => $this->curso->id,
             'salario_concepto_id' => 2,
             'importe' => $anticipo,
+            'tipo' => 2,
             'estado_id' => 1,
             'user_id' => auth()->user()->id,
             'modif_user_id' => auth()->user()->id,
@@ -251,6 +249,7 @@ class InstructorSalario extends Component
                 'salario_concepto_id' => 2,
                 'importe' => $anticipo,
                 'concluido' => 0,
+                'tipo' => 2,
                 'estado_id' => 1,
                 'user_id' => auth()->user()->id,
                 'modif_user_id' => auth()->user()->id,

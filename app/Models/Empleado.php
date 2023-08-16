@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Empleado extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
+
+    public function ingreso()
+    {
+        return $this->hasMany(SalarioEmpleado::class, 'empleado_id')->where('tipo', 1)->where('estado_id', 1);
+    }
+
+    public function egreso()
+    {
+        return $this->hasMany(SalarioEmpleado::class, 'empleado_id')->where('tipo', 2)->where('estado_id', 1);
+    }
 }

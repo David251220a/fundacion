@@ -16,6 +16,7 @@ use App\Http\Controllers\GrupoUsuarioController;
 use App\Http\Controllers\IngresoMatriculaController;
 use App\Http\Controllers\IngresoVarioController;
 use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\PagoEmpleadoController;
 use App\Http\Controllers\PagoInstructorController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProfesorController;
@@ -125,9 +126,11 @@ Route::group([
     Route::get('/pdf/ingreso-vario/{ingresoVarios}/recibo', [PDFController::class, 'recibo_vario'])->name('ingreso_vario.recibo_vario');
     Route::get('/pdf/ingreso-vario/{id}/reporte', [PDFController::class, 'ingreso_varios_reporte'])->name('ingreso_vario.ingreso_varios_reporte');
     Route::get('/pdf/pago-instructor/{id}/anticpo', [PDFController::class, 'recibo_anticipo_instructor'])->name('pdf.recibo_anticipo_instructor');
+    Route::get('/pdf/pago-instructor/{id}/salario', [PDFController::class, 'recibo_salario_instructor'])->name('pdf.recibo_salario_instructor');
 
 
     Route::get('/pago/instructores', [PagoInstructorController::class, 'index'])->name('pago_instructor.index');
+    Route::get('/pago/empleados', [PagoEmpleadoController::class, 'index'])->name('pago_empleados.index');
 
 });
 

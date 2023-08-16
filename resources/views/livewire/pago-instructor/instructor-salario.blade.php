@@ -11,7 +11,7 @@
                         <th width="5%">Horario</th>
                         <th width="5%">Dias</th>
                         <th width="">Salario</th>
-                        <th class="no-content">Actions</th>
+                        <th class="no-content">Acción</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,47 +24,39 @@
                                 {{$item->instructor->persona->nombre}} {{$item->instructor->persona->apellido}}
                             </td>
                             <td style="font-size: 11px">
-                                {{$item->id}} - {{$item->tipo_curso->descripcion}}:
-                                {{$item->curso->descripcion}} <br> {{$item->curso->modulo->descripcion}}
+                                {{$item->curso_habilitado_id}} - {{$item->curso_habilitado->tipo_curso->descripcion}}:
+                                {{$item->curso_habilitado->curso->descripcion}} <br> {{$item->curso_habilitado->curso->modulo->descripcion}}
                             </td>
                             <td style="font-size: 11px">
-                                {{date('d/m/Y', strtotime($item->periodo_desde))}}
-                                a <br> {{date('d/m/Y', strtotime($item->periodo_hasta))}}
+                                {{date('d/m/Y', strtotime($item->curso_habilitado->periodo_desde))}}
+                                a <br> {{date('d/m/Y', strtotime($item->curso_habilitado->periodo_hasta))}}
                             </td>
                             <td style="font-size: 11px">
-                                {{date('H:i', strtotime($item->hora_entrada))}}
-                                a <br> {{date('H:i', strtotime($item->hora_salida))}}
+                                {{date('H:i', strtotime($item->curso_habilitado->hora_entrada))}}
+                                a <br> {{date('H:i', strtotime($item->curso_habilitado->hora_salida))}}
                             </td>
                             <td style="font-size: 11px">
-                                {{ ($item->lunes == 1 ? 'LUNES ' : '') }}
-                                {{ ($item->martes == 1 ? 'MARTES ' : '')}}
-                                {{ ($item->miercoles == 1 ? 'MIERCOLES ' : '')}}
-                                {{ ($item->jueves == 1 ? 'JUEVES ' : '')}}
-                                {{ ($item->viernes == 1 ? 'VIERNES ' : '')}}
-                                {{ ($item->sabado == 1 ? 'SABADO ' : '')}}
-                                {{ ($item->domingo == 1 ? 'DOMINGO ' : '')}}
+                                {{ ($item->curso_habilitado->lunes == 1 ? 'LUNES ' : '') }}
+                                {{ ($item->curso_habilitado->martes == 1 ? 'MARTES ' : '')}}
+                                {{ ($item->curso_habilitado->miercoles == 1 ? 'MIERCOLES ' : '')}}
+                                {{ ($item->curso_habilitado->jueves == 1 ? 'JUEVES ' : '')}}
+                                {{ ($item->curso_habilitado->viernes == 1 ? 'VIERNES ' : '')}}
+                                {{ ($item->curso_habilitado->sabado == 1 ? 'SABADO ' : '')}}
+                                {{ ($item->curso_habilitado->domingo == 1 ? 'DOMINGO ' : '')}}
                             </td>
                             <td class="text-right" style="font-size: 11px">
-                                {{-- {{$item->salario_instructor($item->instructor_id)}} --}}
                                 @php
-                                    $sal = 0;
-                                    if ($item->salario_instructor($item->instructor_id)->count() <> 0){
-                                        $valor = $item->salario_instructor($item->instructor_id)->pluck('importe');
-                                        $sal = str_replace('["', '', $valor);
-                                        $sal = str_replace('"]', '', $sal);
-                                        $sal = number_format($sal, 0, ".", ".");
-                                    }
-
+                                    $neto_general = $item->importe - $item->instructor->egreso($item->curso_habilitado_id)->sum('importe');
                                 @endphp
-                                {{$sal}}
+                                {{number_format($neto_general, 0, ".", ".")}}
                             </td>
                             <td style="font-size: 11px">
-                                <a wire:click="datos({{$item->id}})" data-toggle="modal" data-target="#modal_heredado_tab">
+                                <a wire:click="datos({{$item->curso_habilitado_id}})" data-toggle="modal" data-target="#modal_heredado_tab">
                                     <i class="fas fa-pen mr-2" style="font-size: 15px;
                                     color: rgb(247, 168, 50);"></i>
                                 </a>
 
-                                <a wire:click="datos_anticipo({{$item->id}})" data-toggle="modal" data-target="#modal_anticipo_heredado_tab">
+                                <a wire:click="datos_anticipo({{$item->curso_habilitado_id}})" data-toggle="modal" data-target="#modal_anticipo_heredado_tab">
                                     <i class="fas fa-comments-dollar" style="font-size: 15px;
                                     color: rgb(200, 236, 70);"></i>
                                 </a>

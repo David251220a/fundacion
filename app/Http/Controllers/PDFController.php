@@ -7,6 +7,7 @@ use App\Models\IngresoMatricula;
 use App\Models\IngresoVarios;
 use App\Models\Pago;
 use App\Models\Persona;
+use App\Models\SalarioInstructor;
 use App\Models\TipoCurso;
 use Illuminate\Http\Request;
 use PDF;
@@ -197,6 +198,21 @@ class PDFController extends Controller
         $pdf->setPaper(array(0, 0, 200.772, 400.394), 'defaultPaperSize');
 
         return $pdf->stream('recibo_anticipo_instructor.pdf');
+
+    }
+
+    public function recibo_salario_instructor($id)
+    {
+        $data = Pago::find($id);
+        $curso = $data->pago_instructor[0];
+        $salario = SalarioInstructor::where('curso_habilitado_id', $curso->curso_habilitado_id)
+        ->where('instructor_id', $curso->instructor_id)
+        ->where('estado_id', 1)
+        ->get();
+        $pdf = PDF::loadView('pdf.salario.recibo_salario_instructor', compact('data', 'salario'));
+        $pdf->setPaper(array(0, 0, 200.772, 470.394), 'defaultPaperSize');
+
+        return $pdf->stream('recibo_salario_instructor.pdf');
 
     }
 }

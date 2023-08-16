@@ -170,6 +170,11 @@
                             <a href="{{route('pago_instructor.index')}}"> Instructores </a>
                         </li>
                     {{-- @endcan --}}
+                    {{-- @can('tipocurso.index') --}}
+                    <li>
+                        <a href="{{route('pago_empleados.index')}}"> Empleados </a>
+                    </li>
+                {{-- @endcan --}}
                 </ul>
             </li>
         {{-- @endcan --}}

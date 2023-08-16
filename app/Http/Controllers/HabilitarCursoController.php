@@ -11,6 +11,8 @@ use App\Models\CursoHabilitado;
 use App\Models\Noticia;
 use App\Models\NoticiaFile;
 use App\Models\Periodo;
+use App\Models\SalarioInstructor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -276,6 +278,18 @@ class HabilitarCursoController extends Controller
         $cursoHabilitado->concluido = 1;
         $cursoHabilitado->update();
 
+        // ACTUALIZA EN SALARIO PARA QUE PUEDA PROCEDER AL COBRO DE SU REMUNERACION
+        $salario = SalarioInstructor::where('curso_habilitado_id', $cursoHabilitado->id)
+        ->where('instructor_id', $cursoHabilitado->instructor_id)
+        ->where('estado_id', 1)
+        ->get();
+
+        foreach ($salario as $item) {
+            $item->fecha_concluido = Carbon::now();
+            $item->concluido = 1;
+            $item->modif_user_id = auth()->user()->id;
+            $item->update();
+        }
         return redirect()->route('habilitado.show', $cursoHabilitado)->with('message', 'Calificacion de alumnos completado. Este curso ya esta finalizado.');
     }
 }

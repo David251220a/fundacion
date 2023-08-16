@@ -7,6 +7,7 @@ use App\Models\AsistenciaMotivo;
 use App\Models\CursoAlumno;
 use App\Models\CursoAlumnoAsistencia;
 use App\Models\CursoHabilitado;
+use App\Models\SalarioInstructor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -218,6 +219,19 @@ class ProfesorController extends Controller
 
         $cursoHabilitado->concluido = 1;
         $cursoHabilitado->update();
+
+        // ACTUALIZA EN SALARIO PARA QUE PUEDA PROCEDER AL COBRO DE SU REMUNERACION
+        $salario = SalarioInstructor::where('curso_habilitado_id', $cursoHabilitado->id)
+        ->where('instructor_id', $cursoHabilitado->instructor_id)
+        ->where('estado_id', 1)
+        ->get();
+
+        foreach ($salario as $item) {
+            $item->fecha_concluido = Carbon::now();
+            $item->concluido = 1;
+            $item->modif_user_id = auth()->user()->id;
+            $item->update();
+        }
 
         return redirect()->route('profesor.index')->with('message', 'Calificacion de alumnos completado.');
     }

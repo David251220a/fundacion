@@ -20,4 +20,13 @@ class Instructor extends Model
     {
         return $this->belongsTo(Estado::class, 'estado_id');
     }
+
+    public function egreso($param)
+    {
+        return $this->hasMany(SalarioInstructor::class, 'instructor_id')
+        ->where('curso_habilitado_id', $param)
+        ->where('estado_id', 1)
+        ->where('tipo', 2);
+    }
+
 }

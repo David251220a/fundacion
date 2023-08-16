@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('persona_id')->constrained();
             $table->foreignId('salario_pago_id')->constrained();
-            $table->date('fecha_inicio');
-            $table->date('fecha_fin')->nullable();
+            // $table->date('fecha_inicio');
+            // $table->date('fecha_fin')->nullable();
             $table->foreignId('estado_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->unsignedBigInteger('modif_user_id');

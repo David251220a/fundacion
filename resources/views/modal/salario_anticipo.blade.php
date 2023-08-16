@@ -20,15 +20,15 @@
                 <label for="">
                     Periodo: {{date('d/m/Y', strtotime($curso->periodo_desde))}}
                     a {{date('d/m/Y', strtotime($curso->periodo_hasta))}}
-                    | Hora: {{date('H:i', strtotime($item->hora_entrada))}}
-                    a {{date('H:i', strtotime($item->hora_salida))}}
+                    | Hora: {{date('H:i', strtotime($curso->hora_entrada))}}
+                    a {{date('H:i', strtotime($curso->hora_salida))}}
                     | Dia: {{ ($item->lunes == 1 ? 'LUNES ' : '') }}
-                    {{ ($item->martes == 1 ? 'MARTES ' : '')}}
-                    {{ ($item->miercoles == 1 ? 'MIERCOLES ' : '')}}
-                    {{ ($item->jueves == 1 ? 'JUEVES ' : '')}}
-                    {{ ($item->viernes == 1 ? 'VIERNES ' : '')}}
-                    {{ ($item->sabado == 1 ? 'SABADO ' : '')}}
-                    {{ ($item->domingo == 1 ? 'DOMINGO ' : '')}}
+                    {{ ($curso->martes == 1 ? 'MARTES ' : '')}}
+                    {{ ($curso->miercoles == 1 ? 'MIERCOLES ' : '')}}
+                    {{ ($curso->jueves == 1 ? 'JUEVES ' : '')}}
+                    {{ ($curso->viernes == 1 ? 'VIERNES ' : '')}}
+                    {{ ($curso->sabado == 1 ? 'SABADO ' : '')}}
+                    {{ ($curso->domingo == 1 ? 'DOMINGO ' : '')}}
                 </label>
             </div>
         @endif
@@ -64,7 +64,7 @@
                     </td>
                     <td class="text-right">
                         <b>{{$neto}}</b>
-                        <input type="hidden" id="curso_precio" value="{{$neto}}">
+                        <input type="hidden" id="curso_precio" value="{{str_replace('.', '', $neto)}}">
                     </td>
                 </tr>
             </tfoot>
