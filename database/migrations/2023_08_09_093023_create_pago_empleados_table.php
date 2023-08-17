@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('empleado_id')->constrained();
             $table->foreignId('salario_concepto_id')->constrained();
             $table->decimal('importe', 12, 0);
+            $table->integer('tipo')->default(1);
             $table->foreignId('estado_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->unsignedBigInteger('modif_user_id');

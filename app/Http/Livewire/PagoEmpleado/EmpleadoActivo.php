@@ -3,29 +3,37 @@
 namespace App\Http\Livewire\PagoEmpleado;
 
 use App\Models\Empleado;
+use App\Models\FormaPago;
+use App\Models\Pago;
+use App\Models\PagoEmpleado;
 use App\Models\Persona;
 use App\Models\SalarioEmpleado;
 use App\Models\SalarioPago;
-use Faker\Provider\ar_EG\Person;
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class EmpleadoActivo extends Component
 {
-    public $titulo, $titulo_dos, $buscar_documento, $persona, $nombre, $documento, $apellido, $remuneracion = 0, $celular, $email;
-    public $salario_pago_id, $estado_id, $salario_pago;
+    public $titulo, $titulo_dos, $buscar_documento, $persona, $nombre, $documento, $apellido, $remuneracion = 0, $celular, $email, $reporte_id = 0, $pago;
+    public $salario_pago_id, $estado_id, $salario_pago, $forma_pago, $forma_pago_id, $concepto_ingreso = [], $concepto_egreso= [], $monto_ingreso= [], $monto_egreso= [];
+    public $descripcion_ingreso = [], $descripcion_egreso = [], $empleado, $neto_empleado, $anticipo_forma_pago_id, $monto_anticipo = 0;
+    public $total_ingreso = 0, $total_egreso = 0, $total_neto = 0, $anticipo_detalle = [];
 
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
 
-    protected $listeners = ['continuar'];
+    protected $listeners = ['continuar', 'delete'];
 
     public function mount()
     {
         $this->titulo = 'Buscar Persona';
         $this->salario_pago = SalarioPago::all();
         $this->salario_pago_id = 4;
+        $this->forma_pago = FormaPago::all();
+        $this->forma_pago_id = 1;
+        $this->anticipo_forma_pago_id = 1;
     }
     public function render()
     {
@@ -35,6 +43,7 @@ class EmpleadoActivo extends Component
         ->orderBy('personas.documento')
         ->paginate(20);
 
+        $this->totales();
         return view('livewire.pago-empleado.empleado-activo', compact('data'));
     }
 
@@ -77,6 +86,90 @@ class EmpleadoActivo extends Component
         $this->emit('añadir_empleado', 'Añade o crear persona');
 
 
+    }
+
+    public function totales()
+    {
+        $data = Empleado::where('estado_id', 1)
+        ->get();
+        $ingreso = 0;
+        $egreso = 0;
+        foreach ($data as $item) {
+            $ingreso += $item->ingreso->where('salario_concepto_id', 1)->sum('importe');
+            $egreso += $item->egreso->sum('importe');
+        }
+
+        $this->total_ingreso = number_format($ingreso, 0, ".", ".");
+        $this->total_egreso = number_format($egreso, 0, ".", ".");
+        $this->total_neto = number_format($ingreso - $egreso, 0, ".", ".");
+    }
+
+    public function edit($id)
+    {
+        $this->empleado = Empleado::find($id);
+
+        $this->documento = number_format($this->empleado->persona->documento, 0, ".", ".");
+        $this->nombre = $this->empleado->persona->nombre;
+        $this->apellido = $this->empleado->persona->apellido;
+        $this->salario_pago_id = $this->empleado->salario_pago_id;
+        $this->anticipo_detalle = PagoEmpleado::where('salario_concepto_id', 2)
+        ->where('estado_id', 1)
+        ->where('empleado_id', $this->empleado->id)
+        ->take(5)
+        ->get();
+
+        foreach($this->empleado->ingreso AS $item){
+            $this->concepto_ingreso[] = $item->salario_concepto_id;
+            $this->monto_ingreso[] = number_format($item->importe, 0, ".", ".");
+            $this->descripcion_ingreso[] = $item->concepto->descripcion;
+            $this->neto_empleado = $this->neto_empleado + $item->importe;
+        }
+
+        foreach($this->empleado->egreso AS $item){
+            $this->concepto_egreso[] = $item->salario_concepto_id;
+            $this->monto_egreso[] = number_format($item->importe, 0, ".", ".");
+            $this->descripcion_egreso[] = $item->concepto->descripcion;
+            $this->neto_empleado = $this->neto_empleado - $item->importe;
+        }
+    }
+
+    public function update_empleado()
+    {
+        for ($i=0; $i < count($this->concepto_ingreso) ; $i++) {
+
+            if($this->concepto_ingreso[$i] == 1){
+                if($this->monto_ingreso[$i] == 0){
+                    $this->emit('mensaje_error', 'El importe de remuneracion no puede ser cero.');
+                    $this->resetUI();
+                    return false;
+                }
+            }
+
+            if(empty($this->monto_ingreso[$i])){
+                $this->emit('mensaje_error', 'El importe de remuneracion no puede ser vacio.');
+                $this->resetUI();
+                return false;
+            }
+
+            $empleado = Empleado::find($this->empleado->id);
+            $empleado->salario_pago_id = $this->salario_pago_id;
+            $empleado->modif_user_id = auth()->user()->id;
+            $empleado->update();
+
+
+            $salario = SalarioEmpleado::where('empleado_id', $this->empleado->id)
+            ->where('salario_concepto_id', $this->concepto_ingreso[$i])
+            ->first();
+
+            $salario->forma_pago_id = $this->forma_pago_id;
+            $salario->importe = str_replace('.', '', $this->monto_ingreso[$i]);
+            $salario->modif_user_id = auth()->user()->id;
+            $salario->update();
+
+        }
+
+        $this->emit('correcto', 'Salario actualizado con exito.');
+        $this->resetUI();
     }
 
     public function save_empleado()
@@ -159,6 +252,94 @@ class EmpleadoActivo extends Component
         $this->resetUI();
     }
 
+    public function grabar_anticipo()
+    {
+        $monto = str_replace('.', '', $this->monto_anticipo);
+        if(empty($this->monto_anticipo)){
+            $this->emit('mensaje_error', 'El anticipo no puede estar vacio.');
+            $this->resetUI();
+            return false;
+        }
+
+        if($monto == 0){
+            $this->emit('mensaje_error', 'El anticipo no puede ser cero.');
+            $this->resetUI();
+            return false;
+        }
+
+        $fecha_actual = Carbon::now();
+        $mes = intval(date('m', strtotime($fecha_actual)));
+        $anio = intval(date('Y', strtotime($fecha_actual)));
+        $numero_recibo = Pago::where('año', $anio)
+        ->max('numero_recibo');
+
+        $numero_recibo = $numero_recibo + 1;
+
+        $pago = Pago::create([
+            'pago_tipo_id' => 5,
+            'fecha' => $fecha_actual,
+            'mes' => $mes,
+            'año' => $anio,
+            'importe' => $monto,
+            'forma_pago_id' => $this->anticipo_forma_pago_id,
+            'procesado' => 0,
+            'sucursal' => '0000',
+            'general' => '0000',
+            'factura_numero' => 0,
+            'numero_recibo' => $numero_recibo,
+            'estado_id' => 1,
+            'user_id' => auth()->user()->id,
+            'modif_user_id' => auth()->user()->id,
+        ]);
+
+        $pago->pago_empleado()->create([
+            'empleado_id' => $this->empleado->id,
+            'salario_concepto_id' => 2,
+            'importe' => $monto,
+            'tipo' => 2,
+            'estado_id' => 1,
+            'user_id' => auth()->user()->id,
+            'modif_user_id' => auth()->user()->id,
+        ]);
+
+        $salario = SalarioEmpleado::where('empleado_id', $this->empleado->id)
+        ->where('salario_concepto_id', 2)
+        ->first();
+
+        if(empty($salario)){
+            SalarioEmpleado::create([
+                'empleado_id' => $this->empleado->id,
+                'salario_concepto_id' => 2,
+                'importe' => $monto,
+                'tipo' => 2,
+                'estado_id' => 1,
+                'user_id' => auth()->user()->id,
+                'modif_user_id' => auth()->user()->id,
+            ]);
+        }else{
+            $salario->importe = $salario->importe + $monto;
+            $salario->modif_user_id = auth()->user()->id;
+            $salario->update();
+        }
+
+        $this->pago = $pago;
+        $this->reporte_id = $pago->id;
+        $this->emit('reporte', 'Se cargo con exito el anticipo.');
+
+    }
+
+
+    public function delete($id)
+    {
+        $empleado = Empleado::find($id);
+        $empleado->estado_id = 2;
+        $empleado->modif_user_id = auth()->user()->id;
+        $empleado->update();
+
+        $this->emit('correcto', 'Empleado eliminado con exito.');
+        $this->resetUI();
+    }
+
     public function resetUI()
     {
         $this->reset('buscar_documento');
@@ -168,8 +349,23 @@ class EmpleadoActivo extends Component
         $this->reset('nombre');
         $this->reset('documento');
         $this->reset('apellido');
+        $this->reset('concepto_ingreso');
+        $this->reset('monto_ingreso');
+        $this->reset('descripcion_ingreso');
+        $this->reset('concepto_egreso');
+        $this->reset('monto_egreso');
+        $this->reset('descripcion_egreso');
+        $this->reset('empleado');
+        $this->reset('pago');
+        $this->reset('anticipo_detalle');
         $this->remuneracion = 0;
         $this->salario_pago_id = 4;
+        $this->forma_pago_id = 1;
+        $this->neto_empleado = 0;
+        $this->anticipo_forma_pago_id = 1;
+        $this->monto_anticipo = 0;
+        $this->reporte_id = 0;
+        $this->totales();
         $this->emit('reloadClassCSs');
     }
 }

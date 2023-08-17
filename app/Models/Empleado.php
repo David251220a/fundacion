@@ -20,4 +20,16 @@ class Empleado extends Model
     {
         return $this->hasMany(SalarioEmpleado::class, 'empleado_id')->where('tipo', 2)->where('estado_id', 1);
     }
+
+    public function todos()
+    {
+        return $this->hasMany(SalarioEmpleado::class, 'empleado_id');
+    }
+
+    public function persona()
+    {
+        return $this->belongsTo(Persona::class, 'persona_id');
+    }
+
+
 }

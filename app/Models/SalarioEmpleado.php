@@ -10,4 +10,9 @@ class SalarioEmpleado extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function concepto()
+    {
+        return $this->belongsTo(SalarioConcepto::class, 'salario_concepto_id');
+    }
 }

@@ -215,4 +215,13 @@ class PDFController extends Controller
         return $pdf->stream('recibo_salario_instructor.pdf');
 
     }
+
+    public function recibo_anticipo_empleado($id)
+    {
+        $data = Pago::find($id);
+        $pdf = PDF::loadView('pdf.salario.recibo_anticipo_empleado', compact('data'));
+        $pdf->setPaper(array(0, 0, 200.772, 400.394), 'defaultPaperSize');
+
+        return $pdf->stream('recibo_anticipo_empleado.pdf');
+    }
 }

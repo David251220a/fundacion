@@ -49,13 +49,50 @@
 
                             <div class="tab-pane fade" id="underline-profile" role="tabpanel" aria-labelledby="underline-profile-tab">
 
-                                @livewire('pago-empleado.empleado-activo')
+                                @livewire('pago-empleado.empleado-inactivo')
 
                             </div>
 
                             <div class="tab-pane fade" id="underline-historico" role="tabpanel" aria-labelledby="underline-historico-tab">
 
-                                <h2>AJHHH</h2>
+                                <div class="table-responsive col-xl-12 col-lg-12 col-sm-12">
+
+                                    <table id="" class="table table-bordered" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th width="20%">Tipo de Pago</th>
+                                                <th width="30%">Mes/Año</th>
+                                                <th width="30%">Importe</th>
+                                                <th class="no-content">Acción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($data_pago as $item)
+                                                <tr>
+                                                    <td style="font-size: 11px">
+                                                        {{$item->tipo_pago->descripcion}}
+                                                    </td>
+                                                    <td style="font-size: 11px">
+                                                        {{str_pad($item->mes, 2, '0', STR_PAD_LEFT)}} / {{$item->año}}
+                                                    </td>
+                                                    <td class="text-right" style="font-size: 11px">
+                                                        {{number_format($item->importe, 0, ".", ".")}}
+                                                    </td>
+                                                    <td class="text-right; font-size: 11px">
+                                                        <a href="{{route('pago_empleados.show', $item->id)}}">
+                                                            <i class="fas fa-eye" style="font-size: 15px;
+                                                            color: rgb(52, 253, 220);" ></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                {{-- <div class="row">
+                                    {{$data_pago->links()}}
+                                </div> --}}
 
                             </div>
                         </div>

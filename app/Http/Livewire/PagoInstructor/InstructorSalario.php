@@ -64,6 +64,7 @@ class InstructorSalario extends Component
         ->where('curso_habilitado_id', $this->curso->id)
         ->where('salario_concepto_id', 2)
         ->where('estado_id', 1)
+        ->take(5)
         ->get();
 
         if(count($salario) <= 0){
@@ -209,7 +210,7 @@ class InstructorSalario extends Component
         $numero_recibo = $numero_recibo + 1;
 
         $pago = Pago::create([
-            'pago_tipo_id' => 2,
+            'pago_tipo_id' => 6,
             'fecha' => $fecha_actual,
             'mes' => $mes,
             'año' => $anio,

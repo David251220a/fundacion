@@ -22,12 +22,6 @@ class PagoTipoSeeder extends Seeder
             'modif_user_id' => 1
         ]);
 
-        // PagoTipo::create([
-        //     'descripcion' => 'PAGO EMPLEADO ANTICIPO',
-        //     'estado_id' => 1,
-        //     'user_id' => 1,
-        //     'modif_user_id' => 1
-        // ]);
 
         PagoTipo::create([
             'descripcion' => 'PAGO INSTRUCTORES',
@@ -35,13 +29,6 @@ class PagoTipoSeeder extends Seeder
             'user_id' => 1,
             'modif_user_id' => 1
         ]);
-
-        // PagoTipo::create([
-        //     'descripcion' => 'PAGO INSTRUCTORES ANTICIPO',
-        //     'estado_id' => 1,
-        //     'user_id' => 1,
-        //     'modif_user_id' => 1
-        // ]);
 
         PagoTipo::create([
             'descripcion' => 'PAGO PROVEEDORES',
@@ -52,6 +39,20 @@ class PagoTipoSeeder extends Seeder
 
         PagoTipo::create([
             'descripcion' => 'OTROS PAGOS',
+            'estado_id' => 1,
+            'user_id' => 1,
+            'modif_user_id' => 1
+        ]);
+
+        PagoTipo::create([
+            'descripcion' => 'PAGO EMPLEADO - ANTICIPO',
+            'estado_id' => 1,
+            'user_id' => 1,
+            'modif_user_id' => 1
+        ]);
+
+        PagoTipo::create([
+            'descripcion' => 'PAGO INSTRUCTORES - ANTICIPO',
             'estado_id' => 1,
             'user_id' => 1,
             'modif_user_id' => 1
