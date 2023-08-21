@@ -21,6 +21,11 @@ class Pago extends Model
         return $this->hasMany(PagoEmpleado::class, 'pago_id');
     }
 
+    public function pago_varios()
+    {
+        return $this->hasMany(PagoVarios::class, 'pago_id');
+    }
+
     public function forma_pago()
     {
         return $this->belongsTo(FormaPago::class, 'forma_pago_id');

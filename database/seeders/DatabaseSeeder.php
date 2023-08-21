@@ -43,10 +43,11 @@ class DatabaseSeeder extends Seeder
             // IngresoConceptoSeeder::class,
             // CursoModuloSeeder::class,
             // AsistenciaMotivoSeeder::class,
-            UnidadMedidaSeeder::class,
-            PagoTipoSeeder::class,
-            SalarioConceptoSeeder::class,
-            SalarioPagoSeeder::class,
+            // UnidadMedidaSeeder::class,
+            // PagoTipoSeeder::class,
+            // SalarioConceptoSeeder::class,
+            // SalarioPagoSeeder::class,
+            InsumoSeeder::class,
         ]);
     }
 }
