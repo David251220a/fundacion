@@ -34,13 +34,16 @@
                                 {{number_format($item->egreso->sum('importe'), 0, ".", ".")}}
                             </td>
                             <td class="text-right; font-size: 11px">
-                                <a onclick="activar({{$item->id}})" style="border: 1px solid greenyellow;
-                                    padding: 1px 2px;
-                                    border-radius: 30%;
-                                }">
-                                    <i class="fas fa-check" style="font-size: 15px;
-                                    color: rgb(144, 248, 112);"></i>
-                                </a>
+                                @can('pago_empleados.activo')
+                                    <a onclick="activar({{$item->id}})" style="border: 1px solid greenyellow;
+                                        padding: 1px 2px;
+                                        border-radius: 30%;
+                                    }">
+                                        <i class="fas fa-check" style="font-size: 15px;
+                                        color: rgb(144, 248, 112);"></i>
+                                    </a>
+                                @endcan
+
                             </td>
                         </tr>
                     @endforeach

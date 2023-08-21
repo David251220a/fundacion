@@ -121,7 +121,29 @@ class RoleSeeder extends Seeder
         // $permission = Permission::create(['name' => 'general.retroceder', 'descripcion' => 'General: Vuelta a la Vista Principal']);
         // $permission = Permission::create(['name' => 'habilitado.retroceder', 'descripcion' => 'Habilitacion: Vuelta a la Vista Principal']);
 
-        $permission = Permission::create(['name' => 'habilitado.calificar', 'descripcion' => 'Habilitacion de Curso: Calificar']);
+        // $permission = Permission::create(['name' => 'habilitado.calificar', 'descripcion' => 'Habilitacion de Curso: Calificar']);
+
+        $permission = Permission::create(['name' => 'ver_salario', 'descripcion' => 'Ver Pagos']);
+
+        $permission = Permission::create(['name' => 'pago_instructor.index', 'descripcion' => 'Pago: Pago Instructor']);
+        $permission = Permission::create(['name' => 'pago_instructor.pagar', 'descripcion' => 'Pago: Pago Instructor - Pagar']);
+        $permission = Permission::create(['name' => 'pago_instructor.anticipo', 'descripcion' => 'Pago: Pago Instructor - Anticipo']);
+        $permission = Permission::create(['name' => 'pago_instructor.editar', 'descripcion' => 'Pago: Pago Instructor - Editar Salario']);
+
+        $permission = Permission::create(['name' => 'pago_empleados.index', 'descripcion' => 'Pago: Pago Empleado']);
+        $permission = Permission::create(['name' => 'pago_empleados.create', 'descripcion' => 'Pago: Pago Empleado Cierre']);
+        $permission = Permission::create(['name' => 'pago_empleados.show', 'descripcion' => 'Pago: Pago Empleado Ver Cierre']);
+        $permission = Permission::create(['name' => 'pago_empleados.agregar_funcionario', 'descripcion' => 'Pago: Pago Empleado - Agregar']);
+        $permission = Permission::create(['name' => 'pago_empleados.editar', 'descripcion' => 'Pago: Pago Empleado - Editar Salario']);
+        $permission = Permission::create(['name' => 'pago_empleados.anticipo', 'descripcion' => 'Pago: Pago Empleado - Anticipo']);
+        $permission = Permission::create(['name' => 'pago_empleados.inactivo', 'descripcion' => 'Pago: Pago Empleado - Inactivo']);
+        $permission = Permission::create(['name' => 'pago_empleados.activo', 'descripcion' => 'Pago: Pago Empleado - Activo']);
+
+        $permission = Permission::create(['name' => 'pago_varios.index', 'descripcion' => 'Pago: Pago Varios']);
+        $permission = Permission::create(['name' => 'pago_varios.agregar_insumo', 'descripcion' => 'Pago: Pago Varios - Agregar Insumo']);
+        $permission = Permission::create(['name' => 'pago_varios.pagar', 'descripcion' => 'Pago: Pago Varios - Pagar']);
+        $permission = Permission::create(['name' => 'pago_varios.inactivar', 'descripcion' => 'Pago: Pago Varios - Inactivar Insumo']);
+        $permission = Permission::create(['name' => 'pago_varios.activar', 'descripcion' => 'Pago: Pago Varios - Activar Insumo']);
 
     }
 

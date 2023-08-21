@@ -51,15 +51,20 @@
                                 {{number_format($neto_general, 0, ".", ".")}}
                             </td>
                             <td style="font-size: 11px">
-                                <a wire:click="datos({{$item->curso_habilitado_id}})" data-toggle="modal" data-target="#modal_heredado_tab">
-                                    <i class="fas fa-pen mr-2" style="font-size: 15px;
-                                    color: rgb(247, 168, 50);"></i>
-                                </a>
+                                @can('pago_instructor.editar')
+                                    <a wire:click="datos({{$item->curso_habilitado_id}})" data-toggle="modal" data-target="#modal_heredado_tab">
+                                        <i class="fas fa-pen mr-2" style="font-size: 15px;
+                                        color: rgb(247, 168, 50);"></i>
+                                    </a>
+                                @endcan
 
-                                <a wire:click="datos_anticipo({{$item->curso_habilitado_id}})" data-toggle="modal" data-target="#modal_anticipo_heredado_tab">
-                                    <i class="fas fa-comments-dollar" style="font-size: 15px;
-                                    color: rgb(200, 236, 70);"></i>
-                                </a>
+                                @can('pago_instructor.anticipo')
+                                    <a wire:click="datos_anticipo({{$item->curso_habilitado_id}})" data-toggle="modal" data-target="#modal_anticipo_heredado_tab">
+                                        <i class="fas fa-comments-dollar" style="font-size: 15px;
+                                        color: rgb(200, 236, 70);"></i>
+                                    </a>
+                                @endcan
+
                             </td>
 
                         </tr>

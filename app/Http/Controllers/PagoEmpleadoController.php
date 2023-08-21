@@ -11,6 +11,14 @@ use Illuminate\Http\Request;
 
 class PagoEmpleadoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:pago_empleados.index')->only('index');
+        $this->middleware('permission:pago_empleados.create')->only('create');
+        $this->middleware('permission:pago_empleados.create')->only('store');
+        $this->middleware('permission:pago_empleados.show')->only('show');
+    }
+
     public function index()
     {
         $data_pago = Pago::where('pago_tipo_id', 1)

@@ -55,10 +55,12 @@
                                 {{number_format($neto, 0, ".", ".")}}
                             </td>
                             <td style="font-size: 11px">
-                                <a wire:click="datos_salario({{$item->curso_habilitado->id}})" data-toggle="modal" data-target="#modal_salario_instructor">
-                                    <i class="fas fa-coins mr-2" style="font-size: 15px;
-                                    color: rgb(247, 168, 50);"></i>
-                                </a>
+                                @can('pago_instructor.pagar')
+                                    <a wire:click="datos_salario({{$item->curso_habilitado->id}})" data-toggle="modal" data-target="#modal_salario_instructor">
+                                        <i class="fas fa-coins mr-2" style="font-size: 15px;
+                                        color: rgb(247, 168, 50);"></i>
+                                    </a>
+                                @endcan
                             </td>
 
                         </tr>

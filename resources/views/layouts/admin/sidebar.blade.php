@@ -153,7 +153,7 @@
         @endcan
 
 
-        {{-- @can('ver_salario') --}}
+        @can('ver_salario')
             <li class="menu">
                 <a href="#ele" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
@@ -165,24 +165,24 @@
                     </div>
                 </a>
                 <ul class="collapse submenu list-unstyled" id="ele" data-parent="#accordionExample">
-                    {{-- @can('tipocurso.index') --}}
+                    @can('pago_instructor.index')
                         <li>
                             <a href="{{route('pago_instructor.index')}}"> Instructores </a>
                         </li>
-                    {{-- @endcan --}}
-                    {{-- @can('tipocurso.index') --}}
-                    <li>
-                        <a href="{{route('pago_empleados.index')}}"> Empleados </a>
-                    </li>
-                {{-- @endcan --}}
-                {{-- @can('tipocurso.index') --}}
-                <li>
-                    <a href="{{route('pago_varios.index')}}"> Varios </a>
-                </li>
-                {{-- @endcan --}}
+                    @endcan
+                    @can('pago_empleados.index')
+                        <li>
+                            <a href="{{route('pago_empleados.index')}}"> Empleados </a>
+                        </li>
+                    @endcan
+                    @can('pago_varios.index')
+                        <li>
+                            <a href="{{route('pago_varios.index')}}"> Varios </a>
+                        </li>
+                    @endcan
                 </ul>
             </li>
-        {{-- @endcan --}}
+        @endcan
 
         @can('persona.index')
             <li class="menu">
