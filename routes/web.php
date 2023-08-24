@@ -4,6 +4,7 @@ use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ConsultaGeneralController;
 use App\Http\Controllers\CursoAlumnoController;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\GeneralController;
@@ -138,6 +139,10 @@ Route::group([
     Route::post('/pago/empleados/cierre', [PagoEmpleadoController::class, 'store'])->name('pago_empleados.store');
     Route::get('/pago/empleados/{pago}/ver', [PagoEmpleadoController::class, 'show'])->name('pago_empleados.show');
     Route::get('/pago/varios', [PagoVariosController::class, 'index'])->name('pago_varios.index');
+
+    Route::get('/consulta/curso/deuda', [ConsultaGeneralController::class, 'curso_deuda'])->name('consulta.curso_deuda');
+
+
 
 });
 

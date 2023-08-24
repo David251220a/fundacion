@@ -153,6 +153,21 @@ class HabilitarCursoController extends Controller
             ]);
         }
 
+        if($request->instructor_id >= 1){
+            SalarioInstructor::create([
+                'instructor_id' => $request->instructor_id,
+                'curso_habilitado_id' => $curso->id,
+                'forma_pago_id' => 1,
+                'salario_concepto_id' => 1,
+                'importe' => 100000,
+                'tipo' => 1,
+                'concluido' => 0,
+                'estado_id' => 1,
+                'user_id' => auth()->user()->id,
+                'modif_user_id' => auth()->user()->id,
+            ]);
+        }
+
         return redirect()->route('habilitado.index')->with('message', 'Curso habilitado con exito.');
     }
 
@@ -242,6 +257,77 @@ class HabilitarCursoController extends Controller
         $cursoHabilitado->modif_user_id = auth()->user()->id;
 
         $cursoHabilitado->update();
+
+        if($request->instructor_id >= 1){
+            $aux_existe = SalarioInstructor::where('curso_habilitado_id', $cursoHabilitado->id)
+            ->where('instructor_id', $request->instructor_id)
+            ->get();
+
+            if(count($aux_existe) <= 0){
+                $dar_baja = SalarioInstructor::where('estado_id', 1)
+                ->where('curso_habilitado_id', $cursoHabilitado->id)
+                ->get();
+
+                foreach ($dar_baja as $item) {
+                    $item->estado_id = 2;
+                    $item->modif_user_id = auth()->user()->id;
+                    $item->update();
+                }
+
+                SalarioInstructor::create([
+                    'instructor_id' => $request->instructor_id,
+                    'curso_habilitado_id' => $cursoHabilitado->id,
+                    'forma_pago_id' => 1,
+                    'salario_concepto_id' => 1,
+                    'importe' => 100000,
+                    'tipo' => 1,
+                    'concluido' => 0,
+                    'estado_id' => 1,
+                    'user_id' => auth()->user()->id,
+                    'modif_user_id' => auth()->user()->id,
+                ]);
+            }else{
+
+                $dar_baja = SalarioInstructor::where('curso_habilitado_id', $cursoHabilitado->id)
+                ->where('instructor_id','<>' ,  $request->instructor_id)
+                ->where('estado_id', 1)
+                ->get();
+
+                foreach ($dar_baja as $item) {
+                    $item->estado_id = 2;
+                    $item->modif_user_id = auth()->user()->id;
+                    $item->update();
+                }
+
+                foreach ($aux_existe as $item) {
+                    $item->estado_id = 1;
+                    $item->modif_user_id = auth()->user()->id;
+                    $item->update();
+                }
+            }
+        }else{
+            $dar_baja = SalarioInstructor::where('estado_id', 1)
+            ->where('curso_habilitado_id', $cursoHabilitado->id)
+            ->get();
+
+            foreach ($dar_baja as $item) {
+                $item->estado_id = 2;
+                $item->modif_user_id = auth()->user()->id;
+                $item->update();
+            }
+        }
+
+        if($request->estado_id == 2){
+            $dar_baja = SalarioInstructor::where('estado_id', 1)
+            ->where('curso_habilitado_id', $cursoHabilitado->id)
+            ->get();
+
+            foreach ($dar_baja as $item) {
+                $item->estado_id = 2;
+                $item->modif_user_id = auth()->user()->id;
+                $item->update();
+            }
+        }
 
         return redirect()->route('habilitado.edit', $cursoHabilitado)->with('message', 'Curso habilitado con exito.');
     }

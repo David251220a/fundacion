@@ -1,4 +1,4 @@
-<div wire:ignore.self class="modal fade bd-example-modal-lg" id="recibo_comprobante" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div wire:ignore.self class="modal fade bd-example-modal-lg" @if (!(empty($nombre_id))) id="{{$nombre_id}}"    @else id="recibo_comprobante" @endif tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-body">
