@@ -12,4 +12,9 @@ class ConsultaGeneralController extends Controller
         return view('consulta.curso_deuda');
 
     }
+
+    public function pago()
+    {
+        return view('consulta.pago');
+    }
 }

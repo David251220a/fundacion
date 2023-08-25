@@ -54,7 +54,7 @@
                             </div>
 
                             <div class="tab-pane fade" id="underline-historico" role="tabpanel" aria-labelledby="underline-historico-tab">
-
+                                @livewire('consulta-general.insumo-deuda')
                             </div>
                         </div>
                     </div>

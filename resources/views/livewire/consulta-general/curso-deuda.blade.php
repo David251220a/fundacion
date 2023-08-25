@@ -7,7 +7,7 @@
             </div>
             <div class="form-group col-md-3">
                 <label for="inputEmail4">Accion</label> <br>
-                <button type="button" class="btn btn-info btn-sm" wire:click="render">Buscar</button>
+                <button type="button" class="btn btn-info btn-sm" wire:click="buscar">Buscar</button>
             </div>
         </div>
     </div>
@@ -62,10 +62,9 @@
             </tbody>
             <tfoot>
                 <tr>
-                    {{-- <th colspan="3" class="" style="color: :white; font-size: 15px">Total</th>
-                    <th class="text-right">{{$total_ingreso}}</th>
-                    <th class="text-right">{{$total_egreso}}</th>
-                    <th class="text-right">{{$total_neto}}</th> --}}
+                    <th colspan="4" class="" style="color: :white; font-size: 15px">Total</th>
+                    <th class="text-right">{{$cursodeuda}}</th>
+                    <th class="text-right"></th>
                 </tr>
             </tfoot>
         </table>

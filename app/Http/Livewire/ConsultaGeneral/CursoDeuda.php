@@ -15,7 +15,7 @@ class CursoDeuda extends Component
 {
 
     public $titulo, $forma_pago_id, $forma_pago, $comprobante, $monto_pagar, $total_pagar_modal, $ingreso, $valor_id = 0;
-    public $guardando = false, $cursoAlumno, $search;
+    public $guardando = false, $cursoAlumno, $search, $cursodeuda=0;
 
     use WithPagination;
     use WithFileUploads;
@@ -41,11 +41,19 @@ class CursoDeuda extends Component
 
     public function render()
     {
+        $this->cursodeuda = 0;
+
         if(empty($this->search)){
             $data = CursoAlumno::where('saldo', '>' , 0)
             ->whereIn('curso_a_estado_id', [1, 2, 3, 7])
             ->where('estado_id', 1)
+            ->orderBy('curso_habilitado_id', 'DESC')
             ->paginate(15);
+
+            $aux = CursoAlumno::where('saldo', '>' , 0)
+            ->whereIn('curso_a_estado_id', [1, 2, 3, 7])
+            ->where('estado_id', 1)
+            ->get();
         }else{
             $persona = Persona::where('documento', str_replace('.', '', $this->search))
             ->first();
@@ -54,19 +62,37 @@ class CursoDeuda extends Component
                 $data = CursoAlumno::where('saldo', '>' , 0)
                 ->whereIn('curso_a_estado_id', [1, 2, 3, 7])
                 ->where('estado_id', 1)
+                ->orderBy('curso_habilitado_id', 'DESC')
                 ->paginate(15);
+
+                $aux = CursoAlumno::where('saldo', '>' , 0)
+                ->whereIn('curso_a_estado_id', [1, 2, 3, 7])
+                ->where('estado_id', 1)
+                ->get();
             }else{
                 $data = CursoAlumno::where('saldo', '>' , 0)
                 ->where('alumno_id', $persona->alumno->id)
                 ->whereIn('curso_a_estado_id', [1, 2, 3, 7])
                 ->where('estado_id', 1)
+                ->orderBy('curso_habilitado_id', 'DESC')
                 ->paginate(15);
+
+                $aux = CursoAlumno::where('saldo', '>' , 0)
+                ->where('alumno_id', $persona->alumno->id)
+                ->whereIn('curso_a_estado_id', [1, 2, 3, 7])
+                ->where('estado_id', 1)
+                ->get();
             }
         }
 
-
+        $this->cursodeuda = number_format($aux->sum('saldo'), 0, ".", ".");
 
         return view('livewire.consulta-general.curso-deuda', compact('data'));
+    }
+
+    public function buscar()
+    {
+        $this->render();
     }
 
     public function detalle(CursoAlumno $cursoAlumno)

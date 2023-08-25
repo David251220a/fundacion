@@ -14,7 +14,7 @@ use Livewire\WithFileUploads;
 class CertificadoDeuda extends Component
 {
     public $titulo, $cer_forma_pago_id, $forma_pago, $cer_comprobante, $precio_certificado, $cer_total_pagar_modal, $ingreso, $valor_id = 0;
-    public $guardando = false, $cursoAlumno, $search, $documento_modal, $nombre_modal, $nombre_id='recibo_comprobante_certificado';
+    public $guardando = false, $cursoAlumno, $search, $documento_modal, $nombre_modal, $nombre_id='recibo_comprobante_certificado', $deudacertificado;
 
     use WithPagination;
     use WithFileUploads;
@@ -38,11 +38,19 @@ class CertificadoDeuda extends Component
 
     public function render()
     {
+        $this->deudacertificado = 0;
+
         if(empty($this->search)){
             $data = CursoAlumno::where('certificado_saldo', '>' , 0)
             ->whereIn('curso_a_estado_id', [1, 2, 3, 7])
             ->where('estado_id', 1)
+            ->orderBy('curso_habilitado_id', 'DESC')
             ->paginate(15);
+
+            $aux = CursoAlumno::where('certificado_saldo', '>' , 0)
+            ->whereIn('curso_a_estado_id', [1, 2, 3, 7])
+            ->where('estado_id', 1)
+            ->get();
         }else{
             $persona = Persona::where('documento', str_replace('.', '', $this->search))
             ->first();
@@ -51,16 +59,30 @@ class CertificadoDeuda extends Component
                 $data = CursoAlumno::where('certificado_saldo', '>' , 0)
                 ->whereIn('curso_a_estado_id', [1, 2, 3, 7])
                 ->where('estado_id', 1)
+                ->orderBy('curso_habilitado_id', 'DESC')
                 ->paginate(15);
+
+                $aux = CursoAlumno::where('certificado_saldo', '>' , 0)
+                ->whereIn('curso_a_estado_id', [1, 2, 3, 7])
+                ->where('estado_id', 1)
+                ->get();
             }else{
                 $data = CursoAlumno::where('certificado_saldo', '>' , 0)
                 ->where('alumno_id', $persona->alumno->id)
                 ->whereIn('curso_a_estado_id', [1, 2, 3, 7])
                 ->where('estado_id', 1)
+                ->orderBy('curso_habilitado_id', 'DESC')
                 ->paginate(15);
+
+                $aux = CursoAlumno::where('certificado_saldo', '>' , 0)
+                ->where('alumno_id', $persona->alumno->id)
+                ->whereIn('curso_a_estado_id', [1, 2, 3, 7])
+                ->where('estado_id', 1)
+                ->get();
             }
         }
 
+        $this->deudacertificado = number_format($aux->sum('certificado_saldo'), 0, ".", ".");
         return view('livewire.consulta-general.certificado-deuda', compact('data'));
     }
 

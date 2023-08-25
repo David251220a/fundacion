@@ -141,6 +141,7 @@ Route::group([
     Route::get('/pago/varios', [PagoVariosController::class, 'index'])->name('pago_varios.index');
 
     Route::get('/consulta/curso/deuda', [ConsultaGeneralController::class, 'curso_deuda'])->name('consulta.curso_deuda');
+    Route::get('/consulta/pago', [ConsultaGeneralController::class, 'pago'])->name('consulta.pago');
 
 
 

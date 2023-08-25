@@ -201,6 +201,12 @@
                             <a href="{{route('consulta.curso_deuda')}}"> Cursos </a>
                         </li>
                     {{-- @endcan --}}
+
+                    {{-- @can('consulta.pago') --}}
+                    <li>
+                        <a href="{{route('consulta.pago')}}"> Pago </a>
+                    </li>
+                {{-- @endcan --}}
                 </ul>
             </li>
         {{-- @endcan --}}

@@ -47,6 +47,11 @@ window.addEventListener('load', function() {
         $('#recibo_comprobante_certificado').modal('show');
     });
 
+    window.livewire.on('reporte_insumo', msj => {
+        $('#modal_cobrar_insumo').modal('hide');
+        $('#recibo_comprobante_ingreso').modal('show');
+    });
+
 
     window.livewire.on('correcto', msj => {
         $('#modal_agregar').modal('hide');
@@ -74,6 +79,24 @@ function exonerar(id)
     }).then(function(result) {
         if (result.value) {
             Livewire.emit('exonerar', id);
+        }
+
+    })
+
+}
+
+function exonerar_insumo(id)
+{
+    swal({
+        title: 'Desea exonerar el insumo?',
+        text: "Esta acción no se puede revertir!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Exonerar',
+        padding: '2em'
+    }).then(function(result) {
+        if (result.value) {
+            Livewire.emit('exonerar_insumo', id);
         }
 
     })

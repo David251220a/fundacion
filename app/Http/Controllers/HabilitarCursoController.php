@@ -8,6 +8,8 @@ use App\Models\CursoAEstado;
 use App\Models\CursoAlumno;
 use App\Models\CursoAlumnoAsistencia;
 use App\Models\CursoHabilitado;
+use App\Models\CursoInAlumno;
+use App\Models\CursoIngreso;
 use App\Models\Noticia;
 use App\Models\NoticiaFile;
 use App\Models\Periodo;
@@ -32,11 +34,13 @@ class HabilitarCursoController extends Controller
     {
         $data = CursoHabilitado::latest()
         ->where('concluido', 0)
+        ->where('estado_id', 1)
         ->take(1000)
         ->get();
 
         $data_d = CursoHabilitado::latest()
         ->where('concluido', 1)
+        ->where('estado_id', 1)
         ->take(1000)
         ->get();
 
@@ -327,8 +331,29 @@ class HabilitarCursoController extends Controller
                 $item->modif_user_id = auth()->user()->id;
                 $item->update();
             }
-        }
 
+            foreach ($cursoHabilitado->alumnos_todos as $item) {
+                $item->estado_id = 2;
+                $item->modif_user_id = auth()->user()->id;
+                $item->update();
+            }
+
+            $insumo = CursoIngreso::where('curso_habilitado_id', $cursoHabilitado->id)
+            ->get();
+
+            foreach ($insumo as $item) {
+                $item->estado_id = 2;
+                $item->modif_user_id = auth()->user()->id;
+                $item->update();
+
+                foreach ($item->alumnos as $alum) {
+                    $alum->estado_id = 2;
+                    $alum->modif_user_id = auth()->user()->id;
+                    $alum->update();
+                }
+            }
+
+        }
         return redirect()->route('habilitado.edit', $cursoHabilitado)->with('message', 'Curso habilitado con exito.');
     }
 
