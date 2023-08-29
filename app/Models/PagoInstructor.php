@@ -25,4 +25,9 @@ class PagoInstructor extends Model
     {
         return $this->belongsTo(CursoHabilitado::class, 'curso_habilitado_id');
     }
+
+    public function pago()
+    {
+        return $this->belongsTo(Pago::class, 'pago_id');
+    }
 }

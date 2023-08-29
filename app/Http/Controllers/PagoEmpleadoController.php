@@ -41,17 +41,12 @@ class PagoEmpleadoController extends Controller
 
 
         if(empty($mayor)){
-            $mes = 8;
-            $año = 2023;
+            $mes  = date('m', strtotime(Carbon::now()));
+            $año  = date('Y', strtotime(Carbon::now()));
         }else{
 
-            $mes  = date('m', strtotime($mayor)) + 1;
-            $año  = date('Y', strtotime($mayor));
-            if($mes == 12){
-                $mes = 1;
-                $año = $año + 1;
-            }
-
+            $mes  = date('m', strtotime(Carbon::now()));
+            $año  = date('Y', strtotime(Carbon::now()));
         }
 
         $forma_pago = FormaPago::all();
@@ -66,18 +61,20 @@ class PagoEmpleadoController extends Controller
             'anio' => 'required',
         ]);
 
-        $existe = Pago::where('estado_id', 1)
-        ->where('pago_tipo_id', 1)
-        ->where('mes', $request->mes)
-        ->where('año', $request->anio)
-        ->first();
+        // *------ SE COMENTA ESTA PARTE POR QUE EL COBRO ES SEMANAL
+
+        // $existe = Pago::where('estado_id', 1)
+        // ->where('pago_tipo_id', 1)
+        // ->where('mes', $request->mes)
+        // ->where('año', $request->anio)
+        // ->first();
+
+        // if (!(empty($existe))) {
+        //     return redirect()->back()->withInput()->withErrors('Ya existe un cierre de planilla con este mes y año:'. $mes .'/'. $año . '.');
+        // }
 
         $año = $request->anio;
         $mes = $request->mes;
-
-        if (!(empty($existe))) {
-            return redirect()->back()->withInput()->withErrors('Ya existe un cierre de planilla con este mes y año:'. $mes .'/'. $año . '.');
-        }
 
         $fecha_actual = Carbon::now();
         $aux_anio = intval(date('Y', strtotime($fecha_actual)));
@@ -112,18 +109,19 @@ class PagoEmpleadoController extends Controller
                 $pago->pago_empleado()->create([
                     'empleado_id' => $item->id,
                     'salario_concepto_id' => $ingre->salario_concepto_id,
+                    'salario_base' => $ingre->importe,
                     'importe' => $ingre->importe - $item->egreso->sum('importe'),
                     'tipo' => 1,
                     'estado_id' => 1,
                     'user_id' => auth()->user()->id,
                     'modif_user_id' => auth()->user()->id,
                 ]);
+            }
 
-                foreach ($item->egreso->where('salario_concepto_id', 2) as $egre) {
-                    $egre->importe = 0;
-                    $egre->modif_user_id = auth()->user()->id;
-                    $egre->update();
-                }
+            foreach ($item->egreso->where('salario_concepto_id', 2) as $egre) {
+                $egre->importe = 0;
+                $egre->modif_user_id = auth()->user()->id;
+                $egre->update();
             }
 
         }

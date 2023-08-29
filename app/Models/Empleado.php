@@ -16,6 +16,11 @@ class Empleado extends Model
         return $this->hasMany(SalarioEmpleado::class, 'empleado_id')->where('tipo', 1)->where('estado_id', 1);
     }
 
+    public function salario()
+    {
+        return $this->hasMany(SalarioEmpleado::class, 'empleado_id')->where('salario_concepto_id', 1)->where('estado_id', 1);
+    }
+
     public function egreso()
     {
         return $this->hasMany(SalarioEmpleado::class, 'empleado_id')->where('tipo', 2)->where('estado_id', 1);

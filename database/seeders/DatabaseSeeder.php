@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder
             // PagoTipoSeeder::class,
             // SalarioConceptoSeeder::class,
             // SalarioPagoSeeder::class,
-            InsumoSeeder::class,
+            // InsumoSeeder::class,
         ]);
     }
 }

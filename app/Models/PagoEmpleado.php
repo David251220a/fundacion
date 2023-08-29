@@ -20,4 +20,9 @@ class PagoEmpleado extends Model
     {
         return $this->belongsTo(SalarioConcepto::class, 'salario_concepto_id');
     }
+
+    public function pago()
+    {
+        return $this->belongsTo(Pago::class, 'pago_id');
+    }
 }

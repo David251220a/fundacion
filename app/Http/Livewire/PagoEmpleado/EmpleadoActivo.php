@@ -295,6 +295,7 @@ class EmpleadoActivo extends Component
         $pago->pago_empleado()->create([
             'empleado_id' => $this->empleado->id,
             'salario_concepto_id' => 2,
+            'salario_base' => $this->empleado->salario->sum('importe'),
             'importe' => $monto,
             'tipo' => 2,
             'estado_id' => 1,
