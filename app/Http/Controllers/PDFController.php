@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CierreCaja;
 use App\Models\Curso;
 use App\Models\IngresoMatricula;
 use App\Models\IngresoVarios;
@@ -232,5 +233,11 @@ class PDFController extends Controller
         $pdf->setPaper(array(0, 0, 200.772, 320.394), 'defaultPaperSize');
 
         return $pdf->stream('recibo_pago_varios.pdf');
+    }
+
+    public function cierre_cajero(CierreCaja $cierreCaja)
+    {
+        $pdf = PDF::loadView('pdf.cierre.cajero', compact('cierreCaja'));
+        return $pdf->stream('cierre_caja.pdf');
     }
 }

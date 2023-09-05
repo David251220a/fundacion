@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\IngresoTipo;
 use App\Models\PagoTipo;
 use App\Models\SalarioPago;
 use App\Models\User;
@@ -20,7 +21,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-        $this->call(RoleSeeder::class);
+        // $this->call(RoleSeeder::class);
 
         //  User::create([
         //      'name' => 'Admin',
@@ -48,6 +49,7 @@ class DatabaseSeeder extends Seeder
             // SalarioConceptoSeeder::class,
             // SalarioPagoSeeder::class,
             // InsumoSeeder::class,
+            IngresoTipoSeeder::class,
         ]);
     }
 }

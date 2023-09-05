@@ -95,6 +95,20 @@
             </li>
         @endcan
 
+        {{-- @can('cierre.cajero') --}}
+            <li class="menu">
+                <a href="{{ route('cierre.cajero') }}" {{(substr(Route::currentRouteName() , 0 , strpos(Route::currentRouteName(), '.')) == 'cierre' ? 'data-active=true' : '')}}
+                    aria-expanded="false" class="dropdown-toggle">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" class="feather feather-trending-up"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18">
+                            </polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                        <span>Cierre Caja</span>
+                    </div>
+                </a>
+            </li>
+        {{-- @endcan --}}
+
         @can('profesor.index')
             <li class="menu">
                 <a href="{{ route('profesor.index') }}" {{(substr(Route::currentRouteName() , 0 , strpos(Route::currentRouteName(), '.')) == 'profesor' ? 'data-active=true' : '')}}
@@ -118,6 +132,31 @@
                 </a>
             </li>
         @endcan
+
+        {{-- @can('ver_gerencia') --}}
+            <li class="menu">
+                <a href="#gerencia" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                        <span>Gerencia</span>
+                    </div>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </div>
+                </a>
+                <ul class="collapse submenu list-unstyled" id="gerencia" data-parent="#accordionExample">
+                    {{-- @can('cierre.falta_cierre') --}}
+                        <li>
+                            <a href="{{route('cierre.falta_cierre')}}"> Falta Cajero </a>
+                        </li>
+
+                        <li>
+                            <a href="{{route('cierre.consulta_gerente')}}"> Consulta </a>
+                        </li>
+                    {{-- @endcan --}}
+                </ul>
+            </li>
+        {{-- @endcan --}}
 
         @can('ver_opciones')
             <li class="menu">

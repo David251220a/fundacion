@@ -28,7 +28,12 @@ class Empleado extends Model
 
     public function todos()
     {
-        return $this->hasMany(SalarioEmpleado::class, 'empleado_id');
+        return $this->hasMany(SalarioEmpleado::class, 'empleado_id')->where('estado_id', 1);
+    }
+
+    public function todos_inactivos()
+    {
+        return $this->hasMany(SalarioEmpleado::class, 'empleado_id')->where('estado_id', 2);
     }
 
     public function persona()

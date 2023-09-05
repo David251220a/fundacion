@@ -32,6 +32,12 @@ class EmpleadoInactivo extends Component
         $empleado->modif_user_id = auth()->user()->id;
         $empleado->update();
 
+        foreach ($empleado->todos_inactivos as $item) {
+            $item->estado_id = 1;
+            $item->modif_user_id = auth()->user()->id;
+            $item->update();
+        }
+
         $this->emit('correcto', 'Empleado activado con exito.');
     }
 }

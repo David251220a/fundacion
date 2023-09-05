@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\ConsultaGeneral;
 
+use App\Models\Pago;
 use App\Models\PagoVarios;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -53,5 +54,20 @@ class OtrosPagos extends Component
     public function buscar_varios()
     {
         $this->render();
+    }
+
+    public function anular_pago(Pago $pago)
+    {
+        $pago->estado_id = 2;
+        $pago->modif_user_id = auth()->user()->id;
+        $pago->update();
+
+        foreach ($pago->pago_varios as $item) {
+            $item->estado_id = 2;
+            $item->modif_user_id = auth()->user()->id;
+            $item->update();
+        }
+
+        $this->emit('correcto', 'Pago vario anulado con exito.');
     }
 }

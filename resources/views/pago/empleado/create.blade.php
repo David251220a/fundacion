@@ -18,14 +18,14 @@
                     <form action="{{route('pago_empleados.store')}}" novalidate method="POST" onsubmit="disableButton()">
                         @csrf
                         <div class="form-row">
-                            <div class="form-group col-md-2">
+                            {{-- <div class="form-group col-md-2">
                                 <label for="inputEmail4">Mes</label>
                                 <input type="text" name="mes" id="mes" class="form-control text-right" value="{{old('mes', $mes)}}">
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="inputEmail4">Año</label>
                                 <input type="text" name="anio" id="anio" class="form-control text-right" value="{{old('anio', $año)}}">
-                            </div>
+                            </div> --}}
                             <div class="form-group col-md-4">
                                 <label for="inputEmail4">Forma Pago</label>
                                 <select name="forma_pago_id" id="forma_pago_id" class="form-control">

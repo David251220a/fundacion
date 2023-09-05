@@ -61,8 +61,10 @@
                                         <thead>
                                             <tr>
                                                 <th width="20%">Tipo de Pago</th>
-                                                <th width="30%">Mes/Año</th>
-                                                <th width="30%">Importe</th>
+                                                <th width="30%">Fecha</th>
+                                                <th width="15%">Total Salario</th>
+                                                <th width="15%">Total Descuentos</th>
+                                                <th width="15%">Total Neto</th>
                                                 <th class="no-content">Acción</th>
                                             </tr>
                                         </thead>
@@ -73,10 +75,16 @@
                                                         {{$item->tipo_pago->descripcion}}
                                                     </td>
                                                     <td style="font-size: 11px">
-                                                        {{str_pad($item->mes, 2, '0', STR_PAD_LEFT)}} / {{$item->año}}
+                                                        {{date('d/m/Y', strtotime($item->fecha_cierre))}}
                                                     </td>
                                                     <td class="text-right" style="font-size: 11px">
-                                                        {{number_format($item->importe, 0, ".", ".")}}
+                                                        {{number_format($item->total_salario, 0, ".", ".")}}
+                                                    </td>
+                                                    <td class="text-right" style="font-size: 11px">
+                                                        {{number_format($item->total_descuento, 0, ".", ".")}}
+                                                    </td>
+                                                    <td class="text-right" style="font-size: 11px">
+                                                        {{number_format($item->total_neto, 0, ".", ".")}}
                                                     </td>
                                                     <td class="text-right; font-size: 11px">
                                                         <a href="{{route('pago_empleados.show', $item->id)}}">

@@ -112,7 +112,7 @@
             </div>
             <div class="modal-footer">
                 <button wire:click="resetUI" class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Cancelar</button>
-                <button wire:click="grabar_anticipo" type="button" class="btn btn-primary">Guardar</button>
+                <button wire:click="grabar_anticipo" type="button" wire:loading.attr="disabled" class="btn btn-primary">Guardar</button>
             </div>
         </div>
     </div>

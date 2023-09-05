@@ -337,6 +337,12 @@ class EmpleadoActivo extends Component
         $empleado->modif_user_id = auth()->user()->id;
         $empleado->update();
 
+        foreach ($empleado->todos as $item) {
+            $item->estado_id = 2;
+            $item->modif_user_id = auth()->user()->id;
+            $item->update();
+        }
+
         $this->emit('correcto', 'Empleado eliminado con exito.');
         $this->resetUI();
     }

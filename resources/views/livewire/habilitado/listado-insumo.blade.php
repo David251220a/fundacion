@@ -49,12 +49,15 @@
                                     foreach ($existe as $a) {
                                         $valor = $a->saldo;
                                         $id = $a->id;
+                                        $color = '';
                                         if($a->total_pagado >=  $a->total_pagar){
                                             $color = 'background: rgb(148 235 122)';
                                         }elseif ($a->total_pagado > 0){
                                             $color = 'background: rgb(241 226 46)';
                                         }elseif($a->saldo > 0) {
                                             $color = 'background: rgb(217 96 96)';
+                                        }else {
+                                            $color = 'background: aqua';
                                         }
                                     }
                                 @endphp

@@ -4,6 +4,7 @@ use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\CierreController;
 use App\Http\Controllers\ConsultaGeneralController;
 use App\Http\Controllers\CursoAlumnoController;
 use App\Http\Controllers\CursoController;
@@ -131,6 +132,7 @@ Route::group([
     Route::get('/pdf/pago-instructor/{id}/salario', [PDFController::class, 'recibo_salario_instructor'])->name('pdf.recibo_salario_instructor');
     Route::get('/pdf/pago-empleado/{id}/anticipo', [PDFController::class, 'recibo_anticipo_empleado'])->name('pdf.recibo_anticipo_empleado');
     Route::get('/pdf/pago/{id}/varios', [PDFController::class, 'recibo_pago_varios'])->name('pdf.recibo_pago_varios');
+    Route::get('/pdf/cierre/{cierreCaja}/cajero', [PDFController::class, 'cierre_cajero'])->name('pdf.cierre_cajero');
 
 
     Route::get('/pago/instructores', [PagoInstructorController::class, 'index'])->name('pago_instructor.index');
@@ -142,6 +144,14 @@ Route::group([
 
     Route::get('/consulta/curso/deuda', [ConsultaGeneralController::class, 'curso_deuda'])->name('consulta.curso_deuda');
     Route::get('/consulta/pago', [ConsultaGeneralController::class, 'pago'])->name('consulta.pago');
+
+    Route::get('/cierre/cajero', [CierreController::class, 'cajero'])->name('cierre.cajero');
+    Route::post('/cierre/cajero', [CierreController::class, 'cajero_post'])->name('cierre.cajero_post');
+    Route::get('/cierre/cajero/{cierreCaja}/ver', [CierreController::class, 'cajero_ver'])->name('cierre.cajero_ver');
+    Route::get('/cierre', [CierreController::class, 'falta_cierre'])->name('cierre.falta_cierre');
+    Route::get('/cierre/{user}/gerente', [CierreController::class, 'cierre_gerente'])->name('cierre.cierre_gerente');
+    Route::post('/cierre/{user}/gerente', [CierreController::class, 'cierre_gerente_post'])->name('cierre.cierre_gerente_post');
+    Route::get('/cierre/consulta', [CierreController::class, 'consulta_gerente'])->name('cierre.consulta_gerente');
 
 
 

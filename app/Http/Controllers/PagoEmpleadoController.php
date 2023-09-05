@@ -6,6 +6,9 @@ use App\Models\Empleado;
 use App\Models\FormaPago;
 use App\Models\Pago;
 use App\Models\PagoEmpleado;
+use App\Models\SalarioCierre;
+use App\Models\SalarioCierreDetalle;
+use App\Models\SalarioEmpleado;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -21,9 +24,9 @@ class PagoEmpleadoController extends Controller
 
     public function index()
     {
-        $data_pago = Pago::where('pago_tipo_id', 1)
-        ->where('estado_id', 1)
+        $data_pago = SalarioCierre::where('estado_id', 1)
         ->take(12)
+        ->latest()
         ->get();
 
         return view('pago.empleado.index', compact('data_pago'));
@@ -56,10 +59,10 @@ class PagoEmpleadoController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'mes' => 'required',
-            'anio' => 'required',
-        ]);
+        // $request->validate([
+        //     'mes' => 'required',
+        //     'anio' => 'required',
+        // ]);
 
         // *------ SE COMENTA ESTA PARTE POR QUE EL COBRO ES SEMANAL
 
@@ -73,16 +76,17 @@ class PagoEmpleadoController extends Controller
         //     return redirect()->back()->withInput()->withErrors('Ya existe un cierre de planilla con este mes y año:'. $mes .'/'. $año . '.');
         // }
 
-        $año = $request->anio;
-        $mes = $request->mes;
+        // $año = $request->anio;
+        // $mes = $request->mes;
 
         $fecha_actual = Carbon::now();
-        $aux_anio = intval(date('Y', strtotime($fecha_actual)));
-        $numero_recibo = Pago::where('año', $aux_anio)
+        $año = intval(date('Y', strtotime($fecha_actual)));
+        $mes = intval(date('m', strtotime($fecha_actual)));
+        $numero_recibo = Pago::where('año', $año)
         ->max('numero_recibo');
 
         $aux_fecha = $año . "-" . str_pad($mes, 2, '0', STR_PAD_LEFT) . '-' . '01';
-        $fecha = date('Y-m-d', strtotime($aux_fecha));
+        $fecha = date('Y-m-d', strtotime($fecha_actual));
         $data = Empleado::where('estado_id', 1)
         ->get();
 
@@ -117,28 +121,58 @@ class PagoEmpleadoController extends Controller
                     'modif_user_id' => auth()->user()->id,
                 ]);
             }
-
-            foreach ($item->egreso->where('salario_concepto_id', 2) as $egre) {
-                $egre->importe = 0;
-                $egre->modif_user_id = auth()->user()->id;
-                $egre->update();
-            }
-
         }
+
+        $total_salario = SalarioEmpleado::where('estado_id', 1)
+        ->where('tipo', 1)
+        ->sum('importe');
+
+        $total_descuento = SalarioEmpleado::where('estado_id', 1)
+        ->where('tipo', 2)
+        ->sum('importe');
+
+        $cierre = SalarioCierre::create([
+            'forma_pago_id' => $request->forma_pago_id,
+            'pago_tipo_id' => 1,
+            'pago_id' => $pago->id,
+            'salario_pago_id' => 1,
+            'fecha_cierre' => $fecha,
+            'total_salario' => $total_salario,
+            'total_descuento' => $total_descuento,
+            'total_neto' => ($total_salario - $total_descuento),
+            'estado_id' => 1,
+            'user_id' => auth()->user()->id,
+            'modif_user_id' => auth()->user()->id,
+        ]);
+
+        foreach ($data as $item) {
+            foreach ($item->todos as $concepto) {
+                SalarioCierreDetalle::create([
+                    'salario_cierre_id' => $cierre->id,
+                    'empleado_id' => $item->id,
+                    'salario_concepto_id' => $concepto->salario_concepto_id,
+                    'importe' => $concepto->importe,
+                    'tipo' => $concepto->tipo,
+                    'estado_id' => 1,
+                    'user_id' => auth()->user()->id,
+                    'modif_user_id' => auth()->user()->id,
+                ]);
+
+                if($concepto->salario_concepto_id == 2){
+                    $concepto->importe = 0;
+                    $concepto->modif_user_id = auth()->user()->id;
+                    $concepto->update();
+                }
+            }
+        }
+
         return redirect()->route('pago_empleados.index')->with('message', 'Cierra planilla realizado con exito.');
     }
 
-    public function show(Pago $pago)
+    public function show($pago)
     {
-        $anticipo = PagoEmpleado::join('pagos AS a', 'pago_empleados.pago_id', '=', 'a.id')
-        ->where('a.estado_id', 1)
-        ->where('pago_empleados.salario_concepto_id', 2)
-        ->where('a.mes', $pago->mes)
-        ->where('a.año', $pago->año)
-        ->select('pago_empleados.*', 'a.mes', 'a.año')
-        ->get();
-
-        return view('pago.empleado.show', compact('pago', 'anticipo'));
+        $data = SalarioCierre::find($pago);
+        return view('pago.empleado.show', compact('data'));
     }
 
 }

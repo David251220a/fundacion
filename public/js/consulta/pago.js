@@ -85,18 +85,18 @@ function anular_instructor(id)
 
 }
 
-function exonerar_insumo(id)
+function anular_pago(id)
 {
     swal({
-        title: 'Desea exonerar el insumo?',
+        title: 'Desea anular el pago?',
         text: "Esta acción no se puede revertir!",
         type: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Exonerar',
+        confirmButtonText: 'Confirmar',
         padding: '2em'
     }).then(function(result) {
         if (result.value) {
-            Livewire.emit('exonerar_insumo', id);
+            Livewire.emit('anular_pago', id);
         }
 
     })

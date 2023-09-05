@@ -78,7 +78,7 @@
 
                     @foreach ($alumnos as $item)
                         @php
-
+                            $color = '';
                             if($item->monto_abonado >=  $item->total_pagar){
                                 $color = 'background: rgb(148 235 122)';
                             }
@@ -86,6 +86,8 @@
                                 $color = 'background: rgb(241 226 46)';
                             }elseif($item->saldo > 0) {
                                 $color = 'background: rgb(217 96 96)';
+                            }else {
+                                $color = 'background: aqua';
                             }
                         @endphp
                         <tr style="{{$color}}; ">
