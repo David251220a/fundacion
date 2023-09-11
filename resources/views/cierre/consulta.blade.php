@@ -26,20 +26,13 @@
     <script src="{{asset('plugins/apex/custom-apexcharts.js')}}"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Tu código de ApexCharts aquí
 
+        });
+
+        function graficos()
+        {
             var ingresosSeries = [];
             var egresosSeries = [];
-
-            // Construir la serie de datos para ingresos
-            // ingresosData.forEach(function(item) {
-            //     ingresosSeries.push(item.total);
-            // });
-
-            // Construir la serie de datos para egresos
-            // egresosData.forEach(function(item) {
-            //     egresosSeries.push(item.total);
-            // });
 
             var donutChart = {
                 chart: {
@@ -70,7 +63,8 @@
             );
 
             donut.render();
-        });
+        }
+
     </script>
 
 @endsection

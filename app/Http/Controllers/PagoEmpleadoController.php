@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CierreCaja;
+use App\Models\Egreso;
 use App\Models\Empleado;
 use App\Models\FormaPago;
 use App\Models\Pago;
@@ -90,6 +92,27 @@ class PagoEmpleadoController extends Controller
         $data = Empleado::where('estado_id', 1)
         ->get();
 
+        $cierre = CierreCaja::create([
+            'fecha' => $fecha_actual,
+            'total_ingreso' => 0,
+            'total_egreso' => str_replace('.', '', $request->neto_importe),
+            'observacion' => 'PAGO EMPLEADOS',
+            'cajero' => auth()->user()->id,
+            'estado_id' => 1,
+            'user_id' => auth()->user()->id,
+            'modif_user_id' => auth()->user()->id,
+        ]);
+
+        Egreso::create([
+            'cierre_caja_id' => $cierre->id,
+            'pago_tipo_id' => 1,
+            'forma_pago_id' => $request->forma_pago_id,
+            'fecha' => $fecha_actual,
+            'importe' => str_replace('.', '', $request->neto_importe),
+            'estado_id' => 1,
+            'user_id' => auth()->user()->id,
+            'modif_user_id' => auth()->user()->id,
+        ]);
 
         $pago = Pago::create([
             'pago_tipo_id' => 1,

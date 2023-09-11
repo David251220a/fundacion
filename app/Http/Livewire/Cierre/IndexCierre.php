@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Cierre;
 
+use App\Models\CierreCaja;
 use App\Models\Egreso;
 use App\Models\Ingreso;
 use Carbon\Carbon;
@@ -10,7 +11,7 @@ use Livewire\Component;
 
 class IndexCierre extends Component
 {
-    public $desde_fecha, $hasta_fecha;
+    public $desde_fecha, $hasta_fecha, $datos_g = [];
 
     public function mount()
     {
@@ -33,7 +34,17 @@ class IndexCierre extends Component
         ->groupBy('forma_pago_id', 'pago_tipo_id')
         ->get();
 
+        $this->datos_grafico();
+
         return view('livewire.cierre.index-cierre', compact('data', 'data_e'));
+    }
+
+    public function datos_grafico()
+    {
+        $this->datos_g = CierreCaja::where('estado_id', 1)
+        ->whereBetween('fecha', [$this->desde_fecha, $this->hasta_fecha])
+        ->select(DB::raw('SUM(total_ingreso) AS Ingreso', DB::raw('SUM(total_egreso) AS Egreso')))
+        ->first();
     }
 
 }

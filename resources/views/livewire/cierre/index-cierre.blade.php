@@ -20,7 +20,9 @@
                 </div>
                 <div class="form-group col-md-3">
                     <label for="inputEmail4">Accion</label> <br>
-                    <button type="button" class="btn btn-info btn-sm" wire:click="buscar_insumo">Buscar</button>
+                    <button type="button" class="btn btn-info btn-sm" wire:click="render">Buscar</button>
+                    <input type="text" value="{{$datos_g->Ingreso}}">
+                    <input type="text" value="{{$datos_g->Egreso}}">
                 </div>
             </div>
         </div>

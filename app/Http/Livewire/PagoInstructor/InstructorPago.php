@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\PagoInstructor;
 
+use App\Models\CierreCaja;
 use App\Models\CursoHabilitado;
+use App\Models\Egreso;
 use App\Models\FormaPago;
 use App\Models\Pago;
 use App\Models\SalarioInstructor;
@@ -71,6 +73,18 @@ class InstructorPago extends Component
 
         $numero_recibo = $numero_recibo + 1;
         $neto = $this->ingreso->sum('importe') - $this->egreso->sum('importe');
+
+        $cierre = CierreCaja::create([
+            'fecha' => $fecha_actual,
+            'total_ingreso' => 0,
+            'total_egreso' => $neto,
+            'observacion' => 'PAGO PROFESOR',
+            'cajero' => auth()->user()->id,
+            'estado_id' => 1,
+            'user_id' => auth()->user()->id,
+            'modif_user_id' => auth()->user()->id,
+        ]);
+
         $pago = Pago::create([
             'pago_tipo_id' => 2,
             'fecha' => $fecha_actual,
@@ -78,11 +92,23 @@ class InstructorPago extends Component
             'año' => $anio,
             'importe' => $neto,
             'forma_pago_id' => $this->forma_pago_id,
-            'procesado' => 0,
+            'procesado' => 1,
             'sucursal' => '0000',
             'general' => '0000',
             'factura_numero' => 0,
             'numero_recibo' => $numero_recibo,
+            'cierre_caja_id' => $cierre->id,
+            'estado_id' => 1,
+            'user_id' => auth()->user()->id,
+            'modif_user_id' => auth()->user()->id,
+        ]);
+
+        Egreso::create([
+            'cierre_caja_id' => $cierre->id,
+            'pago_tipo_id' => 2,
+            'forma_pago_id' => $this->forma_pago_id,
+            'fecha' => $fecha_actual,
+            'importe' => $neto,
             'estado_id' => 1,
             'user_id' => auth()->user()->id,
             'modif_user_id' => auth()->user()->id,
