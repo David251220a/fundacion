@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 
 class ConsultaGeneralController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:consulta.curso_deuda')->only('curso_deuda');
+        $this->middleware('permission:consulta.pago')->only('pago');
+    }
+
     public function curso_deuda(Request $request)
     {
 

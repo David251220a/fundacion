@@ -21,8 +21,6 @@
                 <div class="form-group col-md-3">
                     <label for="inputEmail4">Accion</label> <br>
                     <button type="button" class="btn btn-info btn-sm" wire:click="render">Buscar</button>
-                    <input type="text" value="{{$datos_g->Ingreso}}">
-                    <input type="text" value="{{$datos_g->Egreso}}">
                 </div>
             </div>
         </div>
@@ -40,11 +38,11 @@
                                 <i class="fas fa-hand-holding-usd mr-2"></i> Datos
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link" id="underline-profile-tab" data-toggle="tab" href="#underline-profile" role="tab" aria-controls="underline-profile" aria-selected="false">
                                 <i class="fas fa-dollar-sign mr-2"></i> Grafico
                             </a>
-                        </li>
+                        </li> --}}
                     </ul>
 
                     <div class="tab-content" id="lineTabContent-3">
@@ -160,7 +158,7 @@
 
                         </div>
 
-                        <div class="tab-pane fade" id="underline-profile" role="tabpanel" aria-labelledby="underline-profile-tab">
+                        {{-- <div class="tab-pane fade" id="underline-profile" role="tabpanel" aria-labelledby="underline-profile-tab">
 
                             <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
                                 <div class="widget widget-table-one">
@@ -178,7 +176,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

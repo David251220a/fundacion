@@ -35,4 +35,9 @@ class IngresoMatricula extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function usuario_modif()
+    {
+        return $this->belongsTo(User::class, 'modif_user_id');
+    }
 }

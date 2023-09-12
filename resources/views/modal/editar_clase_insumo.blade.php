@@ -1,4 +1,4 @@
-<div wire:ignore.self class="modal fade bd-example-modal-lg" id="modal_insumo_editar" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div wire:ignore.self class="modal fade bd-example-modal-lg" id="modal_insumo_editar" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -52,7 +52,7 @@
             </div>
             <div class="modal-footer">
                 <button wire:click="resetUI" class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Cancelar</button>
-                <button wire:click="update({{$editar_id}})" type="button" class="btn btn-primary">Editar</button>
+                <button wire:click="update({{$editar_id}})" type="button"  wire:loading.attr="disabled" class="btn btn-primary">Editar</button>
             </div>
         </div>
     </div>

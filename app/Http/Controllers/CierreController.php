@@ -15,6 +15,18 @@ use Illuminate\Support\Facades\DB;
 
 class CierreController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:cierre.cajero')->only('cajero');
+        $this->middleware('permission:cierre.cajero')->only('cajero_post');
+        $this->middleware('permission:cierre.cajero_ver')->only('cajero_ver');
+        $this->middleware('permission:cierre.falta_cierre')->only('falta_cierre');
+        $this->middleware('permission:cierre.cierre_gerente')->only('cierre_gerente');
+        $this->middleware('permission:cierre.cierre_gerente')->only('cierre_gerente_post');
+        $this->middleware('permission:cierre.consulta_gerente')->only('consulta_gerente');
+    }
+
     public function cajero()
     {
         $user = auth()->user();

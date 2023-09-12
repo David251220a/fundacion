@@ -18,7 +18,7 @@ class ListadoCurso extends Component
 {
 
     public $curso_id, $documento, $curso_precio, $comprobante, $observacion_modal, $estado_a_id, $estado_curso = 99;
-    public $documento_modal, $forma_pago_id = 1, $nombre_modal, $total_pagar_modal = 0;
+    public $documento_modal, $forma_pago_id = 1, $cer_forma_pago_id=1, $nombre_modal, $total_pagar_modal = 0;
     public $cursoAlumno, $documento_e_modal, $nombre_e_modal, $cuenta = [];
     public $precio_certificado, $cer_comprobante, $cer_total_pagar_modal, $ingreso, $valor_id = 0, $saldos;
 
@@ -286,7 +286,7 @@ class ListadoCurso extends Component
         $ingreso = IngresoMatricula::create([
             'alumno_id' => $cursoAlumno->alumno_id,
             'fecha_ingreso' => $fecha_actual,
-            'forma_pago_id' => $this->forma_pago_id,
+            'forma_pago_id' => $this->cer_forma_pago_id,
             'año' => $anio,
             'mes' => $mes,
             'tipo_cobro' => 2,
@@ -338,6 +338,7 @@ class ListadoCurso extends Component
         $this->reset('precio_certificado');
         $this->reset('cer_total_pagar_modal');
         $this->forma_pago_id = 1;
+        $this->cer_forma_pago_id = 1;
         $this->emit('reloadClassCSs');
 
     }

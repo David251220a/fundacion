@@ -95,7 +95,7 @@
             </li>
         @endcan
 
-        {{-- @can('cierre.cajero') --}}
+        @can('cierre.cajero')
             <li class="menu">
                 <a href="{{ route('cierre.cajero') }}" {{(substr(Route::currentRouteName() , 0 , strpos(Route::currentRouteName(), '.')) == 'cierre' ? 'data-active=true' : '')}}
                     aria-expanded="false" class="dropdown-toggle">
@@ -107,7 +107,7 @@
                     </div>
                 </a>
             </li>
-        {{-- @endcan --}}
+        @endcan
 
         @can('profesor.index')
             <li class="menu">
@@ -133,7 +133,41 @@
             </li>
         @endcan
 
-        {{-- @can('ver_gerencia') --}}
+        {{-- @can('ver_anulacion') --}}
+            <li class="menu">
+                <a href="#anulacion" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        <span>Anulaciones</span>
+                    </div>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </div>
+                </a>
+                <ul class="collapse submenu list-unstyled" id="anulacion" data-parent="#accordionExample">
+                    {{-- @can('cierre.falta_cierre') --}}
+                        <li>
+                            <a href="{{route('anulacion.cursos')}}"> Cursos </a>
+                        </li>
+                    {{-- @endcan --}}
+
+                    {{-- @can('cierre.consulta_gerente') --}}
+                        <li>
+                            <a href="{{route('anulacion.ingreso_varios')}}"> Ingresos </a>
+                        </li>
+                    {{-- @endcan --}}
+
+                    {{-- @can('cierre.anticipo') --}}
+                    <li>
+                        <a href="{{route('anulacion.anticipo')}}"> Anticipo </a>
+                    </li>
+                {{-- @endcan --}}
+
+                </ul>
+            </li>
+        {{-- @endcan --}}
+
+        @can('ver_gerencia')
             <li class="menu">
                 <a href="#gerencia" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
@@ -145,18 +179,21 @@
                     </div>
                 </a>
                 <ul class="collapse submenu list-unstyled" id="gerencia" data-parent="#accordionExample">
-                    {{-- @can('cierre.falta_cierre') --}}
+                    @can('cierre.falta_cierre')
                         <li>
                             <a href="{{route('cierre.falta_cierre')}}"> Falta Cajero </a>
                         </li>
+                    @endcan
 
+                    @can('cierre.consulta_gerente')
                         <li>
                             <a href="{{route('cierre.consulta_gerente')}}"> Consulta </a>
                         </li>
-                    {{-- @endcan --}}
+                    @endcan
+
                 </ul>
             </li>
-        {{-- @endcan --}}
+        @endcan
 
         @can('ver_opciones')
             <li class="menu">
@@ -223,7 +260,7 @@
             </li>
         @endcan
 
-        {{-- @can('ver_consulta') --}}
+        @can('ver_consulta')
             <li class="menu">
                 <a href="#consu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
@@ -235,20 +272,20 @@
                     </div>
                 </a>
                 <ul class="collapse submenu list-unstyled" id="consu" data-parent="#accordionExample">
-                    {{-- @can('consulta.curso_deuda') --}}
+                    @can('consulta.curso_deuda')
                         <li>
                             <a href="{{route('consulta.curso_deuda')}}"> Cursos </a>
                         </li>
-                    {{-- @endcan --}}
+                    @endcan
 
-                    {{-- @can('consulta.pago') --}}
-                    <li>
-                        <a href="{{route('consulta.pago')}}"> Pago </a>
-                    </li>
-                {{-- @endcan --}}
+                    @can('consulta.pago')
+                        <li>
+                            <a href="{{route('consulta.pago')}}"> Pago </a>
+                        </li>
+                    @endcan
                 </ul>
             </li>
-        {{-- @endcan --}}
+        @endcan
 
         @can('persona.index')
             <li class="menu">

@@ -40,4 +40,9 @@ class Pago extends Model
     {
         return $this->belongsTo(PagoTipo::class, 'pago_tipo_id');
     }
+
+    public function usuario_modif()
+    {
+        return $this->belongsTo(User::class, 'modif_user_id');
+    }
 }

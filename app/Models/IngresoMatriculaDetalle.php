@@ -20,4 +20,9 @@ class IngresoMatriculaDetalle extends Model
     {
         return $this->belongsTo(IngresoMatricula::class, 'ingreso_matricula_id');
     }
+
+    public function alumno()
+    {
+        return $this->belongsTo(Alumno::class, 'alumno_id');
+    }
 }

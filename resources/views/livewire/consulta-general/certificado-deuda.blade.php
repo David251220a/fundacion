@@ -54,8 +54,14 @@
                             {{number_format($item->certificado_saldo, 0, ".", ".")}}
                         </td>
                         <td>
-                            <button type="button" wire:click="detalle_certificado({{$item->id}})" data-toggle="modal" data-target="#modal_agregar_certificado" class="btn btn-info btn-sm mr-2 mb-2">Cobrar</button>
-                            <button type="button" onclick="exonerar({{$item->id}})" class="btn btn-warning btn-sm mr-2 mb-2">Exonerar</button>
+                            @can('consulta.certificado_deuda_cobrar')
+                                <button type="button" wire:click="detalle_certificado({{$item->id}})" data-toggle="modal" data-target="#modal_agregar_certificado" class="btn btn-info btn-sm mr-2 mb-2">Cobrar</button>
+                            @endcan
+
+                            @can('Consulta Certificado: Exonerar')
+                                <button type="button" onclick="exonerar({{$item->id}})" class="btn btn-warning btn-sm mr-2 mb-2">Exonerar</button>
+                            @endcan
+
                         </td>
                     </tr>
                 @endforeach

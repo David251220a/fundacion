@@ -53,7 +53,7 @@
                             </th>
                             <th width="40%">
                                 <p>N° Recibo:</p>
-                                <p>{{$ingreso->año}}-V-{{ str_pad($ingreso->numero_recibo, 6, '0', STR_PAD_LEFT) }}</p>
+                                <p>{{$ingreso->año}}-B-{{ str_pad($ingreso->numero_recibo, 6, '0', STR_PAD_LEFT) }}</p>
                             </th>
                         </tr>
 

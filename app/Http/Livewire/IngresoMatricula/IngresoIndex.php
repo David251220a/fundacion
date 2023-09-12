@@ -277,11 +277,10 @@ class IngresoIndex extends Component
                 $cursoAlumno->modif_user_id = auth()->user()->id;
                 $cursoAlumno->update();
             }
-
-
-            $this->resetUI();
-            $this->render();
         }
+
+        $this->resetUI();
+        $this->render();
     }
 
     public function actualizar_curso()

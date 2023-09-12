@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-        // $this->call(RoleSeeder::class);
+        $this->call(RoleSeeder::class);
 
         //  User::create([
         //      'name' => 'Admin',
@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
             // SalarioConceptoSeeder::class,
             // SalarioPagoSeeder::class,
             // InsumoSeeder::class,
-            IngresoTipoSeeder::class,
+            // IngresoTipoSeeder::class,
         ]);
     }
 }

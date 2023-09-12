@@ -59,8 +59,13 @@
                                 {{number_format($item->saldo, 0, ".", ".")}}
                             </td>
                             <td>
-                                <button type="button" wire:click="detalle_insumo({{$item->id}})" data-toggle="modal" data-target="#modal_cobrar_insumo" class="btn btn-info btn-sm mr-2 mb-2">Cobrar</button>
-                                <button type="button" onclick="exonerar_insumo({{$item->id}})" class="btn btn-warning btn-sm mr-2 mb-2">Exonerar</button>
+                                @can('consulta.insumo_cobrar')
+                                    <button type="button" wire:click="detalle_insumo({{$item->id}})" data-toggle="modal" data-target="#modal_cobrar_insumo" class="btn btn-info btn-sm mr-2 mb-2">Cobrar</button>
+                                @endcan
+                                @can('consulta.insumo_exonerar')
+                                    <button type="button" onclick="exonerar_insumo({{$item->id}})" class="btn btn-warning btn-sm mr-2 mb-2">Exonerar</button>
+                                @endcan
+
                             </td>
                         </tr>
                     @endif

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\AlumnoController;
+use App\Http\Controllers\AnulacionesController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CierreController;
@@ -152,6 +153,10 @@ Route::group([
     Route::get('/cierre/{user}/gerente', [CierreController::class, 'cierre_gerente'])->name('cierre.cierre_gerente');
     Route::post('/cierre/{user}/gerente', [CierreController::class, 'cierre_gerente_post'])->name('cierre.cierre_gerente_post');
     Route::get('/cierre/consulta', [CierreController::class, 'consulta_gerente'])->name('cierre.consulta_gerente');
+
+    Route::get('/anulacion/cursos', [AnulacionesController::class, 'cursos'])->name('anulacion.cursos');
+    Route::get('/anulacion/ingresos-varios', [AnulacionesController::class, 'ingresos_varios'])->name('anulacion.ingreso_varios');
+    Route::get('/anulacion/anticipo', [AnulacionesController::class, 'anticipo'])->name('anulacion.anticipo');
 
 
 

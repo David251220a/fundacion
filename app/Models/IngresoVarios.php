@@ -46,5 +46,10 @@ class IngresoVarios extends Model
         return $this->belongsTo(Curso::class, 'curso_id');
     }
 
+    public function usuario_modif()
+    {
+        return $this->belongsTo(User::class, 'modif_user_id');
+    }
+
 
 }

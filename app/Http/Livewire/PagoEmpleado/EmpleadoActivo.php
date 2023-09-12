@@ -310,6 +310,7 @@ class EmpleadoActivo extends Component
         if(empty($salario)){
             SalarioEmpleado::create([
                 'empleado_id' => $this->empleado->id,
+                'forma_pago_id' => $this->anticipo_forma_pago_id,
                 'salario_concepto_id' => 2,
                 'importe' => $monto,
                 'tipo' => 2,

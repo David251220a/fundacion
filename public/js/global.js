@@ -50,6 +50,29 @@ function punto_decimal_limite(input){
     }
 }
 
+function punto_decimal_anio(input){
+    var num = input.value.replace(/\./g,'');
+    if(!isNaN(num)){
+        if(num == ''){
+
+        }else{
+            if (num > 9999) {
+                aux_num = num.toString().length;
+                cantidad = ((parseInt(aux_num) - 7) * -1);
+                num = num.slice(0, cantidad);
+            }
+            num = parseInt(num);
+            num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
+            num = num.split('').reverse().join('').replace(/^[\.]/,'');
+            input.value = num;
+        }
+
+    }
+    else{
+        input.value = input.value.replace(/[^\d\.]*/g,'');
+    }
+}
+
 function punto_decimal_n(input){
     var num = input.value.replace(/\./g,'');
     if(!isNaN(num)){

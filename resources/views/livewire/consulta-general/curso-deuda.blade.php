@@ -54,8 +54,14 @@
                             {{number_format($item->saldo, 0, ".", ".")}}
                         </td>
                         <td>
-                            <button type="button" wire:click="detalle({{$item->id}})" data-toggle="modal" data-target="#modal_agregar" class="btn btn-info btn-sm mr-2 mb-2">Cobrar</button>
-                            <button type="button" onclick="exonerar({{$item->id}})" class="btn btn-warning btn-sm mr-2 mb-2">Exonerar</button>
+                            @can('consulta.curso_deuda_cobrar')
+                                <button type="button" wire:click="detalle({{$item->id}})" data-toggle="modal" data-target="#modal_agregar" class="btn btn-info btn-sm mr-2 mb-2">Cobrar</button>
+                            @endcan
+
+                            @can('consulta.curso_deuda_exonerar')
+                                <button type="button" onclick="exonerar({{$item->id}})" class="btn btn-warning btn-sm mr-2 mb-2">Exonerar</button>
+                            @endcan
+
                         </td>
                     </tr>
                 @endforeach
