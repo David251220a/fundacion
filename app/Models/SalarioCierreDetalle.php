@@ -10,4 +10,9 @@ class SalarioCierreDetalle extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'empleado_id');
+    }
 }

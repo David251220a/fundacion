@@ -11,8 +11,18 @@ class SalarioCierre extends Model
 
     protected $guarded = [];
 
-    protected function tipo_pago()
+    public function tipo_pago()
     {
         return $this->belongsTo(PagoTipo::class, 'pago_tipo_id');
+    }
+
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function detalle()
+    {
+        return $this->hasMany(SalarioCierreDetalle::class, 'salario_cierre_id');
     }
 }

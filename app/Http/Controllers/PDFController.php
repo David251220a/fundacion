@@ -230,7 +230,7 @@ class PDFController extends Controller
     {
         $data = Pago::find($id);
         $pdf = PDF::loadView('pdf.salario.recibo_pago_varios', compact('data'));
-        $pdf->setPaper(array(0, 0, 200.772, 320.394), 'defaultPaperSize');
+        $pdf->setPaper(array(0, 0, 200.772, 360.394), 'defaultPaperSize');
 
         return $pdf->stream('recibo_pago_varios.pdf');
     }

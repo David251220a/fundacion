@@ -13,6 +13,7 @@ use App\Models\SalarioCierreDetalle;
 use App\Models\SalarioEmpleado;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PagoEmpleadoController extends Controller
 {
@@ -121,11 +122,12 @@ class PagoEmpleadoController extends Controller
             'año' => $año,
             'importe' => str_replace('.', '', $request->neto_importe),
             'forma_pago_id' => $request->forma_pago_id,
-            'procesado' => 0,
+            'procesado' => 1,
             'sucursal' => '0000',
             'general' => '0000',
             'factura_numero' => 0,
             'numero_recibo' => $numero_recibo,
+            'cierre_caja_id' => $cierre->id,
             'estado_id' => 1,
             'user_id' => auth()->user()->id,
             'modif_user_id' => auth()->user()->id,
@@ -195,7 +197,75 @@ class PagoEmpleadoController extends Controller
     public function show($pago)
     {
         $data = SalarioCierre::find($pago);
-        return view('pago.empleado.show', compact('data'));
+
+        $empleado = SalarioCierreDetalle::where('salario_cierre_id', $data->id)
+        ->where('estado_id', 1)
+        ->select('empleado_id')
+        ->groupBy('empleado_id')
+        ->get();
+
+        $salario = SalarioCierreDetalle::where('salario_cierre_id', $data->id)
+        ->where('tipo', 1)
+        ->where('estado_id', 1)
+        ->select('empleado_id', DB::raw('SUM(importe) AS salario'))
+        ->groupBy('empleado_id')
+        ->get();
+
+        $egreso = SalarioCierreDetalle::where('salario_cierre_id', $data->id)
+        ->where('tipo', 2)
+        ->where('estado_id', 1)
+        ->select('empleado_id', DB::raw('SUM(importe) AS egreso'))
+        ->groupBy('empleado_id')
+        ->get();
+
+        return view('pago.empleado.show', compact('data', 'salario', 'empleado', 'egreso'));
+    }
+
+    public function anular($pago)
+    {
+        $salarioCierre = SalarioCierre::find($pago);
+        $salarioCierre->estado_id = 2;
+        $salarioCierre->modif_user_id = auth()->user()->id;
+        $salarioCierre->update();
+
+        foreach ($salarioCierre->detalle as $item) {
+            $item->estado_id = 2;
+            $item->modif_user_id = auth()->user()->id;
+            $item->update();
+
+            $salario = SalarioEmpleado::where('empleado_id', $item->empleado_id)
+            ->where('salario_concepto_id', $item->salario_concepto_id)
+            ->first();
+
+            $salario->importe = $item->importe;
+            $salario->modif_user_id = auth()->user()->id;
+            $salario->update();
+        }
+
+        $pago = Pago::find($salarioCierre->pago_id);
+        $pago->estado_id = 2;
+        $pago->modif_user_id = auth()->user()->id;
+        $pago->update();
+
+        foreach ($pago->pago_empleado as $item) {
+            $item->estado_id = 2;
+            $item->modif_user_id = auth()->user()->id;
+            $item->update();
+        }
+
+        $cierre = CierreCaja::find($pago->cierre_caja_id);
+        $cierre->estado_id = 2;
+        $cierre->modif_user_id = auth()->user()->id;
+        $cierre->update();
+
+        foreach ($cierre->egresos as $item) {
+            $item->estado_id = 2;
+            $item->modif_user_id = auth()->user()->id;
+            $item->update();
+        }
+
+        return redirect()->route('pago_empleados.index')->with('message', 'Se ha anulado con exito el cierre de planilla');
+
     }
 
 }

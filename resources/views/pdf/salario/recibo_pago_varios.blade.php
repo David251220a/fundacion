@@ -109,6 +109,7 @@
                     Mes: <b>{{$data->mes}}</b> <br>
                     Año: <b>{{$data->año}}</b> <br>
                 @endif
+                Recibo: <b>{{$data->año}}-C-{{ str_pad($data->numero_recibo, 6, '0', STR_PAD_LEFT) }}</b> <br>
                 Forma de Pago: <b>{{$data->forma_pago->descripcion}}</b> <br>
                 Fecha: <b>{{date('d/m/Y H:i', strtotime($data->created_at))}}</b> <br>
                 Usuario: <b>{{$data->usuario->name}}</b> <br>

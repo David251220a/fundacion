@@ -133,7 +133,7 @@
             </li>
         @endcan
 
-        {{-- @can('ver_anulacion') --}}
+        @can('ver_anulacion')
             <li class="menu">
                 <a href="#anulacion" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
@@ -145,27 +145,32 @@
                     </div>
                 </a>
                 <ul class="collapse submenu list-unstyled" id="anulacion" data-parent="#accordionExample">
-                    {{-- @can('cierre.falta_cierre') --}}
+                    @can('anulacion.cursos')
                         <li>
                             <a href="{{route('anulacion.cursos')}}"> Cursos </a>
                         </li>
-                    {{-- @endcan --}}
+                    @endcan
 
-                    {{-- @can('cierre.consulta_gerente') --}}
+                    @can('anulacion.ingreso_varios')
                         <li>
                             <a href="{{route('anulacion.ingreso_varios')}}"> Ingresos </a>
                         </li>
-                    {{-- @endcan --}}
+                    @endcan
 
-                    {{-- @can('cierre.anticipo') --}}
-                    <li>
-                        <a href="{{route('anulacion.anticipo')}}"> Anticipo </a>
-                    </li>
-                {{-- @endcan --}}
+                    @can('anulacion.anticipo')
+                        <li>
+                            <a href="{{route('anulacion.anticipo')}}"> Anticipo </a>
+                        </li>
+                    @endcan
 
+                    @can('anulacion.otros_pago')
+                        <li>
+                            <a href="{{route('anulacion.otros_pago')}}"> Otros Pagos </a>
+                        </li>
+                    @endcan
                 </ul>
             </li>
-        {{-- @endcan --}}
+        @endcan
 
         @can('ver_gerencia')
             <li class="menu">

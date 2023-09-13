@@ -141,6 +141,7 @@ Route::group([
     Route::get('/pago/empleados/cierre', [PagoEmpleadoController::class, 'create'])->name('pago_empleados.create');
     Route::post('/pago/empleados/cierre', [PagoEmpleadoController::class, 'store'])->name('pago_empleados.store');
     Route::get('/pago/empleados/{pago}/ver', [PagoEmpleadoController::class, 'show'])->name('pago_empleados.show');
+    Route::post('/pago/empleados/{pago}/ver', [PagoEmpleadoController::class, 'anular'])->name('pago_empleados.anular');
     Route::get('/pago/varios', [PagoVariosController::class, 'index'])->name('pago_varios.index');
 
     Route::get('/consulta/curso/deuda', [ConsultaGeneralController::class, 'curso_deuda'])->name('consulta.curso_deuda');
@@ -157,6 +158,7 @@ Route::group([
     Route::get('/anulacion/cursos', [AnulacionesController::class, 'cursos'])->name('anulacion.cursos');
     Route::get('/anulacion/ingresos-varios', [AnulacionesController::class, 'ingresos_varios'])->name('anulacion.ingreso_varios');
     Route::get('/anulacion/anticipo', [AnulacionesController::class, 'anticipo'])->name('anulacion.anticipo');
+    Route::get('/anulacion/otros-pagos', [AnulacionesController::class, 'otros_pagos'])->name('anulacion.otros_pago');
 
 
 
