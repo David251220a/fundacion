@@ -159,6 +159,7 @@ Route::group([
     Route::get('/anulacion/ingresos-varios', [AnulacionesController::class, 'ingresos_varios'])->name('anulacion.ingreso_varios');
     Route::get('/anulacion/anticipo', [AnulacionesController::class, 'anticipo'])->name('anulacion.anticipo');
     Route::get('/anulacion/otros-pagos', [AnulacionesController::class, 'otros_pagos'])->name('anulacion.otros_pago');
+    Route::get('/anulacion/cierre', [AnulacionesController::class, 'cierre'])->name('anulacion.cierre');
 
 
 

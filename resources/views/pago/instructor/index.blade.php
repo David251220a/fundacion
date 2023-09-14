@@ -33,6 +33,12 @@
                                     <i class="fas fa-dollar-sign mr-2"></i> Instructores Salario
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="underline-historial-tab" data-toggle="tab" href="#underline-historial" role="tab" aria-controls="underline-historial" aria-selected="false">
+                                    <i class="fas fa-dollar-sign mr-2"></i> Historial de Pago
+                                </a>
+                            </li>
+
                         </ul>
 
                         <div class="tab-content" id="lineTabContent-3">
@@ -45,6 +51,12 @@
                             <div class="tab-pane fade" id="underline-profile" role="tabpanel" aria-labelledby="underline-profile-tab">
 
                                 @livewire('pago-instructor.instructor-salario')
+
+                            </div>
+
+                            <div class="tab-pane fade" id="underline-historial" role="tabpanel" aria-labelledby="underline-historial-tab">
+
+                                @livewire('pago-instructor.historico-pago')
 
                             </div>
                         </div>
@@ -122,5 +134,21 @@
             });
 
         });
+
+        function anular(id)
+        {
+            swal({
+                title: 'Desea este pago a instructor?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Anular',
+                padding: '2em'
+            }).then(function(result) {
+                if (result.value) {
+                    Livewire.emit('anular', id);
+                }
+
+            })
+        }
     </script>
 @endsection

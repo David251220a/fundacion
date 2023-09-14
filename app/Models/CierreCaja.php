@@ -26,4 +26,9 @@ class CierreCaja extends Model
     {
         return $this->belongsTo(User::class, 'cajero');
     }
+
+    public function cajero_nombre()
+    {
+        return $this->belongsTo(User::class, 'cajero');
+    }
 }

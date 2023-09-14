@@ -4,6 +4,7 @@ namespace App\Http\Livewire\IngresoMatricula;
 
 use App\Models\Curso;
 use App\Models\CursoAlumno;
+use App\Models\FormaPago;
 use App\Models\IngresoMatricula;
 use App\Models\Persona;
 use App\Models\TipoCurso;
@@ -15,7 +16,8 @@ class IngresoIndex extends Component
 {
     public $fecha_actual, $fecha_hasta, $curso_id, $tipo_curso_id, $documento, $caso, $recibo, $ingreso;
     public $ver_recibo, $ver_documento, $ver_fecha, $ver_familia, $ver_curso, $valor_id = 0, $total_general = 0;
-    public $aux_familia, $aux_familia_id, $aux_curso, $aux_curso_id;
+    public $aux_familia, $aux_familia_id, $aux_curso, $aux_curso_id, $forma_pago, $forma_pago_id;
+    public $desde, $hasta;
 
     protected $listeners = ['render', 'filtro', 'ver_recibo', 'anular', 'actualizar_curso'];
     protected $paginationTheme = 'bootstrap';
@@ -39,12 +41,18 @@ class IngresoIndex extends Component
         $this->ver_fecha = 'block';
         $this->cargar_familia();
         $this->cargar_curso();
+        $this->forma_pago = FormaPago::all();
+        $this->forma_pago_id = 999;
+        $this->rango_saber();
     }
 
     public function render()
     {
 
+        $this->rango_saber();
+
         if($this->caso == 1){
+            // dd($this->desde, $this->hasta);
             $data = $this->datos_fecha();
         }
 
@@ -90,11 +98,13 @@ class IngresoIndex extends Component
         $fecha = date('Y-m-d', strtotime($this->fecha_actual));
         $fecha_hasta = date('Y-m-d', strtotime($this->fecha_hasta));
         $data = IngresoMatricula::whereBetween('fecha_ingreso', [$fecha, $fecha_hasta])
+        ->whereBetween('forma_pago_id', [$this->desde, $this->hasta])
         ->where('estado_id', 1)
         ->orderBy('fecha_ingreso', 'DESC')
         ->paginate(50);
 
         $suma = IngresoMatricula::whereBetween('fecha_ingreso', [$fecha, $fecha_hasta])
+        ->whereBetween('forma_pago_id', [$this->desde, $this->hasta])
         ->where('estado_id', 1)
         ->orderBy('fecha_ingreso', 'DESC')
         ->sum('total_pagado');
@@ -108,10 +118,12 @@ class IngresoIndex extends Component
     {
         $fecha = date('Y-m-d', strtotime($this->fecha_actual));
         $fecha_hasta = date('Y-m-d', strtotime($this->fecha_hasta));
+
         $data = IngresoMatricula::join('ingreso_matricula_detalles AS a', 'ingreso_matriculas.id', '=', 'a.ingreso_matricula_id')
         ->join('curso_habilitados AS b', 'a.curso_habilitado_id', '=', 'b.id')
         ->select('ingreso_matriculas.*')
         ->whereBetween('ingreso_matriculas.fecha_ingreso', [$fecha, $fecha_hasta])
+        ->whereBetween('ingreso_matriculas.forma_pago_id', [$this->desde, $this->hasta])
         ->where('ingreso_matriculas.estado_id', 1)
         ->where('b.tipo_curso_id', $this->aux_familia_id)
         ->orderBy('ingreso_matriculas.created_at', 'DESC')
@@ -121,6 +133,7 @@ class IngresoIndex extends Component
         ->join('curso_habilitados AS b', 'a.curso_habilitado_id', '=', 'b.id')
         ->select('ingreso_matriculas.*')
         ->whereBetween('ingreso_matriculas.fecha_ingreso', [$fecha, $fecha_hasta])
+        ->whereBetween('ingreso_matriculas.forma_pago_id', [$this->desde, $this->hasta])
         ->where('ingreso_matriculas.estado_id', 1)
         ->where('b.tipo_curso_id', $this->aux_familia_id)
         ->orderBy('ingreso_matriculas.created_at', 'DESC')
@@ -139,6 +152,7 @@ class IngresoIndex extends Component
         ->join('curso_habilitados AS b', 'a.curso_habilitado_id', '=', 'b.id')
         ->select('ingreso_matriculas.*')
         ->whereBetween('ingreso_matriculas.fecha_ingreso', [$fecha, $fecha_hasta])
+        ->whereBetween('ingreso_matriculas.forma_pago_id', [$this->desde, $this->hasta])
         ->where('ingreso_matriculas.estado_id', 1)
         ->where('b.curso_id', $this->aux_curso_id)
         ->orderBy('ingreso_matriculas.created_at', 'DESC')
@@ -148,6 +162,7 @@ class IngresoIndex extends Component
         ->join('curso_habilitados AS b', 'a.curso_habilitado_id', '=', 'b.id')
         ->select('ingreso_matriculas.*')
         ->whereBetween('ingreso_matriculas.fecha_ingreso', [$fecha, $fecha_hasta])
+        ->whereBetween('ingreso_matriculas.forma_pago_id', [$this->desde, $this->hasta])
         ->where('ingreso_matriculas.estado_id', 1)
         ->where('b.curso_id', $this->aux_curso_id)
         ->orderBy('ingreso_matriculas.created_at', 'DESC')
@@ -162,10 +177,12 @@ class IngresoIndex extends Component
     {
         $data = IngresoMatricula::where('numero_recibo', $this->recibo)
         ->where('estado_id', 1)
+        ->whereBetween('forma_pago_id', [$this->desde, $this->hasta])
         ->paginate(50);
 
         $suma = IngresoMatricula::where('numero_recibo', $this->recibo)
         ->where('estado_id', 1)
+        ->whereBetween('forma_pago_id', [$this->desde, $this->hasta])
         ->sum('total_pagado');
 
         $this->total_general = $suma;
@@ -185,9 +202,11 @@ class IngresoIndex extends Component
 
         $data = IngresoMatricula::where('alumno_id', $alumno_id)
         ->where('estado_id', 1)
+        ->whereBetween('forma_pago_id', [$this->desde, $this->hasta])
         ->paginate(50);
 
         $suma = IngresoMatricula::where('alumno_id', $alumno_id)
+        ->whereBetween('forma_pago_id', [$this->desde, $this->hasta])
         ->where('estado_id', 1)
         ->sum('total_pagado');
 
@@ -286,6 +305,18 @@ class IngresoIndex extends Component
     public function actualizar_curso()
     {
         $this->cargar_curso();
+    }
+
+    public function rango_saber()
+    {
+        if($this->forma_pago_id == 999){
+            $this->desde = 1;
+            $this->hasta = 999;
+        }else{
+            $this->desde = $this->forma_pago_id;
+            $this->hasta = $this->forma_pago_id;
+        }
+
     }
 
     public function resetUI()

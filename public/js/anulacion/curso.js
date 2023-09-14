@@ -30,3 +30,19 @@ function anular_curso()
 
     })
 }
+
+function anular_cierre()
+{
+    swal({
+        title: 'Desea cierre de caja?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Anular',
+        padding: '2em'
+    }).then(function(result) {
+        if (result.value) {
+            Livewire.emit('anular');
+        }
+
+    })
+}

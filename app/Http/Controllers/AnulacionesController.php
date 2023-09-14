@@ -33,4 +33,9 @@ class AnulacionesController extends Controller
     {
         return view('anulacion.otros_pagos');
     }
+
+    public function cierre()
+    {
+        return view('anulacion.cierre');
+    }
 }

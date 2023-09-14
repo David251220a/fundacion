@@ -168,6 +168,12 @@
                             <a href="{{route('anulacion.otros_pago')}}"> Otros Pagos </a>
                         </li>
                     @endcan
+
+                    @can('anulacion.cierre')
+                        <li>
+                            <a href="{{route('anulacion.cierre')}}"> Cierre </a>
+                        </li>
+                    @endcan
                 </ul>
             </li>
         @endcan

@@ -62,6 +62,16 @@
             <input wire:model.defer="documento" type="text" class="form-control text-right" onkeyup="punto_decimal(this)" onchange="punto_decimal(this)">
         </div>
 
+        <div class="col-md-3  mb-4">
+            <label for="">Forma de Pago</label>
+            <select wire:model.defer="forma_pago_id" class="form-control">
+                <option value="999">-- TODOS --</option>
+                @foreach ($forma_pago as $item)
+                    <option value="{{$item->id}}">{{$item->descripcion}}</option>
+                @endforeach
+            </select>
+        </div>
+
         <div class="col-md-3  mb-4" id="ver_tipo_curso_id" style="display: {{$ver_familia}}">
             <label for="">Tipo de Curso</label>
             <select wire:model.defer="aux_familia_id" class="form-control" onchange="actualizar_curso()">
