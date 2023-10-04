@@ -325,6 +325,7 @@ class CursoAlumnoController extends Controller
             ]);
             // RECORRE LA ASISTENCIA Y ALUMNI Y GUARDA EN SU TABLA
             for ($i=0; $i < count($alumno_id) ; $i++) {
+
                 $presente = $asistencia_valor[$i];
 
                 CursoAlumnoAsistencia::create([
@@ -346,6 +347,30 @@ class CursoAlumnoController extends Controller
                         'curso_a_estado_id' => 2,
                         'modif_user_id' => auth()->user()->id,
                     ]);
+                }else{
+
+                    $contar_ausencia = CursoAlumnoAsistencia::where('alumno_id', $alumno_id[$i])
+                    ->where('curso_habilitado_id', $cursoHabilitado->id)
+                    ->where('asistencia', 0)
+                    ->count();
+
+
+                    if ($contar_ausencia >= 2) {
+                        $alumnoCuenta = CursoAlumno::where('alumno_id', $alumno_id[$i])
+                        ->where('curso_habilitado_id', $cursoHabilitado->id)
+                        ->first();
+
+                        if ($alumnoCuenta->reactivado == 0){
+                            $aux_alumno = CursoAlumno::where('curso_habilitado_id', $cursoHabilitado->id)
+                            ->where('alumno_id', $alumno_id[$i])
+                            ->first();
+
+                            $aux_alumno->update([
+                                'curso_a_estado_id' => 6,
+                                'modif_user_id' => auth()->user()->id,
+                            ]);
+                        }
+                    }
                 }
             }
         }else{

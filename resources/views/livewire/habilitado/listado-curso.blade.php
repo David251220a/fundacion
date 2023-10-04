@@ -99,10 +99,11 @@
                                 {{ str_replace('-', '', $item->alumno->persona->celular)}}
                             </td>
                             <td class="" style="font-weight: bold; color:black; font-size:15px">
-                                {{-- <button type="button" data-toggle="modal" data-target="#modal_estado" onclick="datos({{$item->id}})" class="btn btn-dark btn-sm mb-2">
-                                    {{$item->estado_alumno->descripcion}}
-                                </button> --}}
-                                <a style="{{$estilo_estado}}" data-toggle="modal" data-target="#modal_estado" onclick="datos({{$item->id}})">{{$item->estado_alumno->descripcion}}</a>
+                                @can('habilitacion.estado_alumno')
+                                    <a style="{{$estilo_estado}}" data-toggle="modal" data-target="#modal_estado" onclick="datos({{$item->id}})">{{$item->estado_alumno->descripcion}}</a>
+                                @else
+                                    <a style="{{$estilo_estado}}">{{$item->estado_alumno->descripcion}}</a>
+                                @endcan
                             </td>
                             <td class="text-right" style="font-weight: bold; color:black; font-size:15px">
                                 {{number_format($item->saldo, 0, ".", ".")}}

@@ -148,34 +148,36 @@ class RoleSeeder extends Seeder
 
         // YA ESTA MIGRADO
 
-        $permission = Permission::create(['name' => 'consulta.curso_deuda', 'descripcion' => 'Consulta Curso: Vista Principal']);
-        $permission = Permission::create(['name' => 'consulta.curso_deuda_cobrar', 'descripcion' => 'Consulta Curso: Cobrar']);
-        $permission = Permission::create(['name' => 'consulta.curso_deuda_exonerar', 'descripcion' => 'Consulta Curso: Exonerar']);
+        // $permission = Permission::create(['name' => 'consulta.curso_deuda', 'descripcion' => 'Consulta Curso: Vista Principal']);
+        // $permission = Permission::create(['name' => 'consulta.curso_deuda_cobrar', 'descripcion' => 'Consulta Curso: Cobrar']);
+        // $permission = Permission::create(['name' => 'consulta.curso_deuda_exonerar', 'descripcion' => 'Consulta Curso: Exonerar']);
 
-        $permission = Permission::create(['name' => 'consulta.certificado_deuda_cobrar', 'descripcion' => 'Consulta Certificado: Cobrar']);
-        $permission = Permission::create(['name' => 'consulta.certificado_deuda_exonerar', 'descripcion' => 'Consulta Certificado: Exonerar']);
+        // $permission = Permission::create(['name' => 'consulta.certificado_deuda_cobrar', 'descripcion' => 'Consulta Certificado: Cobrar']);
+        // $permission = Permission::create(['name' => 'consulta.certificado_deuda_exonerar', 'descripcion' => 'Consulta Certificado: Exonerar']);
 
-        $permission = Permission::create(['name' => 'consulta.pago', 'descripcion' => 'Consulta Pago: Vista Principal']);
-        $permission = Permission::create(['name' => 'consulta.insumo_cobrar', 'descripcion' => 'Consulta Insumo: Cobrar']);
-        $permission = Permission::create(['name' => 'consulta.insumo_exonerar', 'descripcion' => 'Consulta Insumo: Exonerar']);
+        // $permission = Permission::create(['name' => 'consulta.pago', 'descripcion' => 'Consulta Pago: Vista Principal']);
+        // $permission = Permission::create(['name' => 'consulta.insumo_cobrar', 'descripcion' => 'Consulta Insumo: Cobrar']);
+        // $permission = Permission::create(['name' => 'consulta.insumo_exonerar', 'descripcion' => 'Consulta Insumo: Exonerar']);
 
-        $permission = Permission::create(['name' => 'consulta.anular_pago', 'descripcion' => 'Consulta Otros Pagos: Anular']);
+        // $permission = Permission::create(['name' => 'consulta.anular_pago', 'descripcion' => 'Consulta Otros Pagos: Anular']);
 
-        $permission = Permission::create(['name' => 'ver_gerencia', 'descripcion' => 'Ver Gerencia']);
-        $permission = Permission::create(['name' => 'cierre.consulta_gerente', 'descripcion' => 'Gerencia Cierre: Consulta']);
-        $permission = Permission::create(['name' => 'cierre.cajero', 'descripcion' => 'Cierre: Cajero']);
-        $permission = Permission::create(['name' => 'cierre.cajero_ver', 'descripcion' => 'Cierre: Cajero Ver Cierre']);
-        $permission = Permission::create(['name' => 'cierre.falta_cierre', 'descripcion' => 'Gerencia Cierre: Falta Cierre']);
-        $permission = Permission::create(['name' => 'cierre.cierre_gerente', 'descripcion' => 'Gerencia Cierre: Cierre']);
+        // $permission = Permission::create(['name' => 'ver_gerencia', 'descripcion' => 'Ver Gerencia']);
+        // $permission = Permission::create(['name' => 'cierre.consulta_gerente', 'descripcion' => 'Gerencia Cierre: Consulta']);
+        // $permission = Permission::create(['name' => 'cierre.cajero', 'descripcion' => 'Cierre: Cajero']);
+        // $permission = Permission::create(['name' => 'cierre.cajero_ver', 'descripcion' => 'Cierre: Cajero Ver Cierre']);
+        // $permission = Permission::create(['name' => 'cierre.falta_cierre', 'descripcion' => 'Gerencia Cierre: Falta Cierre']);
+        // $permission = Permission::create(['name' => 'cierre.cierre_gerente', 'descripcion' => 'Gerencia Cierre: Cierre']);
 
-        $permission = Permission::create(['name' => 'ver_anulacion', 'descripcion' => 'Ver Anulación']);
-        $permission = Permission::create(['name' => 'anulacion.cursos', 'descripcion' => 'Anulación: Cursos']);
-        $permission = Permission::create(['name' => 'anulacion.ingreso_varios', 'descripcion' => 'Anulación: Ingreso Varios']);
-        $permission = Permission::create(['name' => 'anulacion.anticipo', 'descripcion' => 'Anulación: Anticipo']);
-        $permission = Permission::create(['name' => 'anulacion.otros_pago', 'descripcion' => 'Anulación: Otros Pagos']);
+        // $permission = Permission::create(['name' => 'ver_anulacion', 'descripcion' => 'Ver Anulación']);
+        // $permission = Permission::create(['name' => 'anulacion.cursos', 'descripcion' => 'Anulación: Cursos']);
+        // $permission = Permission::create(['name' => 'anulacion.ingreso_varios', 'descripcion' => 'Anulación: Ingreso Varios']);
+        // $permission = Permission::create(['name' => 'anulacion.anticipo', 'descripcion' => 'Anulación: Anticipo']);
+        // $permission = Permission::create(['name' => 'anulacion.otros_pago', 'descripcion' => 'Anulación: Otros Pagos']);
 
-        $permission = Permission::create(['name' => 'pago_instructor.anular', 'descripcion' => 'Pago Instructor: Anular Pagos']);
-        $permission = Permission::create(['name' => 'anulacion.cierre', 'descripcion' => 'Anulación: Cierre Cajero']);
+        // $permission = Permission::create(['name' => 'pago_instructor.anular', 'descripcion' => 'Pago Instructor: Anular Pagos']);
+        // $permission = Permission::create(['name' => 'anulacion.cierre', 'descripcion' => 'Anulación: Cierre Cajero']);
+
+        $permission = Permission::create(['name' => 'habilitacion.estado_alumno', 'descripcion' => 'Habilitacion de Curso: Estado Alumno']);
 
     }
 

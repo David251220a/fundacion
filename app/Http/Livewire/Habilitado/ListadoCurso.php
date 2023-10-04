@@ -245,6 +245,11 @@ class ListadoCurso extends Component
         $cursoAlumno->curso_a_estado_id = $this->estado_a_id;
         $cursoAlumno->observacion = $this->observacion_modal;
         $cursoAlumno->modif_user_id = auth()->user()->id;
+        if($this->estado_a_id == 2){
+            $cursoAlumno->reactivado = 1;
+        }else{
+            $cursoAlumno->reactivado = 0;
+        }
         $cursoAlumno->update();
 
         $this->resetUI();
