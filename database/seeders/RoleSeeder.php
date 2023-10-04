@@ -144,7 +144,7 @@ class RoleSeeder extends Seeder
         // $permission = Permission::create(['name' => 'pago_varios.pagar', 'descripcion' => 'Pago: Pago Varios - Pagar']);
         // $permission = Permission::create(['name' => 'pago_varios.inactivar', 'descripcion' => 'Pago: Pago Varios - Inactivar Insumo']);
         // $permission = Permission::create(['name' => 'pago_varios.activar', 'descripcion' => 'Pago: Pago Varios - Activar Insumo']);
-        $permission = Permission::create(['name' => 'ver_consulta', 'descripcion' => 'Ver Consulta']);
+        // $permission = Permission::create(['name' => 'ver_consulta', 'descripcion' => 'Ver Consulta']);
 
         // YA ESTA MIGRADO
 
