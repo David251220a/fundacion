@@ -222,7 +222,13 @@ class AlumnoController extends Controller
         ->whereIn('curso_a_estado_id', [1, 2])
         ->get();
 
-        return view('alumno.show', compact('alumno', 'cursos'));
+        $cursos_terminado = CursoAlumno::where('estado_id', 1)
+        ->where('alumno_id', $alumno->id)
+        ->where('curso_a_estado_id', 3)
+        ->where('aprobado', 1)
+        ->get();
+
+        return view('alumno.show', compact('alumno', 'cursos', 'cursos_terminado'));
     }
 
     public function validar_post(Request $request)

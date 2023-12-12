@@ -110,7 +110,46 @@
 
         </div>
 
+        <div class="col-xl-8 col-lg-6 col-md-7 col-sm-12 layout-top-spacing">
+
+            <div class="skills layout-spacing ">
+                <div class="widget-content widget-content-area">
+                    <h3 class="ml-3 mt-2">Cursos Culminados</h3>
+                    <div class="">
+                        <table class="table table-hover table-dark">
+                            <thead>
+                                <tr>
+                                    <th>Curso</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($cursos_terminado as $item)
+                                    @if ($item->curso_habilitado->estado_id == 1)
+                                        <tr>
+                                            <td>
+                                                {{$item->curso_habilitado->estado_id}}
+                                                - {{$item->curso_habilitado->tipo_curso->descripcion}}
+                                                - {{$item->curso_habilitado->curso->descripcion}} <br>
+                                                - {{$item->curso_habilitado->curso->modulo->descripcion}}
+                                            </td>
+                                            <td>
+                                                <a href="{{route('habilitado.show', $item->curso_habilitado_id)}}" class="btn btn-info">Ir</a>
+                                            </td>
+                                        </tr>
+                                    @endif
+
+                                @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
+
 </div>
 
 @endsection
