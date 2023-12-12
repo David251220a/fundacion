@@ -77,6 +77,13 @@
                                     <option {{ (old('estado_id', $cursoHabilitado->estado_id) == 2 ? 'selected' : '') }} value="2">INACTIVO</option>
                                 </select>
                             </div>
+                            <div class="form-group col-md-3">
+                                <label for="inputPassword4">Concluido</label>
+                                <select name="concluido" id="concluido" class="form-control">
+                                    <option {{ (old('concluido', $cursoHabilitado->concluido) == 0 ? 'selected' : '') }} value="0">NO</option>
+                                    <option {{ (old('concluido', $cursoHabilitado->concluido) == 1 ? 'selected' : '') }} value="1">SI</option>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="form-row">

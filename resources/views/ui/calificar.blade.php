@@ -103,8 +103,8 @@
                             <th width="5%">N#</th>
                             <th width="5%" class="text-center">Aprobo?</th>
                             <th width="10%">Documento</th>
-                            <th ">Nombre</th>
-                            <th ">Apellido</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
 
                         </tr>
                     </thead>

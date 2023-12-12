@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alumno;
+use App\Models\CursoAlumno;
+use App\Models\CursoHabilitado;
 use App\Models\EstadoCivil;
 use App\Models\Partido;
 use App\Models\Persona;
@@ -215,7 +217,12 @@ class AlumnoController extends Controller
 
     public function show(Alumno $alumno)
     {
-        return view('alumno.show', compact('alumno'));
+        $cursos = CursoAlumno::where('estado_id', 1)
+        ->where('alumno_id', $alumno->id)
+        ->whereIn('curso_a_estado_id', [1, 2])
+        ->get();
+
+        return view('alumno.show', compact('alumno', 'cursos'));
     }
 
     public function validar_post(Request $request)

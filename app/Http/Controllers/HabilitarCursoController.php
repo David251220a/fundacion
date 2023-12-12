@@ -259,6 +259,7 @@ class HabilitarCursoController extends Controller
         }
         $cursoHabilitado->estado_id = $request->estado_id;
         $cursoHabilitado->modif_user_id = auth()->user()->id;
+        $cursoHabilitado->concluido = $request->concluido;
 
         $cursoHabilitado->update();
 
@@ -376,12 +377,17 @@ class HabilitarCursoController extends Controller
 
             $cursoAlumno = CursoAlumno::where('curso_habilitado_id', $cursoHabilitado->id)
             ->where('alumno_id', $alumno_id[$i])
-            ->where('estado_id', 1)
             ->first();
+
+            $estado_id = 2;
+            if($presente == 1){
+                $estado_id = 3;
+            }
 
             $cursoAlumno->update([
                 'aprobado' => $presente,
                 'modif_user_id' => auth()->user()->id,
+                'curso_a_estado_id' => $estado_id,
             ]);
 
         }
