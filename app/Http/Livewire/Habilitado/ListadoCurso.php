@@ -77,13 +77,16 @@ class ListadoCurso extends Component
 
                 if($this->saldos == 1){
                     $alumnos = CursoAlumno::where('curso_habilitado_id', $this->curso_id)
-                ->get();
+                    ->whereBetween('curso_a_estado_id', [1, 2])
+                    ->get();
                 }elseif($this->saldos == 2){
                     $alumnos = CursoAlumno::where('curso_habilitado_id', $this->curso_id)
+                    ->whereBetween('curso_a_estado_id', [1, 2])
                     ->where('saldo', '>', 0)
                     ->get();
                 }else{
                     $alumnos = CursoAlumno::where('curso_habilitado_id', $this->curso_id)
+                    ->whereBetween('curso_a_estado_id', [1, 2])
                     ->where('saldo', 0)
                     ->get();
                 }

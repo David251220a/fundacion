@@ -121,13 +121,16 @@
                                     </a>
                                 @endif
 
-                                @if ($item->certificado_saldo > 0)
-                                    {{-- <button class="btn btn-info btn-sm mb-2" data-toggle="modal" data-target="#modal_agregar" onclick="datos({{$item->id}})">Cobrar</button> --}}
-                                    <a class="bs-popover" style="{{$estilo_cer}}" data-toggle="modal" data-target="#modal_agregar_certificado" onclick="datos({{$item->id}})" data-container="body"  data-trigger="hover"
-                                    data-content="Cobro Certificado" data-placement="top">
-                                        <i class="fas fa-graduation-cap"></i>{{-- Cobrar --}}
-                                    </a>
+                                @if ($item->saldo == 0)
+                                    @if ($item->certificado_saldo > 0)
+                                        {{-- <button class="btn btn-info btn-sm mb-2" data-toggle="modal" data-target="#modal_agregar" onclick="datos({{$item->id}})">Cobrar</button> --}}
+                                        <a class="bs-popover" style="{{$estilo_cer}}" data-toggle="modal" data-target="#modal_agregar_certificado" onclick="datos({{$item->id}})" data-container="body"  data-trigger="hover"
+                                        data-content="Cobro Certificado" data-placement="top">
+                                            <i class="fas fa-graduation-cap"></i>{{-- Cobrar --}}
+                                        </a>
+                                    @endif
                                 @endif
+
 
                                 {{-- <a class="btn btn-info btn-sm mb-2" data-toggle="modal" data-target="#moda_estado_cuenta" onclick="estado_cuenta({{$item->id}}, {{$item->alumno_id}})">Estado Cuenta</a> --}}
                                 <a class="bs-popover" style="{{$estilo_estado_cuenta}}" data-toggle="modal" data-target="#moda_estado_cuenta" onclick="estado_cuenta({{$item->id}}, {{$item->alumno_id}})"
