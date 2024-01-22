@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\CierreCaja;
 use App\Models\Curso;
+use App\Models\CursoAlumno;
+use App\Models\CursoHabilitado;
 use App\Models\IngresoMatricula;
 use App\Models\IngresoVarios;
 use App\Models\Pago;
@@ -240,4 +242,20 @@ class PDFController extends Controller
         $pdf = PDF::loadView('pdf.cierre.cajero', compact('cierreCaja'));
         return $pdf->stream('cierre_caja.pdf');
     }
+
+
+    public function lista_aprobado(CursoHabilitado $cursoHabilitado)
+    {
+
+        $alumnos = CursoAlumno::where('curso_habilitado_id', $cursoHabilitado->id)
+        ->where('curso_a_estado_id', 3)
+        ->where('estado_id', 1)
+        ->where('aprobado', 1)
+        ->get();
+
+        $pdf = PDF::loadView('pdf.curso.lista_aprobado', compact('alumnos', 'cursoHabilitado'));
+
+        return $pdf->stream('lista_aprobado.pdf');
+    }
+
 }

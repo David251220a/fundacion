@@ -133,7 +133,12 @@
                         $estilo = 'color: red';
                     @endphp
                 @endif
-                <p style="font-size: 18px; line-height: 15px;">Curso Concluido: <b style="{{$estilo}}">{{ ($cursoHabilitado->concluido == 1 ? 'SI' : 'NO')}}</b></p>
+                <p style="font-size: 18px; line-height: 15px;">
+                    Curso Concluido: <b style="{{$estilo}}">{{ ($cursoHabilitado->concluido == 1 ? 'SI' : 'NO')}}</b>
+                </p>
+                @if ($cursoHabilitado->concluido == 1)
+                    <a href="{{route('pdf.lista_aprobado', $cursoHabilitado)}}" target="__blank" class="btn btn-info btn-sm">Lista de alumno aprobados</a>
+                @endif
             </div>
         </div>
 
