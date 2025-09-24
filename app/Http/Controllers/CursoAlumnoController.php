@@ -156,8 +156,33 @@ class CursoAlumnoController extends Controller
     public function agregar_alumno(CursoHabilitado $cursoHabilitado, Alumno $alumno)
     {
         $forma_pago = FormaPago::all();
+        
+        $curso = CursoAlumno::where('saldo', '>' , 0)
+        ->where('alumno_id', $alumno->id)
+        ->whereIn('curso_a_estado_id', [1, 2, 3, 7])
+        ->where('estado_id', 1)
+        ->orderBy('curso_habilitado_id', 'DESC')
+        ->get();
+        
+        $cert = CursoAlumno::where('certificado_saldo', '>' , 0)
+        ->where('alumno_id', $alumno->id)
+        ->whereIn('curso_a_estado_id', [1, 2, 3, 7])
+        ->where('estado_id', 1)
+        ->orderBy('curso_habilitado_id', 'DESC')
+        ->paginate(15);
 
-        return view('cursoAlumno.inscribir', compact('cursoHabilitado', 'alumno', 'forma_pago'));
+        $insu = CursoIngreso::join('curso_in_alumnos', 'curso_ingresos.id', '=', 'curso_in_alumnos.curso_ingreso_id')
+        ->join('alumnos', 'curso_in_alumnos.alumno_id', '=', 'alumnos.id')
+        ->join('personas', 'alumnos.persona_id', '=', 'personas.id')
+        ->where('curso_in_alumnos.estado_id', 1)
+        ->where('curso_in_alumnos.saldo', '>', 0)
+        ->where('personas.documento', $alumno->persona->documento)
+        ->select('curso_in_alumnos.*', 'curso_ingresos.fecha', 'curso_ingresos.curso_habilitado_id', 'personas.documento', 'personas.nombre', 'personas.apellido')
+        ->orderBy('personas.documento', 'ASC')
+        ->orderBy('curso_ingresos.fecha', 'ASC')
+        ->paginate(15);
+
+        return view('cursoAlumno.inscribir', compact('cursoHabilitado', 'alumno', 'forma_pago', 'curso', 'cert', 'insu'));
     }
 
     public function agregar_alumno_post(CursoHabilitado $cursoHabilitado, Alumno $alumno, Request $request)

@@ -15,6 +15,182 @@
                     <h2 class="">Cursos - Agregar Alumno </h2>
                 </div>
             </div>
+            
+            @if ($curso->count() > 0)
+                <div class="row mt-3">
+                    <h4 class="mx-3">Deudas Pendiente en Cursos</h4>
+                    <div class="table-responsive col-xl-12 col-lg-12 col-sm-12">
+                        <table id="" class="table table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th width="20%">IDCurso</th>
+                                    <th width="20%">Curso</th>
+                                    <th width="30%">Detalle Curso</th>
+                                    <th>Concluido?</th>
+                                    <th width="10%">Saldo</th>
+                                    <th class="no-content">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($curso as $item)
+                                    <tr>
+                                        <td>{{$item->id}}</td>
+                                        <td>{{$item->curso_habilitado->id}} - {{$item->curso_habilitado->tipo_curso->descripcion}}: {{$item->curso_habilitado->curso->descripcion}}
+                                            {{$item->curso_habilitado->curso->modulo->descripcion}}
+                                        </td>
+                                        <td>
+                                            Horario: {{date('H:i', strtotime($item->curso_habilitado->hora_entrada))}} a {{date('H:i', strtotime($item->curso_habilitado->hora_salida))}}
+                                            | Fecha: {{date('d/m/Y', strtotime($item->curso_habilitado->periodo_desde))}} a {{date('d/m/Y', strtotime($item->curso_habilitado->periodo_hasta))}} <br>
+                                            Dias: {{ ($item->curso_habilitado->lunes == 1 ? 'LUNES ' : '') }}
+                                            {{ ($item->curso_habilitado->martes == 1 ? 'MARTES ' : '')}}
+                                            {{ ($item->curso_habilitado->miercoles == 1 ? 'MIERCOLES ' : '')}}
+                                            {{ ($item->curso_habilitado->jueves == 1 ? 'JUEVES ' : '')}}
+                                            {{ ($item->curso_habilitado->viernes == 1 ? 'VIERNES ' : '')}}
+                                            {{ ($item->curso_habilitado->sabado == 1 ? 'SABADO ' : '')}}
+                                            {{ ($item->curso_habilitado->domingo == 1 ? 'DOMINGO ' : '')}}
+                                            | Precio: {{number_format($item->curso_habilitado->precio, 0, ".", ".")}}
+                                        </td>
+                                        <td>
+                                            {{($item->curso_habilitado->concluido == 0 ? 'NO' : 'SI')}}
+                                        </td>
+                                        <td>
+                                            {{number_format($item->saldo, 0, ".", ".")}}
+                                        </td>
+                                        <td>
+                                            <a href="{{route('habilitado.show', $item->curso_habilitado->id)}}" target="__blank" class="btn btn-primary btn-sm">Ir al curso</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="4">Total Deuda Curso</th>
+                                    <th colspan="2">{{number_format($curso->sum('saldo'), 0, ".", ".")}}</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>  
+            @endif
+
+            @if ($cert->count() > 0)
+                <div class="row mt-3">
+                    <h4 class="mx-3">Deudas Pendiente en Certificado</h4>
+                    <div class="table-responsive col-xl-12 col-lg-12 col-sm-12">
+                        <table id="" class="table table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th width="20%">IDCurso</th>
+                                    <th width="20%">Curso</th>
+                                    <th width="30%">Detalle Curso</th>
+                                    <th>Concluido?</th>
+                                    <th width="10%">Saldo</th>
+                                    <th class="no-content">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($cert as $item)
+                                    <tr>
+                                        <td>{{$item->id}}</td>
+                                        <td>{{$item->curso_habilitado->id}} - {{$item->curso_habilitado->tipo_curso->descripcion}}: {{$item->curso_habilitado->curso->descripcion}}
+                                            {{$item->curso_habilitado->curso->modulo->descripcion}}
+                                        </td>
+                                        <td>
+                                            Horario: {{date('H:i', strtotime($item->curso_habilitado->hora_entrada))}} a {{date('H:i', strtotime($item->curso_habilitado->hora_salida))}}
+                                            | Fecha: {{date('d/m/Y', strtotime($item->curso_habilitado->periodo_desde))}} a {{date('d/m/Y', strtotime($item->curso_habilitado->periodo_hasta))}} <br>
+                                            Dias: {{ ($item->curso_habilitado->lunes == 1 ? 'LUNES ' : '') }}
+                                            {{ ($item->curso_habilitado->martes == 1 ? 'MARTES ' : '')}}
+                                            {{ ($item->curso_habilitado->miercoles == 1 ? 'MIERCOLES ' : '')}}
+                                            {{ ($item->curso_habilitado->jueves == 1 ? 'JUEVES ' : '')}}
+                                            {{ ($item->curso_habilitado->viernes == 1 ? 'VIERNES ' : '')}}
+                                            {{ ($item->curso_habilitado->sabado == 1 ? 'SABADO ' : '')}}
+                                            {{ ($item->curso_habilitado->domingo == 1 ? 'DOMINGO ' : '')}}
+                                            | Precio: {{number_format($item->certificado_monto, 0, ".", ".")}}
+                                        </td>
+                                        <td>
+                                            {{($item->curso_habilitado->concluido == 0 ? 'NO' : 'SI')}}
+                                        </td>
+                                        <td>
+                                            {{number_format($item->certificado_saldo, 0, ".", ".")}}
+                                        </td>
+                                        <td>
+                                            <a href="{{route('habilitado.show', $item->curso_habilitado->id)}}" target="__blank" class="btn btn-primary btn-sm">Ir al curso</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="4">Total Deuda Certificado</th>
+                                    <th colspan="2">{{number_format($cert->sum('certificado_saldo'), 0, ".", ".")}}</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>  
+            @endif
+            
+            @if ($insu->count() > 0)
+                <div class="row mt-3">
+                    <h4 class="mx-3">Deudas Pendiente en Insumos</h4>
+                    <div class="table-responsive col-xl-12 col-lg-12 col-sm-12">
+                        <table id="" class="table table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th width="20%">IDCurso</th>
+                                    <th width="20%">Curso</th>
+                                    <th width="30%">Detalle Curso</th>
+                                    <th>Concluido?</th>
+                                    <th width="8%">Fecha Insumo</th>
+                                    <th width="10%">Saldo</th>
+                                    <th class="no-content">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($insu as $item)
+                                    <tr>
+                                        <td>{{$item->id}}</td>
+                                        <td>{{$item->curso_habilitado->id}} - {{$item->curso_habilitado->tipo_curso->descripcion}}: {{$item->curso_habilitado->curso->descripcion}}
+                                            {{$item->curso_habilitado->curso->modulo->descripcion}}
+                                        </td>
+                                        <td>
+                                            Horario: {{date('H:i', strtotime($item->curso_habilitado->hora_entrada))}} a {{date('H:i', strtotime($item->curso_habilitado->hora_salida))}}
+                                            | Fecha: {{date('d/m/Y', strtotime($item->curso_habilitado->periodo_desde))}} a {{date('d/m/Y', strtotime($item->curso_habilitado->periodo_hasta))}} <br>
+                                            Dias: {{ ($item->curso_habilitado->lunes == 1 ? 'LUNES ' : '') }}
+                                            {{ ($item->curso_habilitado->martes == 1 ? 'MARTES ' : '')}}
+                                            {{ ($item->curso_habilitado->miercoles == 1 ? 'MIERCOLES ' : '')}}
+                                            {{ ($item->curso_habilitado->jueves == 1 ? 'JUEVES ' : '')}}
+                                            {{ ($item->curso_habilitado->viernes == 1 ? 'VIERNES ' : '')}}
+                                            {{ ($item->curso_habilitado->sabado == 1 ? 'SABADO ' : '')}}
+                                            {{ ($item->curso_habilitado->domingo == 1 ? 'DOMINGO ' : '')}}
+                                            | Precio: {{number_format($item->certificado_monto, 0, ".", ".")}}
+                                        </td>
+                                        <td>
+                                            {{($item->curso_habilitado->concluido == 0 ? 'NO' : 'SI')}}
+                                        </td>
+                                        <td class="text-center" style="font-size: 11px">
+                                            {{date('d/m/Y', strtotime($item->fecha))}}
+                                        </td>
+                                        <td>
+                                            {{number_format($item->saldo, 0, ".", ".")}}
+                                        </td>
+                                        <td>
+                                            <a href="{{route('habilitado.show', $item->curso_habilitado->id)}}" target="__blank" class="btn btn-primary btn-sm">Ir al curso</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="5">Total Deuda en Insumos</th>
+                                    <th colspan="2">{{number_format($insu->sum('saldo'), 0, ".", ".")}}</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>  
+            @endif
+            
 
             <form action="{{route('cursoAlumno.agregar_alumno_post', [$cursoHabilitado, $alumno] )}}" method="POST" onsubmit="disableButton()">
                 @csrf
@@ -68,6 +244,8 @@
                     <button class="btn btn-success" type="submit" id="submitBtn" onclick="this.disabled = true; this.form.submit();">Inscribir</button>
                 </div>
             </form>
+
+
         </div>
 
     </div>

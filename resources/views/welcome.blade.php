@@ -62,7 +62,14 @@
                                 }
                             @endphp
                             <div class="carousel-item  {{$active}}" data-bs-interval="10000">
-                                <img src="{{Storage::url($item->files_fotos[0]->file)}}" class="d-block w-100"  style="max-height: 720px; opacity: 1" alt="..." >
+                                @if(isset($item->files_fotos[0]))
+                                    <img src="{{ Storage::url($item->files_fotos[0]->file) }}"
+                                    class="d-block w-100"
+                                    style="max-height: 720px; opacity: 1" alt="...">
+                                @else
+                                    <img src="#" class="d-block w-100"  style="max-height: 720px; opacity: 1" alt="..." >
+                                @endif
+                                
                                 <div class="carousel-caption d-none d-md-block">
                                     <h5 class="py-2" >
                                         <a href="{{route('new_detalle', $item->slug)}}" class="a-titulo">{{Str::title($item->titulo)}}</a>
