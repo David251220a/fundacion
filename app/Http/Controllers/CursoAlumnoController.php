@@ -169,7 +169,7 @@ class CursoAlumnoController extends Controller
         ->whereIn('curso_a_estado_id', [1, 2, 3, 7])
         ->where('estado_id', 1)
         ->orderBy('curso_habilitado_id', 'DESC')
-        ->paginate(15);
+        ->get();
 
         $insu = CursoIngreso::join('curso_in_alumnos', 'curso_ingresos.id', '=', 'curso_in_alumnos.curso_ingreso_id')
         ->join('alumnos', 'curso_in_alumnos.alumno_id', '=', 'alumnos.id')
@@ -180,7 +180,7 @@ class CursoAlumnoController extends Controller
         ->select('curso_in_alumnos.*', 'curso_ingresos.fecha', 'curso_ingresos.curso_habilitado_id', 'personas.documento', 'personas.nombre', 'personas.apellido')
         ->orderBy('personas.documento', 'ASC')
         ->orderBy('curso_ingresos.fecha', 'ASC')
-        ->paginate(15);
+        ->get();
 
         return view('cursoAlumno.inscribir', compact('cursoHabilitado', 'alumno', 'forma_pago', 'curso', 'cert', 'insu'));
     }

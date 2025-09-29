@@ -150,23 +150,23 @@
                                 @foreach ($insu as $item)
                                     <tr>
                                         <td>{{$item->id}}</td>
-                                        <td>{{$item->curso_habilitado->id}} - {{$item->curso_habilitado->tipo_curso->descripcion}}: {{$item->curso_habilitado->curso->descripcion}}
-                                            {{$item->curso_habilitado->curso->modulo->descripcion}}
+                                        <td>{{$item->cursoHabilitado->id}} - {{$item->cursoHabilitado->tipo_curso->descripcion}}: {{$item->cursoHabilitado->curso->descripcion}}
+                                            {{$item->cursoHabilitado->curso->modulo->descripcion}}
                                         </td>
                                         <td>
-                                            Horario: {{date('H:i', strtotime($item->curso_habilitado->hora_entrada))}} a {{date('H:i', strtotime($item->curso_habilitado->hora_salida))}}
-                                            | Fecha: {{date('d/m/Y', strtotime($item->curso_habilitado->periodo_desde))}} a {{date('d/m/Y', strtotime($item->curso_habilitado->periodo_hasta))}} <br>
-                                            Dias: {{ ($item->curso_habilitado->lunes == 1 ? 'LUNES ' : '') }}
-                                            {{ ($item->curso_habilitado->martes == 1 ? 'MARTES ' : '')}}
-                                            {{ ($item->curso_habilitado->miercoles == 1 ? 'MIERCOLES ' : '')}}
-                                            {{ ($item->curso_habilitado->jueves == 1 ? 'JUEVES ' : '')}}
-                                            {{ ($item->curso_habilitado->viernes == 1 ? 'VIERNES ' : '')}}
-                                            {{ ($item->curso_habilitado->sabado == 1 ? 'SABADO ' : '')}}
-                                            {{ ($item->curso_habilitado->domingo == 1 ? 'DOMINGO ' : '')}}
-                                            | Precio: {{number_format($item->certificado_monto, 0, ".", ".")}}
-                                        </td>
+                                            Horario: {{date('H:i', strtotime($item->cursoHabilitado->hora_entrada))}} a {{date('H:i', strtotime($item->cursoHabilitado->hora_salida))}}
+                                            | Fecha: {{date('d/m/Y', strtotime($item->cursoHabilitado->periodo_desde))}} a {{date('d/m/Y', strtotime($item->cursoHabilitado->periodo_hasta))}} <br>
+                                            Dias: {{ ($item->cursoHabilitado->lunes == 1 ? 'LUNES ' : '') }}
+                                            {{ ($item->cursoHabilitado->martes == 1 ? 'MARTES ' : '')}}
+                                            {{ ($item->cursoHabilitado->miercoles == 1 ? 'MIERCOLES ' : '')}}
+                                            {{ ($item->cursoHabilitado->jueves == 1 ? 'JUEVES ' : '')}}
+                                            {{ ($item->cursoHabilitado->viernes == 1 ? 'VIERNES ' : '')}}
+                                            {{ ($item->cursoHabilitado->sabado == 1 ? 'SABADO ' : '')}}
+                                            {{ ($item->cursoHabilitado->domingo == 1 ? 'DOMINGO ' : '')}}
+                                            | Precio: {{number_format($item->cursoHabilitado->precio, 0, ".", ".")}}
+                                    </td>
                                         <td>
-                                            {{($item->curso_habilitado->concluido == 0 ? 'NO' : 'SI')}}
+                                            {{($item->cursoHabilitado->concluido == 0 ? 'NO' : 'SI')}}
                                         </td>
                                         <td class="text-center" style="font-size: 11px">
                                             {{date('d/m/Y', strtotime($item->fecha))}}
@@ -175,7 +175,7 @@
                                             {{number_format($item->saldo, 0, ".", ".")}}
                                         </td>
                                         <td>
-                                            <a href="{{route('habilitado.show', $item->curso_habilitado->id)}}" target="__blank" class="btn btn-primary btn-sm">Ir al curso</a>
+                                            <a href="{{route('habilitado.show', $item->cursoHabilitado->id)}}" target="__blank" class="btn btn-primary btn-sm">Ir al curso</a>
                                         </td>
                                     </tr>
                                 @endforeach
