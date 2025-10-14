@@ -87,6 +87,10 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php
+                        $descuento = 0;
+                        $porcentaje = 0;
+                    @endphp
                     @foreach ($ingresoMatricula->detalle as $item)
                         <tr style="">
                             <td style="">
@@ -94,6 +98,10 @@
                                 {{$item->curso_habilitado->curso->modulo->descripcion}}
                             </td>
                             <td style="text-align: right; ">{{number_format($item->monto_pagado, 0, ".", ".")}}</td>
+                            @php
+                                $descuento = $item->total_descuento;
+                                $porcentaje = $item->porcentaje_aplicado;
+                            @endphp
                         </tr>
                     @endforeach
                 </tbody>
@@ -112,6 +120,10 @@
         <div>
             <p class="detalle">Detalles</p>
             <p>
+                @if ($descuento > 0)
+                    Descuento: <b>{{number_format($descuento, 0, ".", ".")}}</b>
+                    Porcentaje: <b>{{$porcentaje}}%</b> <br>
+                @endif
                 Tipo de Cobro: <b>{{($ingresoMatricula->tipo_cobro == 1 ? 'MATRICULA' : 'CERTIFICADO')}}</b> <br>
                 Forma de Pago: <b>{{$ingresoMatricula->forma_pago->descripcion}}</b> <br>
                 Fecha: <b>{{date('d/m/Y H:i', strtotime($ingresoMatricula->created_at))}}</b> <br>

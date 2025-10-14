@@ -43,6 +43,17 @@
                             <input wire:model.defer="curso_precio" id="curso_precio" type="text" class="form-control text-right" readonly>
                         </div>
 
+                        @if ($existe_promo == 1)
+                            <div class="form-group col-md-6">
+                                <label for="inputPassword4">Descuento Aplicado</label>
+                                <input type="text" class="form-control text-right" value="{{$descuento}}" readonly>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputPassword4">Porcentaje Aplicado</label>
+                                <input type="text" class="form-control text-right" value="{{$porcentaje}}" readonly>
+                            </div>
+                        @endif
+
                         <div class="form-group col-md-6">
                             <label for="inputPassword4">Total a Pagar</label>
                             <input wire:model.defer="total_pagar_modal" type="text" class="form-control text-right" onkeyup="punto_decimal_limite_precio(this)" >

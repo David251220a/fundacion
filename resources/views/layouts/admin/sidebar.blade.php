@@ -133,6 +133,18 @@
             </li>
         @endcan
 
+        @can('promo.index')
+            <li class="menu">
+                <a href="{{ route('promo.index') }}" {{(substr(Route::currentRouteName() , 0 , strpos(Route::currentRouteName(), '.')) == 'promo' ? 'data-active=true' : '')}}
+                    aria-expanded="false" class="dropdown-toggle">
+                    <div class="">
+                        <i class="fas fa-solid fa-fire mr-3"></i>
+                        <span>Promos</span>
+                    </div>
+                </a>
+            </li>
+        @endcan
+
         @can('ver_anulacion')
             <li class="menu">
                 <a href="#anulacion" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">

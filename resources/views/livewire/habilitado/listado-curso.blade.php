@@ -79,7 +79,7 @@
                     @foreach ($alumnos as $item)
                         @php
                             $color = '';
-                            if($item->monto_abonado >=  $item->total_pagar){
+                            if($item->monto_abonado >=  ($item->total_pagar - $item->total_descuento)){
                                 $color = 'background: rgb(148 235 122)';
                             }
                             elseif ($item->monto_abonado > 0){

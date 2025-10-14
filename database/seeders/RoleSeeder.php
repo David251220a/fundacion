@@ -179,6 +179,10 @@ class RoleSeeder extends Seeder
 
         $permission = Permission::create(['name' => 'habilitacion.estado_alumno', 'descripcion' => 'Habilitacion de Curso: Estado Alumno']);
 
+        $permission = Permission::create(['name' => 'promo.index', 'descripcion' => 'Promo: Vista Principal']);
+        $permission = Permission::create(['name' => 'promo.create', 'descripcion' => 'Promo: Crear']);
+        $permission = Permission::create(['name' => 'promo.edit', 'descripcion' => 'Promo: Editar']);
+
     }
 
 }

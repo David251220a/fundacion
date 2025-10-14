@@ -92,7 +92,7 @@ class PDFController extends Controller
     public function recibo_curso(IngresoMatricula $ingresoMatricula)
     {
         $pdf = PDF::loadView('pdf.ingreso_curso.recibo', compact('ingresoMatricula'));
-        $pdf->setPaper(array(0, 0, 226.772, 350.394), 'defaultPaperSize');
+        $pdf->setPaper(array(0, 0, 226.772, 370.394), 'defaultPaperSize');
 
         return $pdf->stream('recibo_curso.pdf');
     }

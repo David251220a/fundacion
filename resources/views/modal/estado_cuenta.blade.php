@@ -38,6 +38,7 @@
                                             <th>Fecha Ingreso</th>
                                             <th>Forma Pago</th>
                                             <th>Total a Pagar</th>
+                                            <th>Total Descuento</th>
                                             <th>Total Pagado</th>
                                             <th>Saldo</th>
                                         </tr>
@@ -60,6 +61,9 @@
                                                 </td>
                                                 <td>
                                                     {{number_format($item->monto_total, 0, ".", ".")}}
+                                                </td>
+                                                <td>
+                                                    {{number_format($item->total_descuento, 0, ".", ".")}}
                                                 </td>
                                                 <td>
                                                     {{number_format($item->monto_pagado, 0, ".", ".")}}

@@ -24,6 +24,8 @@ use App\Http\Controllers\PagoInstructorController;
 use App\Http\Controllers\PagoVariosController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProfesorController;
+use App\Http\Controllers\PromoController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -161,6 +163,12 @@ Route::group([
     Route::get('/anulacion/anticipo', [AnulacionesController::class, 'anticipo'])->name('anulacion.anticipo');
     Route::get('/anulacion/otros-pagos', [AnulacionesController::class, 'otros_pagos'])->name('anulacion.otros_pago');
     Route::get('/anulacion/cierre', [AnulacionesController::class, 'cierre'])->name('anulacion.cierre');
+
+    Route::get('/promos', [PromoController::class, 'index'])->name('promo.index');
+    Route::get('/promos/crear', [PromoController::class, 'create'])->name('promo.create');
+    Route::post('/promos/crear', [PromoController::class, 'store'])->name('promo.store');
+    Route::get('/promos/{promo}/editar', [PromoController::class, 'edit'])->name('promo.edit');
+    Route::post('/promos/{promo}/editar', [PromoController::class, 'update'])->name('promo.update');
 
 
 
