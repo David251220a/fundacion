@@ -102,7 +102,7 @@
                         <th width="8%">Forma Pago</th>
                         <th width="2%">Fecha</th>
                         <th width="8%">Monto</th>
-
+                        <th width="8%">Descuento</th>
                     </tr>
                 </thead>
                 <tbody style="font-size: 10px">
@@ -130,6 +130,9 @@
                             <td style="text-align: right">
                                 {{number_format($item->total_pagado, 0, ".", ".")}}
                             </td>
+                            <td style="text-align: right">
+                                {{number_format($item->detalle->sum('total_descuento'), 0, ".", ".")}}
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -140,6 +143,7 @@
                         <td colspan="2" class="text-right">
                             <b> {{number_format($data->sum('total_pagado'), 0, ".", ".")}} </b>
                         </td>
+                        <td></td>
                     </tr>
                 </tfoot>
             </table>

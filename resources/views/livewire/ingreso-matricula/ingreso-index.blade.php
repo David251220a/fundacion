@@ -124,6 +124,7 @@
                         <th>Tipo Cobro</th>
                         <th>Fecha Pago</th>
                         <th>Monto</th>
+                        <th>Descuento</th>
                         <th>Forma Pago</th>
                         <th>Estado</th>
                         <th class="no-content">Actions</th>
@@ -150,6 +151,9 @@
                             </td>
                             <td>
                                 {{number_format($item->total_pagado, 0, ".", ".")}}
+                            </td>
+                            <td>
+                                {{number_format($item->detalle->sum('total_descuento'), 0, ".", ".")}}
                             </td>
                             <td>
                                 {{$item->forma_pago->descripcion}}

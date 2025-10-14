@@ -147,38 +147,37 @@ class ListadoCurso extends Component
         $this->recuperar_promo();
         $this->descuento = 0;
         $this->porcentaje = 0;
+        $fecha_inscripcion = $cursoAlumno->created_at->format('Y-m-d');
+        $fecha = Carbon::now();
+        $fecha_actual= $fecha->format('Y-m-d');
+        $fecha_curso_creacion = $cursoAlumno->curso_habilitado->created_at->format('Y-m-d');
+        $aplica = false;
         if($this->existe_promo == 1){
-            $fecha_inscripcion = $cursoAlumno->created_at->format('Y-m-d');
-            $fecha = Carbon::now();
-            $fecha_actual= $fecha->format('Y-m-d');
-            if($fecha_actual == $fecha_inscripcion){
-                if($cursoAlumno->monto_abonado == 0){
-                    $descuento = round(($cursoAlumno->total_pagar * $this->promo->porcentaje) / 100);
-                    $precio = $cursoAlumno->total_pagar - $descuento;
-                    $this->porcentaje = $this->promo->porcentaje;
-                    $this->descuento = number_format($descuento, 0, ".", ".");
-                    $this->curso_precio = number_format($precio, 0, ".", ".");
-                }else{
-                    $this->existe_promo = 0;
-                    $this->curso_precio = number_format($cursoAlumno->saldo, 0, ".", ".");
+            if ($fecha >= $fecha_curso_creacion){
+                if ($cursoAlumno->monto_abonado == 0){
+                    $aplica = true;
                 }
-            }else{
-                $this->existe_promo = 0;
-                $this->curso_precio = number_format($cursoAlumno->saldo, 0, ".", ".");
             }
+        }
+
+        if ($aplica == true){
+            $descuento = round(($cursoAlumno->total_pagar * $this->promo->porcentaje) / 100);
+            $precio = $cursoAlumno->total_pagar - $descuento;
+            $this->porcentaje = $this->promo->porcentaje;
+            $this->descuento = number_format($descuento, 0, ".", ".");
+            $this->curso_precio = number_format($precio, 0, ".", ".");
         }else{
             $this->existe_promo = 0;
+            $this->descuento = 0;
+            $this->porcentaje = 0;
             $this->curso_precio = number_format($cursoAlumno->saldo, 0, ".", ".");
         }
-        
         $this->documento_modal = number_format($cursoAlumno->alumno->persona->documento, 0, ".", ".");
         $this->nombre_modal = $cursoAlumno->alumno->persona->nombre . ' ' . $cursoAlumno->alumno->persona->apellido;
         $this->estado_a_id = $cursoAlumno->curso_a_estado_id;
         $this->cursoAlumno = $cursoAlumno;
         $this->precio_certificado = number_format($cursoAlumno->certificado_saldo, 0, ".", ".");
         $this->cer_total_pagar_modal = $this->precio_certificado;
-        
-        
     }
 
     public function estado_cuenta(CursoAlumno $cursoAlumno, Alumno $alumno)
@@ -223,7 +222,7 @@ class ListadoCurso extends Component
 
         $porcentaje = 0;
         $descuento = 0;
-        
+
         if($this->existe_promo == 1){
             $porcentaje = $this->porcentaje;
             $descuento = str_replace('.', '', $this->descuento);
@@ -236,7 +235,7 @@ class ListadoCurso extends Component
         }
 
         $saldo_curso = $monto_total - ($descuento + $total_pagar);
-        
+
         $cursoAlumno = $this->cursoAlumno;
         $fecha_actual = Carbon::now();
         $mes = intval(date('m', strtotime($fecha_actual)));

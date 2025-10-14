@@ -80,7 +80,12 @@
                         @php
                             $color = '';
                             if($item->monto_abonado >=  ($item->total_pagar - $item->total_descuento)){
-                                $color = 'background: rgb(148 235 122)';
+                                if($item->total_descuento > 0){
+                                    $color = 'background: rgb(122 162 235)';
+                                }else{
+                                    $color = 'background: rgb(148 235 122)';
+                                }
+
                             }
                             elseif ($item->monto_abonado > 0){
                                 $color = 'background: rgb(241 226 46)';

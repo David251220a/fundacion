@@ -11,9 +11,9 @@ class PromoController extends Controller
     {
         $this->middleware('permission:promo.index')->only('index');
         $this->middleware('permission:promo.create')->only('create');
-        $this->middleware('permission:promo.store')->only('create');
+        $this->middleware('permission:promo.create')->only('store');
         $this->middleware('permission:promo.edit')->only('edit');
-        $this->middleware('permission:promo.update')->only('edit');
+        $this->middleware('permission:promo.edit')->only('update');
     }
 
 
@@ -56,7 +56,7 @@ class PromoController extends Controller
         if ($request->procentaje == 0){
             return redirect()->back()->withErrors('El procentaje debe ser mayor a cero.');
         }
-        
+
         if($request->lunes == 'on'){
             $lunes = 1;
             $selecciono = 1;
@@ -135,7 +135,7 @@ class PromoController extends Controller
         if ($request->procentaje == 0){
             return redirect()->back()->withErrors('El procentaje debe ser mayor a cero.');
         }
-        
+
         if($request->lunes == 'on'){
             $lunes = 1;
             $selecciono = 1;
