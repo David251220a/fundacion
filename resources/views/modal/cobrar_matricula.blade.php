@@ -45,11 +45,11 @@
 
                         @if ($existe_promo == 1)
                             <div class="form-group col-md-6">
-                                <label for="inputPassword4">Descuento Aplicado</label>
-                                <input type="text" class="form-control text-right" value="{{$descuento}}" readonly>
+                                <label for="descuento">Descuento Aplicado</label>
+                                <input type="text" wire:model.defer="descuento" class="form-control text-right" readonly>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="inputPassword4">Porcentaje Aplicado</label>
+                                <label for="porcentaje">Porcentaje Aplicado</label>
                                 <input type="text" class="form-control text-right" value="{{$porcentaje}}" readonly>
                             </div>
                         @endif

@@ -177,7 +177,7 @@ class RoleSeeder extends Seeder
         // $permission = Permission::create(['name' => 'pago_instructor.anular', 'descripcion' => 'Pago Instructor: Anular Pagos']);
         // $permission = Permission::create(['name' => 'anulacion.cierre', 'descripcion' => 'Anulación: Cierre Cajero']);
 
-        $permission = Permission::create(['name' => 'habilitacion.estado_alumno', 'descripcion' => 'Habilitacion de Curso: Estado Alumno']);
+        // $permission = Permission::create(['name' => 'habilitacion.estado_alumno', 'descripcion' => 'Habilitacion de Curso: Estado Alumno']);
 
         $permission = Permission::create(['name' => 'promo.index', 'descripcion' => 'Promo: Vista Principal']);
         $permission = Permission::create(['name' => 'promo.create', 'descripcion' => 'Promo: Crear']);

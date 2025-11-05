@@ -27,7 +27,7 @@ return new class extends Migration
             $table->tinyInteger('sabado')->default(0);
             $table->tinyInteger('domingo')->default(0);
             $table->bigInteger('user_id')->default(0);
-            $table->foreignId('estado_id')->constrained();
+            $table->tinyInteger('estado_id')->default(1);
             $table->timestamps();
         });
     }

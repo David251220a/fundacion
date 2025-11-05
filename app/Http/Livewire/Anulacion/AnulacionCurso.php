@@ -63,10 +63,22 @@ class AnulacionCurso extends Component
 
             if($ingreso->tipo_cobro == 1){
                 $cursoAlumno->monto_abonado = $cursoAlumno->monto_abonado - $item->monto_pagado;
-                $cursoAlumno->saldo = $cursoAlumno->saldo + $item->monto_pagado;
-                $cursoAlumno->estado_id = 1;
-                $cursoAlumno->modif_user_id = auth()->user()->id;
-                $cursoAlumno->update();
+                if($item->total_descuento > 0){
+                    $cursoAlumno->saldo = $cursoAlumno->saldo + $item->monto_pagado + $item->total_descuento;
+                    $cursoAlumno->total_descuento = 0;
+                    $cursoAlumno->porcentaje_aplicado = 0;
+                    $cursoAlumno->estado_id = 1;
+                    $cursoAlumno->modif_user_id = auth()->user()->id;
+                    $cursoAlumno->update();
+                }else{
+                    $cursoAlumno->saldo = $cursoAlumno->saldo + $item->monto_pagado;
+                    $cursoAlumno->total_descuento = 0;
+                    $cursoAlumno->porcentaje_aplicado = 0;
+                    $cursoAlumno->estado_id = 1;
+                    $cursoAlumno->modif_user_id = auth()->user()->id;
+                    $cursoAlumno->update();
+                }
+
             }else{
                 $cursoAlumno->certificado_pagado = $cursoAlumno->certificado_pagado - $item->monto_pagado;
                 $cursoAlumno->certificado_saldo = $cursoAlumno->certificado_saldo + $item->monto_pagado;
