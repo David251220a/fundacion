@@ -22,6 +22,7 @@ class ListadoCurso extends Component
     public $documento_modal, $forma_pago_id = 1, $cer_forma_pago_id=1, $nombre_modal, $total_pagar_modal = 0;
     public $cursoAlumno, $documento_e_modal, $nombre_e_modal, $cuenta = [];
     public $precio_certificado, $cer_comprobante, $cer_total_pagar_modal, $ingreso, $valor_id = 0, $saldos, $promo, $existe_promo, $descuento, $porcentaje;
+    public $original_precio_examen, $precio_examen, $titulo_cobro, $examen;
     use WithFileUploads;
 
     protected $listeners = ['render', 'datos', 'estado_cuenta'];
@@ -35,8 +36,10 @@ class ListadoCurso extends Component
     {
         $this->curso_id = $cursoHabilitado->id;
         $this->curso_precio = number_format($cursoHabilitado->precio, 0, ".", ".");
+        $this->original_precio_examen = $cursoHabilitado->precio_examen;
         $this->saldos = 1;
         $this->existe_promo = 0;
+        $this->examen = 0;
     }
 
     public function render()
@@ -55,7 +58,13 @@ class ListadoCurso extends Component
         }
 
         $forma_pago = FormaPago::all();
+        
+        $curso = CursoHabilitado::with('alumnos_todos')->find($this->curso_id);
 
+        $tienePendientes = $curso->alumnos_todos()
+        ->where('examen_monto', 0)
+        ->exists();
+        
         if ($this->estado_curso == 99){
             if(!(empty($this->documento))){
                 if($this->saldos == 1){
@@ -138,11 +147,11 @@ class ListadoCurso extends Component
         $total_saldo = $alumnos->sum('saldo');
         $estado = CursoAEstado::all();
 
-        return view('livewire.habilitado.listado-curso', compact('alumnos', 'estado', 'forma_pago', 'total_saldo'));
+        return view('livewire.habilitado.listado-curso', compact('alumnos', 'estado', 'forma_pago', 'total_saldo', 'tienePendientes'));
     }
 
 
-    public function datos(CursoAlumno $cursoAlumno)
+    public function datos(CursoAlumno $cursoAlumno, $ver)
     {
         $this->recuperar_promo();
         $this->descuento = 0;
@@ -172,12 +181,24 @@ class ListadoCurso extends Component
             $this->porcentaje = 0;
             $this->curso_precio = number_format($cursoAlumno->saldo, 0, ".", ".");
         }
+
+        
         $this->documento_modal = number_format($cursoAlumno->alumno->persona->documento, 0, ".", ".");
         $this->nombre_modal = $cursoAlumno->alumno->persona->nombre . ' ' . $cursoAlumno->alumno->persona->apellido;
         $this->estado_a_id = $cursoAlumno->curso_a_estado_id;
         $this->cursoAlumno = $cursoAlumno;
-        $this->precio_certificado = number_format($cursoAlumno->certificado_saldo, 0, ".", ".");
-        $this->cer_total_pagar_modal = $this->precio_certificado;
+        if($ver == 1){
+            $this->precio_certificado = number_format($cursoAlumno->certificado_saldo, 0, ".", ".");
+            $this->cer_total_pagar_modal = $this->precio_certificado;
+            $this->titulo_cobro = 'Cobro de Certificado';
+            $this->examen = 0;
+        }else{
+            $this->precio_certificado = number_format($cursoAlumno->examen_saldo, 0, ".", ".");
+            $this->cer_total_pagar_modal = $this->precio_certificado;
+            $this->titulo_cobro = 'Cobro de Examen';
+            $this->examen = 1;
+        }
+        
     }
 
     public function estado_cuenta(CursoAlumno $cursoAlumno, Alumno $alumno)
@@ -386,6 +407,81 @@ class ListadoCurso extends Component
         $this->emit('cobro_exito', 'Cobro realizado con exito.');
     }
 
+    public function save_examen()
+    {
+        
+        if($this->cer_comprobante){
+            $filePath = $this->cer_comprobante->store('public/comprobante');
+            $this->validate([
+                'cer_total_pagar_modal' => 'required',
+                'cer_comprobante' => 'image|mimes:jpeg,png,jpg,gif'
+            ]);
+        }else{
+            $filePath = '';
+            $this->validate([
+                'cer_total_pagar_modal' => 'required',
+            ]);
+        }
+
+        $total_pagar = str_replace('.', '', $this->cer_total_pagar_modal);
+
+        if($total_pagar == 0){
+            $this->emit('mensaje_error', 'El total a pagar no pueder ser 0.');
+            $this->resetUI();
+
+            return false;
+        }
+
+        $cursoAlumno = $this->cursoAlumno;
+        $fecha_actual = Carbon::now();
+        $mes = intval(date('m', strtotime($fecha_actual)));
+        $anio = intval(date('Y', strtotime($fecha_actual)));
+        $numero_recibo = IngresoMatricula::where('año', $anio)
+        ->max('numero_recibo');
+        $numero_recibo += 1;
+
+        $ingreso = IngresoMatricula::create([
+            'alumno_id' => $cursoAlumno->alumno_id,
+            'fecha_ingreso' => $fecha_actual,
+            'forma_pago_id' => $this->cer_forma_pago_id,
+            'año' => $anio,
+            'mes' => $mes,
+            'tipo_cobro' => 3,
+            'numero_recibo' => $numero_recibo,
+            'sucursal' => '000',
+            'general' => '000',
+            'factura_numero' => 0,
+            'total_pagado' => $total_pagar,
+            'comprobante' => $filePath,
+            'estado_id' => 1,
+            'user_id' => auth()->user()->id,
+            'modif_user_id' => auth()->user()->id,
+        ]);
+
+        $monto_total = str_replace('.', '', $this->precio_certificado);
+        $ingreso->detalle()->create([
+            'curso_habilitado_id' => $cursoAlumno->curso_habilitado_id,
+            'alumno_id' => $cursoAlumno->alumno_id,
+            'monto_total' => $monto_total,
+            'monto_pagado' => $total_pagar,
+            'saldo' => ($monto_total - $total_pagar),
+            'estado_id' => 1,
+            'user_id' => auth()->user()->id,
+            'modif_user_id' => auth()->user()->id,
+        ]);
+
+        $cursoAlumno->examen_pagado = $cursoAlumno->examen_pagado + $total_pagar;
+        $cursoAlumno->examen_saldo = $cursoAlumno->examen_saldo - $total_pagar;
+        $cursoAlumno->modif_user_id = auth()->user()->id;
+        $cursoAlumno->update();
+
+        $this->ingreso = $ingreso;
+        $this->valor_id = $ingreso->id;
+
+        $this->resetUI();
+        $this->emit('cobro_exito', 'Cobro realizado con exito.');
+    }
+
     public function resetUI()
     {
         $this->reset('curso_precio');
@@ -433,6 +529,22 @@ class ListadoCurso extends Component
         }else{
             $this->existe_promo = 0;
         }
+
+    }
+
+    public function generar_examen()
+    {
+        $curso = CursoHabilitado::findOrFail($this->curso_id);
+
+        $curso->alumnos_todos()
+        ->where('examen_monto', 0)
+        ->update([
+            'examen_monto' => $this->original_precio_examen,
+            'examen_pagado' => 0,
+            'examen_saldo' => $this->original_precio_examen
+        ]);
+
+        $this->emit('estado_exito', 'Generacion de examen correctamente.');
 
     }
 }

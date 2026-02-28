@@ -20,7 +20,8 @@
                     <th width="20%">Nombre</th>
                     <th width="20%">Curso</th>
                     <th width="30%">Detalle Curso</th>
-                    <th width="10%">Saldo</th>
+                    <th width="10%">Saldo Certificado</th>
+                    <th width="10%">Saldo Examen</th>
                     <th class="no-content">Acción</th>
                 </tr>
             </thead>
@@ -53,9 +54,16 @@
                         <td class="text-right" style="font-size: 11px">
                             {{number_format($item->certificado_saldo, 0, ".", ".")}}
                         </td>
+                        <td class="text-right" style="font-size: 11px">
+                            {{number_format($item->examen_saldo, 0, ".", ".")}}
+                        </td>
                         <td>
                             @can('consulta.certificado_deuda_cobrar')
-                                <button type="button" wire:click="detalle_certificado({{$item->id}})" data-toggle="modal" data-target="#modal_agregar_certificado" class="btn btn-info btn-sm mr-2 mb-2">Cobrar</button>
+                                <button type="button" wire:click="detalle_certificado({{$item->id}})" data-toggle="modal" data-target="#modal_agregar_certificado" class="btn btn-info btn-sm mr-2 mb-2">Certicado</button>
+                            @endcan
+
+                            @can('consulta.certificado_deuda_cobrar')
+                                <button type="button" wire:click="detalle_examen({{$item->id}}, 3)" data-toggle="modal" data-target="#modal_agregar_certificado" class="btn btn-secundary btn-sm mr-2 mb-2">Examen</button>
                             @endcan
 
                             @can('Consulta Certificado: Exonerar')
@@ -70,6 +78,7 @@
                 <tr>
                     <th colspan="4" class="" style="color: :white; font-size: 15px">Total</th>
                     <th class="text-right">{{$deudacertificado}}</th>
+                    <th class="text-right">{{$deudaexamen}}</th>
                     <th class="text-right"></th>
                 </tr>
             </tfoot>

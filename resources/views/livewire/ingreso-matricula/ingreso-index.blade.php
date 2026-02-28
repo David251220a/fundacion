@@ -144,7 +144,19 @@
                                 - {{$item->detalle[0]->curso_habilitado->curso->modulo->descripcion}}
                             </td>
                             <td>
-                                {{($item->tipo_cobro == 1 ? 'MATRICULA' : 'CERTIFICADO')}}
+                                @php
+                                    $desc_tipo = '';
+                                    if($item->tipo_cobro == 1){
+                                        $desc_tipo= 'MATRICULA';
+                                    }
+                                    if($item->tipo_cobro == 2){
+                                        $desc_tipo= 'CERTIFICADO';
+                                    }
+                                    if($item->tipo_cobro == 3){
+                                        $desc_tipo= 'EXAMEN';
+                                    }
+                                @endphp
+                                {{$desc_tipo}}
                             </td>
                             <td>
                                 {{date('d/m/Y H:i', strtotime($item->created_at))}}

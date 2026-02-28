@@ -107,8 +107,8 @@ function actualizar(){
     Livewire.emit('render');
 }
 
-function datos(cursoAlumno){
-    Livewire.emit('datos', cursoAlumno);
+function datos(cursoAlumno, ver = 1){
+    Livewire.emit('datos', cursoAlumno, ver);
 }
 
 function estado_cuenta(cursoAlumno, alumno){

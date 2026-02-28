@@ -298,9 +298,15 @@ class IngresoIndex extends Component
                 $cursoAlumno->estado_id = 1;
                 $cursoAlumno->modif_user_id = auth()->user()->id;
                 $cursoAlumno->update();
-            }else{
+            }elseif ($ingreso->tipo_cobro == 2){
                 $cursoAlumno->certificado_pagado = $cursoAlumno->certificado_pagado - $item->monto_pagado;
                 $cursoAlumno->certificado_saldo = $cursoAlumno->certificado_saldo + $item->monto_pagado;
+                $cursoAlumno->estado_id = 1;
+                $cursoAlumno->modif_user_id = auth()->user()->id;
+                $cursoAlumno->update();
+            }elseif ($ingreso->tipo_cobro == 3){
+                $cursoAlumno->examen_pagado = $cursoAlumno->examen_pagado - $item->monto_pagado;
+                $cursoAlumno->examen_saldo = $cursoAlumno->examen_saldo + $item->monto_pagado;
                 $cursoAlumno->estado_id = 1;
                 $cursoAlumno->modif_user_id = auth()->user()->id;
                 $cursoAlumno->update();

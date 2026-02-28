@@ -51,103 +51,125 @@
                         </div>
 
                     @else
-                        @if ($data->cierre_caja_id > 0)
-                            <div class="form-row">
-                                <h2 class="text-center">
-                                    No se puede anular esta boleta por que ya se realizo el cierre de caja.
-                                </h2>
-
+                        @if ($data->estado_id == 2)
+                            <div class="col-md-12" >
+                                <h2 class="text-center" style="text-align: center">El comprobante ya se encuentra anulado.</h2>
                             </div>
-
                         @else
-                            <div class="form-row">
-                                <div class="form-group col-md-4">
-                                    <label for="inputEmail4">Nombre y Apellido</label>
-                                    @php
-                                        $documento = number_format($data->detalle[0]->alumno->persona->documento, 0, ".", ".");
-                                        $nombre = $data->detalle[0]->alumno->persona->nombre . ' '. $data->detalle[0]->alumno->persona->apellido;
-                                        $completo = $documento .' - ' . $nombre;
-                                    @endphp
-                                    <input type="text" class="form-control" value="{{$completo}}" readonly>
+                            @if ($data->cierre_caja_id > 0)
+                                <div class="form-row">
+                                    <h2 class="text-center">
+                                        No se puede anular esta boleta por que ya se realizo el cierre de caja.
+                                    </h2>
+
                                 </div>
 
-                                <div class="form-group col-md-4">
-                                    <label for="inputEmail4">Concepto</label>
-                                    @php
-                                        if($data->tipo_cobro == 1){
-                                            $concepto = 'MATRICULA';
-                                        }
+                            @else
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="inputEmail4">Nombre y Apellido</label>
+                                        @php
+                                            $documento = number_format($data->detalle[0]->alumno->persona->documento, 0, ".", ".");
+                                            $nombre = $data->detalle[0]->alumno->persona->nombre . ' '. $data->detalle[0]->alumno->persona->apellido;
+                                            $completo = $documento .' - ' . $nombre;
+                                        @endphp
+                                        <input type="text" class="form-control" value="{{$completo}}" readonly>
+                                    </div>
 
-                                        if($data->tipo_cobro == 2){
-                                            $concepto = 'CERTIFICADO';
-                                        }
-                                    @endphp
-                                    <input type="text" class="form-control" value="{{$concepto}}" readonly>
-                                </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputEmail4">Concepto</label>
+                                        @php
+                                            if($data->tipo_cobro == 1){
+                                                $concepto = 'MATRICULA';
+                                            }
 
-                                <div class="form-group col-md-4">
-                                    <label for="inputEmail4">Monto Pagado</label>
-                                    <input type="text" class="form-control" value="{{number_format($data->total_pagado, 0, ".", ".")}}" class="text-right" readonly>
-                                </div>
+                                            if($data->tipo_cobro == 2){
+                                                $concepto = 'CERTIFICADO';
+                                            }
 
-                                <div class="form-group col-md-3">
-                                    <label for="inputEmail4">Cajera</label>
-                                    <input type="text" class="form-control" value="{{$data->usuario->name}}"  readonly>
-                                </div>
+                                            if($data->tipo_cobro == 3){
+                                                $concepto = 'EXAMEN';
+                                            }
+                                        @endphp
+                                        <input type="text" class="form-control" value="{{$concepto}}" readonly>
+                                    </div>
 
-                                <div class="form-group col-md-3">
-                                    <label for="inputEmail4">Fecha Cobro</label>
-                                    <input type="datetime" class="form-control" value="{{date('d/m/Y H:i', strtotime($data->created_at))}}"  readonly>
-                                </div>
-
-                                <div class="form-group col-md-3">
-                                    <label for="inputEmail4">Familia</label>
-                                    <input type="text" class="form-control" value="{{ $data->detalle[0]->curso_habilitado->tipo_curso->descripcion}}"  readonly>
-                                </div>
-
-                                <div class="form-group col-md-3">
-                                    <label for="inputEmail4">Modulo</label>
-                                    <input type="text" class="form-control" value="{{ $data->detalle[0]->curso_habilitado->curso->modulo->descripcion}}"  readonly>
-                                </div>
-
-                                <div class="form-group col-md-12">
-                                    <label for="inputEmail4">Curso</label>
-                                    @php
-                                        $curso = $data->detalle[0]->curso_habilitado->curso->descripcion;
-                                        $datos_curso = $data->detalle[0]->curso_habilitado_id .' - '. $curso .' | '. date('d/m/Y', strtotime($data->detalle[0]->curso_habilitado->periodo_desde))
-                                        . ' a ' . date('d/m/Y', strtotime($data->detalle[0]->curso_habilitado->periodo_hasta)) .' | ' . date('H:i', strtotime($data->detalle[0]->curso_habilitado->hora_entrada))
-                                        . ' a ' . date('H:i', strtotime($data->detalle[0]->curso_habilitado->hora_salida)) . ' | Precio: ' .number_format($data->detalle[0]->curso_habilitado->precio, 0, ".", ".");
-                                    @endphp
-                                    <input type="text" class="form-control" value="{{ $datos_curso}}"  readonly>
-                                </div>
-
-                                @if ($data->estado_id == 2)
-                                    <div class="form-group col-md-3">
-                                        <label for="inputEmail4">Estado</label>
-                                        <input type="text" class="form-control text-red" style="color:rgb(202, 81, 81)" value="Esta boleta de recibo esta anulada."  readonly>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputEmail4">Monto Pagado</label>
+                                        <input type="text" class="form-control" value="{{number_format($data->total_pagado, 0, ".", ".")}}" class="text-right" readonly>
                                     </div>
 
                                     <div class="form-group col-md-3">
-                                        <label for="inputEmail4">Anulado Cajero</label>
-                                        <input type="text" class="form-control text-red" value="{{$data->usuario_modif->name}}"  readonly>
+                                        <label for="inputEmail4">Cajera</label>
+                                        <input type="text" class="form-control" value="{{$data->usuario->name}}"  readonly>
                                     </div>
 
                                     <div class="form-group col-md-3">
-                                        <label for="inputEmail4">Fecha Anulación</label>
-                                        <input type="datetime" class="form-control" value="{{date('d/m/Y H:i', strtotime($data->updated_at))}}"  readonly>
+                                        <label for="inputEmail4">Fecha Cobro</label>
+                                        <input type="datetime" class="form-control" value="{{date('d/m/Y H:i', strtotime($data->created_at))}}"  readonly>
                                     </div>
 
-                                @else
+                                    <div class="form-group col-md-3">
+                                        <label for="inputEmail4">Familia</label>
+                                        <input type="text" class="form-control" value="{{ $data->detalle[0]->curso_habilitado->tipo_curso->descripcion}}"  readonly>
+                                    </div>
+
+                                    <div class="form-group col-md-3">
+                                        <label for="inputEmail4">Modulo</label>
+                                        <input type="text" class="form-control" value="{{ $data->detalle[0]->curso_habilitado->curso->modulo->descripcion}}"  readonly>
+                                    </div>
+
                                     <div class="form-group col-md-12">
-                                        <button type="button" onclick="anular_curso()"  class="btn btn-danger">Anular</button>
+                                        <label for="inputEmail4">Curso</label>
+                                        @php
+                                            $curso = $data->detalle[0]->curso_habilitado->curso->descripcion;
+                                            if($data->tipo_cobro == 1){
+                                                $precio_a = number_format($data->detalle[0]->curso_habilitado->precio, 0, ".", ".");
+                                                $agregar_des= ' | Precio: ' . $precio_a;
+                                            }
+
+                                            if($data->tipo_cobro == 2){
+                                                $precio_a = number_format($data->detalle[0]->curso_habilitado->precio_certificado, 0, ".", ".");
+                                                $agregar_des= ' | Precio Certificado: ' . $precio_a;
+                                            }
+
+                                            if($data->tipo_cobro == 3){
+                                                $precio_a = number_format($data->detalle[0]->curso_habilitado->precio_examen, 0, ".", ".");
+                                                $agregar_des= ' | Precio Examen: ' . $precio_a;
+                                            }
+                                            $datos_curso = $data->detalle[0]->curso_habilitado_id .' - '. $curso .' | '. date('d/m/Y', strtotime($data->detalle[0]->curso_habilitado->periodo_desde))
+                                            . ' a ' . date('d/m/Y', strtotime($data->detalle[0]->curso_habilitado->periodo_hasta)) .' | ' . date('H:i', strtotime($data->detalle[0]->curso_habilitado->hora_entrada))
+                                            . ' a ' . date('H:i', strtotime($data->detalle[0]->curso_habilitado->hora_salida)) . $agregar_des;
+                                        @endphp
+                                        <input type="text" class="form-control" value="{{ $datos_curso}}"  readonly>
                                     </div>
-                                @endif
 
-                            </div>
+                                    @if ($data->estado_id == 2)
+                                        <div class="form-group col-md-3">
+                                            <label for="inputEmail4">Estado</label>
+                                            <input type="text" class="form-control text-red" style="color:rgb(202, 81, 81)" value="Esta boleta de recibo esta anulada."  readonly>
+                                        </div>
+
+                                        <div class="form-group col-md-3">
+                                            <label for="inputEmail4">Anulado Cajero</label>
+                                            <input type="text" class="form-control text-red" value="{{$data->usuario_modif->name}}"  readonly>
+                                        </div>
+
+                                        <div class="form-group col-md-3">
+                                            <label for="inputEmail4">Fecha Anulación</label>
+                                            <input type="datetime" class="form-control" value="{{date('d/m/Y H:i', strtotime($data->updated_at))}}"  readonly>
+                                        </div>
+
+                                    @else
+                                        <div class="form-group col-md-12">
+                                            <button type="button" onclick="anular_curso()"  class="btn btn-danger">Anular</button>
+                                        </div>
+                                    @endif
+
+                                </div>
+                            @endif
                         @endif
-
-
-
+                        
                     @endif
 
                 </div>

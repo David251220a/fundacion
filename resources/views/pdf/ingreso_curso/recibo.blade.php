@@ -124,7 +124,19 @@
                     Descuento: <b>{{number_format($descuento, 0, ".", ".")}}</b>
                     Porcentaje: <b>{{$porcentaje}}%</b> <br>
                 @endif
-                Tipo de Cobro: <b>{{($ingresoMatricula->tipo_cobro == 1 ? 'MATRICULA' : 'CERTIFICADO')}}</b> <br>
+                @php
+                    $desctipo = '';
+                    if($ingresoMatricula->tipo_cobro == 1){
+                        $desctipo = 'MATRICULA';
+                    }
+                    if($ingresoMatricula->tipo_cobro == 2){
+                        $desctipo = 'CERTIFICADO';
+                    }
+                    if($ingresoMatricula->tipo_cobro == 3){
+                        $desctipo = 'EXAMEN';
+                    }
+                @endphp
+                Tipo de Cobro: <b>{{$desctipo}}</b> <br>
                 Forma de Pago: <b>{{$ingresoMatricula->forma_pago->descripcion}}</b> <br>
                 Fecha: <b>{{date('d/m/Y H:i', strtotime($ingresoMatricula->created_at))}}</b> <br>
                 Usuario: <b>{{$ingresoMatricula->usuario->name}}</b> <br>

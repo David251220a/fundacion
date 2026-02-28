@@ -30,9 +30,10 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="underline-profile-tab" data-toggle="tab" href="#underline-profile" role="tab" aria-controls="underline-profile" aria-selected="false">
-                                    <i class="fas fa-dollar-sign mr-2"></i> Certificado
+                                    <i class="fas fa-dollar-sign mr-2"></i> Certificado y Examen
                                 </a>
                             </li>
+                        
                             <li class="nav-item">
                                 <a class="nav-link" id="underline-historico-tab" data-toggle="tab" href="#underline-historico" role="tab" aria-controls="underline-historico" aria-selected="false">
                                     <i class="fas fa-dollar-sign mr-2"></i> Insumo
@@ -42,15 +43,11 @@
 
                         <div class="tab-content" id="lineTabContent-3">
                             <div class="tab-pane fade show active" id="underline-home" role="tabpanel" aria-labelledby="underline-home-tab">
-
                                 @livewire('consulta-general.curso-deuda')
-
                             </div>
 
                             <div class="tab-pane fade" id="underline-profile" role="tabpanel" aria-labelledby="underline-profile-tab">
-
                                 @livewire('consulta-general.certificado-deuda')
-
                             </div>
 
                             <div class="tab-pane fade" id="underline-historico" role="tabpanel" aria-labelledby="underline-historico-tab">

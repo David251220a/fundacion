@@ -113,6 +113,7 @@ class HabilitarCursoController extends Controller
             'hora_salida' => $request->hora_salida,
             'precio'  => str_replace('.', '', $request->precio),
             'precio_certificado'  => str_replace('.', '', $request->certificado_precio),
+            'precio_examen'  => str_replace('.', '', $request->examen_precio),
             'lunes' => $lunes,
             'martes' => $martes,
             'miercoles' => $miercoles,
@@ -212,6 +213,7 @@ class HabilitarCursoController extends Controller
             'hora_salida' => 'required',
             'portada' => 'image|mimes:jpeg,png,jpg',
             'curso_id' => 'required',
+            'precio_examen' => 'required',
         ]);
 
         $lunes = ($request->lunes == 'on' ? 1 : 0);
@@ -245,6 +247,7 @@ class HabilitarCursoController extends Controller
         $cursoHabilitado->hora_salida = $request->hora_salida;
         $cursoHabilitado->precio  = str_replace('.', '', $request->precio);
         $cursoHabilitado->precio_certificado  = str_replace('.', '', $request->certificado_precio);
+        $cursoHabilitado->precio_examen  = str_replace('.', '', $request->precio_examen);
         $cursoHabilitado->lunes = $lunes;
         $cursoHabilitado->martes = $martes;
         $cursoHabilitado->miercoles = $miercoles;

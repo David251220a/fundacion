@@ -1,10 +1,8 @@
-<div wire:ignore.self class="modal fade bd-example-modal-lg" id="modal_agregar_certificado" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static">
+<div wire:ignore.self class="modal fade bd-example-modal-lg" id="modal_agregar_examen" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">
-                    {{$titulo_cobro}}
-                </h5>
+                <h5 class="modal-title" id="myLargeModalLabel">Cobro Exmane</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                     width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -59,12 +57,7 @@
             </div>
             <div class="modal-footer">
                 <button wire:click="resetUI" class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Cancelar</button>
-                @if ($examen = 0)
-                    <button wire:click="save_certificado" type="button" wire:loading.attr="disabled" class="btn btn-primary">Guardar</button>
-                @else
-                    <button wire:click="save_examen" type="button" wire:loading.attr="disabled" class="btn btn-primary">Guardar</button>
-                @endif
-                
+                <button wire:click="save_certificado" type="button" wire:loading.attr="disabled" class="btn btn-primary">Guardar</button>
             </div>
         </div>
     </div>

@@ -171,6 +171,13 @@ class CursoAlumnoController extends Controller
         ->orderBy('curso_habilitado_id', 'DESC')
         ->get();
 
+        $examen = CursoAlumno::where('examen_saldo', '>' , 0)
+        ->where('alumno_id', $alumno->id)
+        ->whereIn('curso_a_estado_id', [1, 2, 3, 7])
+        ->where('estado_id', 1)
+        ->orderBy('curso_habilitado_id', 'DESC')
+        ->get();
+
         $insu = CursoIngreso::join('curso_in_alumnos', 'curso_ingresos.id', '=', 'curso_in_alumnos.curso_ingreso_id')
         ->join('alumnos', 'curso_in_alumnos.alumno_id', '=', 'alumnos.id')
         ->join('personas', 'alumnos.persona_id', '=', 'personas.id')
@@ -182,7 +189,7 @@ class CursoAlumnoController extends Controller
         ->orderBy('curso_ingresos.fecha', 'ASC')
         ->get();
 
-        return view('cursoAlumno.inscribir', compact('cursoHabilitado', 'alumno', 'forma_pago', 'curso', 'cert', 'insu'));
+        return view('cursoAlumno.inscribir', compact('cursoHabilitado', 'alumno', 'forma_pago', 'curso', 'cert', 'insu', 'examen'));
     }
 
     public function agregar_alumno_post(CursoHabilitado $cursoHabilitado, Alumno $alumno, Request $request)
@@ -204,6 +211,9 @@ class CursoAlumnoController extends Controller
             'certificado_monto' => $cursoHabilitado->precio_certificado,
             'certificado_pagado' => 0,
             'certificado_saldo' => $cursoHabilitado->precio_certificado,
+            'examen_monto' => $cursoHabilitado->precio_examen,
+            'examen_pagado' => 0,
+            'examen_saldo' => $cursoHabilitado->precio_examen,
             'aprobado' => 0,
             'certificado' => '',
             'estado_id' => 1,

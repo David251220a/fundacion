@@ -28,6 +28,9 @@
         <div class="col-md-2 col-sm-4 mb-4">
             <label for="" class="w-full" style="width: 100%">Accion</label>
             <button type="button" class="btn btn-info" onclick="actualizar()">Filtrar</button>
+            @if (($tienePendientes) && ($original_precio_examen > 0))
+                <button type="button" class="ml-2 btn btn-info" wire:click="generar_examen">Generar</button>
+            @endif
         </div>
     </div>
 
@@ -43,6 +46,7 @@
                         <th width="5%">Celular</th>
                         <th width="10%">Estado</th>
                         <th style="text-align: right">Saldo M</th>
+                        <th style="text-align: right">Saldo E</th>
                         <th style="text-align: right">Saldo C</th>
                         <th class="text-center no-content">Actions</th>
                     </tr>
@@ -70,6 +74,12 @@
                                     border: 1px solid #9e01a1;
                                     border-radius: 5px;
                                     background: #9e01a1;
+                                    color:white;
+                                    margin-right: 15px;';
+                    $estilo_examen = 'padding: 3px 3px;
+                                    border: 1px solid rgb(0, 221, 255);
+                                    border-radius: 5px;
+                                    background: rgb(0, 221, 255);
                                     color:white;
                                     margin-right: 15px;';
 
@@ -114,6 +124,9 @@
                                 {{number_format($item->saldo, 0, ".", ".")}}
                             </td>
                             <td class="text-right" style="font-weight: bold; color:black; font-size:15px">
+                                {{number_format($item->examen_saldo, 0, ".", ".")}}
+                            </td>
+                            <td class="text-right" style="font-weight: bold; color:black; font-size:15px">
                                 {{number_format($item->certificado_saldo, 0, ".", ".")}}
                             </td>
                             <td class="text-center" style="font-weight: bold; color:black; font-size:15px">
@@ -123,6 +136,14 @@
                                     data-content="Cobro Matricula" data-placement="top">
                                         <i class="fas fa-hand-holding-usd"></i>
                                         {{-- Cobrar --}}
+                                    </a>
+                                @endif
+
+                                @if ($item->examen_saldo > 0)
+                                    {{-- <button class="btn btn-info btn-sm mb-2" data-toggle="modal" data-target="#modal_agregar" onclick="datos({{$item->id}})">Cobrar</button> --}}
+                                    <a class="bs-popover" style="{{$estilo_examen}}" data-toggle="modal" data-target="#modal_agregar_certificado" onclick="datos({{$item->id}}, 2)" data-container="body"  data-trigger="hover"
+                                    data-content="Cobro Examen" data-placement="top">
+                                        <i class="fas fa-file-invoice-dollar"></i>
                                     </a>
                                 @endif
 
@@ -158,6 +179,9 @@
                     </td>
                     <td class="text-right">
                         {{number_format($total_saldo, 0, ".", ".")}}
+                    </td>
+                    <td class="text-right">
+                         {{number_format($alumnos->sum('examen_saldo'), 0, ".", ".")}}
                     </td>
                     <td class="text-right">
                         {{number_format($alumnos->sum('certificado_saldo'), 0, ".", ".")}}

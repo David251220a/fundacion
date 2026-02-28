@@ -39,6 +39,11 @@
                                 value="{{old('certificado_precio', number_format($cursoHabilitado->precio_certificado, 0, ".", "."))}}">
                             </div>
                             <div class="form-group col-md-3">
+                                <label for="inputPassword4">Precio Examen</label>
+                                <input wire:model.defer="precio_examen" type="text" name="precio_examen" id="precio_examen" class="form-control text-right" onkeyup="punto_decimal_limite(this)"
+                                value="{{old('precio_examen', number_format($cursoHabilitado->precio_examen, 0, ".", "."))}}">
+                            </div>
+                            <div class="form-group col-md-3">
                                 <label for="inputPassword4">Fecha Inicio</label>
                                 <input type="date" name="periodo_desde" id="periodo_desde" class="form-control" value="{{old('periodo_desde', $cursoHabilitado->periodo_desde)}}">
                             </div>

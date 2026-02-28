@@ -50,7 +50,19 @@
                                                     {{$item->ingreso_matricula->año}} - {{$item->ingreso_matricula->numero_recibo}}
                                                 </td>
                                                 <td>
-                                                    {{($item->ingreso_matricula->tipo_cobro == 1 ? 'MATRICULA' : 'CERTIFICADO' )}}
+                                                    @php
+                                                        $desc_topo = '';
+                                                        if($item->ingreso_matricula->tipo_cobro == 1){
+                                                            $desc_topo = 'MATRICULA';
+                                                        }
+                                                        if($item->ingreso_matricula->tipo_cobro == 2){
+                                                            $desc_topo = 'CERTIFICADO';
+                                                        }
+                                                        if($item->ingreso_matricula->tipo_cobro == 3){
+                                                            $desc_topo = 'EXAMEN';
+                                                        }
+                                                    @endphp
+                                                    {{$desc_topo}}
                                                 </td>
                                                 <td>
                                                     {{date('d/m/Y', strtotime($item->ingreso_matricula->fecha_ingreso))}}
