@@ -14,6 +14,7 @@ use App\Models\Noticia;
 use App\Models\NoticiaFile;
 use App\Models\Periodo;
 use App\Models\SalarioInstructor;
+use App\Models\TipoCurso;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -32,19 +33,7 @@ class HabilitarCursoController extends Controller
 
     public function index()
     {
-        $data = CursoHabilitado::latest()
-        ->where('concluido', 0)
-        ->where('estado_id', 1)
-        ->take(1000)
-        ->get();
-
-        $data_d = CursoHabilitado::latest()
-        ->where('concluido', 1)
-        ->where('estado_id', 1)
-        ->take(1000)
-        ->get();
-
-        return view('habilitar.index', compact('data', 'data_d'));
+        return view('habilitar.index');
     }
 
     public function create()

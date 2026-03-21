@@ -358,6 +358,11 @@ class ListadoCurso extends Component
         }
 
         $cursoAlumno = $this->cursoAlumno;
+        if ($total_pagar > $cursoAlumno->certificado_saldo){
+            $this->emit('mensaje_error', 'El total a pagar mayor al saldo del certificado.');
+            $this->resetUI();
+            return false;
+        }
         $fecha_actual = Carbon::now();
         $mes = intval(date('m', strtotime($fecha_actual)));
         $anio = intval(date('Y', strtotime($fecha_actual)));
@@ -433,6 +438,13 @@ class ListadoCurso extends Component
         }
 
         $cursoAlumno = $this->cursoAlumno;
+
+        if ($total_pagar > $cursoAlumno->examen_saldo){
+            $this->emit('mensaje_error', 'El total a pagar mayor al saldo del examen.');
+            $this->resetUI();
+            return false;
+        }
+
         $fecha_actual = Carbon::now();
         $mes = intval(date('m', strtotime($fecha_actual)));
         $anio = intval(date('Y', strtotime($fecha_actual)));
