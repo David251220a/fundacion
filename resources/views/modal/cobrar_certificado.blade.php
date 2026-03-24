@@ -59,7 +59,7 @@
             </div>
             <div class="modal-footer">
                 <button wire:click="resetUI" class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Cancelar</button>
-                @if ($examen = 0)
+                @if ($examen == 0)
                     <button wire:click="save_certificado" type="button" wire:loading.attr="disabled" class="btn btn-primary">Guardar</button>
                 @else
                     <button wire:click="save_examen" type="button" wire:loading.attr="disabled" class="btn btn-primary">Guardar</button>

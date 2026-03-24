@@ -150,7 +150,7 @@
                                 @if ($item->saldo == 0)
                                     @if ($item->certificado_saldo > 0)
                                         {{-- <button class="btn btn-info btn-sm mb-2" data-toggle="modal" data-target="#modal_agregar" onclick="datos({{$item->id}})">Cobrar</button> --}}
-                                        <a class="bs-popover" style="{{$estilo_cer}}" data-toggle="modal" data-target="#modal_agregar_certificado" onclick="datos({{$item->id}})" data-container="body"  data-trigger="hover"
+                                        <a class="bs-popover" style="{{$estilo_cer}}" data-toggle="modal" data-target="#modal_agregar_certificado" onclick="datos({{$item->id}}, 1)" data-container="body"  data-trigger="hover"
                                         data-content="Cobro Certificado" data-placement="top">
                                             <i class="fas fa-graduation-cap"></i>{{-- Cobrar --}}
                                         </a>
